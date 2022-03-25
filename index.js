@@ -8,7 +8,10 @@ const passport = require('passport');
 
 const session = require('express-session')
 const connectDB = require('./server/database/connection.js')
+
+
 require('./server/services/passport-setup.js');
+
 const app = express();
 
 dotenv.config({path:'config.env'});
@@ -31,12 +34,16 @@ app.use(session({
     saveUninitialized: false,
 }));
 
-//passport auth
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 //set view engine
 app.set("view engine","ejs");
+app.use(express.urlencoded({extended:false}));
+//app.use(express.json());
+
+//passport auth
+app.use(passport.initialize());
+app.use(passport.session());
 
 //loads assets
 app.use("/css",express.static(path.resolve(__dirname,"assets/css")));

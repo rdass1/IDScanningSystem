@@ -1,0 +1,46 @@
+<!--Include Header-->
+<%- include('include/_header')%>
+<!--Include Header-->
+
+<!--Main-->
+<main id="site-main">
+    <div class="continer">
+        <div>
+            <a href="/add-user">
+                <span>New User <i></i></span>
+            </a>
+        </div>
+        <div>
+            <form id="activesOnlyForm" action="/dashboard" method="POST">
+                <input type="checkbox" name="activesOnly" value="Active Members Only" ></input>
+            </form>
+        </div>
+        <div>
+            <form action="/"method="POST">
+
+                <table>
+                    <thead>
+                       
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <%- include('include/_show')%>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        
+        
+    </div>
+</main>
+<!--/Main-->
+
+
+<!--Include footer-->
+<%- include('include/_footer')%>
+<!--Include footer-->

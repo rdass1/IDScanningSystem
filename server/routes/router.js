@@ -1,6 +1,7 @@
 const express = require('express');
 const route = express.Router();
 const passport = require('passport');
+require('../services/passport-setup');
 const services = require('../services/render.js');
 const controller = require('../controller/controller.js');
 
@@ -9,7 +10,10 @@ const controller = require('../controller/controller.js');
  * @description Root Route
  * @method GET /
  */
-route.get('/',controller.login);
+ 
+route.get('/',services.index);
+
+route.get('/login',controller.login);
 
 //Needs to be moved
 
@@ -17,7 +21,7 @@ const isLoggedIn = (req,res,next) =>{
     if(req.user){
         next();
     }else{
-        res.sendStatus(401);
+        res.status(401).send("Please log in first");
     }
 }
 
@@ -41,6 +45,15 @@ route.get('/google',
   passport.authenticate('google', { scope:
       [ 'email', 'profile' ] }
 ));
+
+route.post('/login', 
+  passport.authenticate('local', { 
+      failureRedirect: '/',
+      successRedirect: '/dashboard' 
+    }));
+// route.post('/login', (req,res) => {
+//     res.send(req.body);
+// });
 
 route.get( '/google/callback',
     passport.authenticate( 'google', {
