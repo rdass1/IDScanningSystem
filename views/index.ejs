@@ -1,0 +1,36 @@
+<!--Include Header-->
+<%- include('include/_header')%>
+<!--Include Header-->
+
+<!--Main-->
+<main id="site-main">
+    <div class="continer">
+        <div>
+            <a href="/add-user">
+                <span>New User <i></i></span>
+            </a>
+        </div>
+
+        <form action="/"method="POST">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%- include('include/_show')%>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</main>
+<!--/Main-->
+
+
+<!--Include footer-->
+<%- include('include/_footer')%>
+<!--Include footer-->
