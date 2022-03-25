@@ -16,9 +16,9 @@ exports.find = (req,res) =>{
     userDB.find()
     .then(user=>{
         res.send(user);
-        user.forEach(function(item,index){
-            console.log(index+": "+ item.cardID+", "+item.firstName+","+item.address.get("0"));
-        });
+        // user.forEach(function(item,index){
+        //     console.log(index+": "+ item.cardID+", "+item.firstName+","+item.address.get("0"));
+        // });
         
     })
     .catch(err=>{
@@ -32,4 +32,17 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
 
+}
+
+exports.login = (req, res) => {
+    res.render('login.ejs');
+}
+
+exports.activeMember = (req,res) => {
+    userDB.find({'active':'true'})
+    .then(user=>{
+        res.send(user);
+    }).catch(err=>{
+        res.status(500).send({message:err.message || "Error occured while trying to retrive data"})
+    })
 }

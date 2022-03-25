@@ -25,6 +25,7 @@ var schema = new mongoose.Schema({
     firstName: String,
     lastName: String,
     address: Map,
+    active: Boolean,
 
 }, 
     { collection : 'memberInfo' });   // collection name

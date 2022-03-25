@@ -1,15 +1,19 @@
 const express = require('express');
 const morgan = require('morgan');
+
 const dotenv = require('dotenv');
 const bodyparser = require('body-parser');
 const path = require('path');
+const passport = require('passport');
 
+const session = require('express-session')
 const connectDB = require('./server/database/connection.js')
-
+require('./server/services/passport-setup.js');
 const app = express();
 
-dotenv.config({path:'config.env'})
-const PORT = process.env.PORT||8080
+dotenv.config({path:'config.env'});
+const PORT = process.env.PORT||8080;
+const URL = process.env.URL + PORT || "http://localhost:"+PORT;
 
 //log request
 app.use(morgan('tiny'));
@@ -19,6 +23,17 @@ connectDB();
 
 //parse request to body parser
 app.use(bodyparser.urlencoded({extended:true}));
+
+//session
+app.use(session({
+    secret: 'secret-key',
+    resave: false,
+    saveUninitialized: false,
+}));
+
+//passport auth
+app.use(passport.initialize());
+app.use(passport.session());
 
 //set view engine
 app.set("view engine","ejs");
@@ -36,4 +51,3 @@ app.use('/',require('./server/routes/router'));
 app.listen(PORT,()=>{
     console.log(`server is running on localhost:${PORT}`);
 });
-
