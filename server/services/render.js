@@ -5,7 +5,7 @@ dotenv.config({path:'config.env'});
 
 exports.homeRoutes = (req,res)=>{
     if(req.query.active){
-        axios.get(process.env.URL+process.env.PORT+'/api/active_members')
+        axios.get(process.env.URL+process.env.PORT+'/api/members')
         .then(function(response){
             res.render('dashboard',{users:response.data})
         })
@@ -13,7 +13,7 @@ exports.homeRoutes = (req,res)=>{
             res.send(err);
         });
     }else{
-        axios.get(process.env.URL+process.env.PORT+'/api/members')
+        axios.get(process.env.URL+process.env.PORT+'/api/active_members')
         .then(function(response){
             res.render('dashboard',{users:response.data})
             //console.log(response.data);

@@ -6,12 +6,16 @@ const services = require('../services/render.js');
 const controller = require('../controller/controller.js');
 
 
+
+
 /**
  * @description Root Route
  * @method GET /
  */
  
 route.get('/',services.index);
+
+
 
 route.get('/login',controller.login);
 
@@ -79,3 +83,7 @@ route.get('/api/active_members',controller.activeMember);
 
 module.exports = route;
 
+route.get('*',(req,res) => {
+   
+    res.redirect("..");
+})
