@@ -1,11 +1,11 @@
 const express = require('express');
 const route = express.Router();
 const passport = require('passport');
-require('../services/passport-setup');
+require('../middleware/passport-setup');
 const services = require('../services/render.js');
 const controller = require('../controller/controller.js');
-
-
+const userDB = require('../model/model.js');
+const upload = require('../middleware/multer');
 
 
 /**
@@ -35,6 +35,20 @@ const isLoggedIn = (req,res,next) =>{
 
 //
 
+route.get("/sse", (req,res) =>{
+    res.set("Content-Type", "text/event-stream");
+    res.set("Connection", "keep-alive");
+    res.set("Cache-Control","no-cache");
+    res.set("Access-Control-Allow-Origin", "*");
+    console.log('client connected.');
+    
+    userDB.watch().
+        on('change', data => {
+        res.status(200).write(`data: update\n\n`);
+        });
+
+    
+});
 
 
 route.get('/good', isLoggedIn, (req,res) =>{
@@ -70,11 +84,16 @@ route.get('/logout', (req,res)=>{
     res.send('Logged OUt');
 });
 
-route.get('/dashboard',isLoggedIn,services.homeRoutes);
-route.post('/dashboard',function(req, res, next) {
-    res.redirect('/dashboard?active=true');
-    console.log('post');
+route.get('/dashboard',services.homeRoutes);
+route.get('/dashboard/actives',services.actives);
+route.post('/dashboard',services.actives);
+
+//Images Routes
+route.post('/upload', upload.single('file') ,(req,res) =>{
+    console.log(req.file);
+    res.sendStatus(200);
 });
+
 
 //API
 route.post('/api/members',controller.create);

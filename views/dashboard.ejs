@@ -12,7 +12,7 @@
         </div>
         <div>
             <form id="activesOnlyForm" action="/dashboard" method="POST">
-                <input type="checkbox" name="activesOnly" value="Active Members Only" ></input>
+                <input id="activesOnlyCheckBox"type="checkbox" name="activesOnly" value="Active Members Only" ></input>
             </form>
         </div>
         <div>
@@ -35,6 +35,14 @@
             </form>
         </div>
         
+        <div class="container-item">
+            <h3>Images test</h3>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" id="file">
+                <label for="file">Choose File</label>
+                <input type="Submit" value="submit">
+            </form>
+        </div>
         
     </div>
 </main>

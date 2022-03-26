@@ -10,9 +10,11 @@ const session = require('express-session')
 const connectDB = require('./server/database/connection.js')
 
 
-require('./server/services/passport-setup.js');
+require('./server/middleware/passport-setup.js');
 
 const app = express();
+
+app.set("view engine","ejs");
 
 dotenv.config({path:'config.env'});
 const PORT = process.env.PORT||8080;
@@ -37,7 +39,7 @@ app.use(session({
 
 
 //set view engine
-app.set("view engine","ejs");
+
 app.use(express.urlencoded({extended:false}));
 //app.use(express.json());
 

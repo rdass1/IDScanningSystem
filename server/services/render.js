@@ -1,17 +1,23 @@
 const { default: axios } = require("axios")
 const lodash = require('lodash');
 const dotenv = require('dotenv');
+
+const $ = require('jquery');
 dotenv.config({path:'config.env'});
 
+
+
+
 exports.homeRoutes = (req,res)=>{
-    if(req.query.active){
-        axios.get(process.env.URL+process.env.PORT+'/api/members')
-        .then(function(response){
-            res.render('dashboard',{users:response.data})
-        })
-        .catch(err=>{
-            res.send(err);
-        });
+    if(req.query.id){
+        console.log(req.query.id);
+        // axios.get(process.env.URL+process.env.PORT+'/api/members')
+        // .then(function(response){
+        //     res.render('dashboard',{users:response.data})
+        // })
+        // .catch(err=>{
+        //     res.send(err);
+        // });
     }else{
         axios.get(process.env.URL+process.env.PORT+'/api/active_members')
         .then(function(response){
@@ -34,7 +40,7 @@ exports.actives = (req, res) => {
     // res.status(200).send();
     console.log(lodash.isEmpty(req.body));
     //console.log(req.body);
-    res.redirect('/dashboard?active=true')
+    res.render('index');
     
 }
 

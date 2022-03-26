@@ -1,9 +1,12 @@
 <% for(var i = 0; i < users.length; i++){ %>
-<tr>
-    <td><%=i%></td>
-    <td><%=users[i].cardID%></td>
-    <td><%=users[i].firstName%></td>
-    <td><%=users[i].lastname%></td>
-    <td><%=users[i].lastname%></td>
-</tr>
+<!-- <a href="/dashboard/viewmember?id=<%=users[i].cardID%>"> -->
+    <tr>
+        <td><%=i%></td>
+        <td><%=users[i].cardID%></td>
+        <td><%=users[i].firstName%></td>
+        <td><%=users[i].lastname%></td>
+        <td><%=users[i].lastname%></td>
+    </tr>
+<!-- </a> -->
+
 <% } %>
