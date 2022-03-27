@@ -11,3 +11,8 @@
     margin: 15px;
     float: left;
 }
+
+.user-profile-box > a {
+    color: black;
+    text-decoration: none;
+}

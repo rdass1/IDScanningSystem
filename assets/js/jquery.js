@@ -78,28 +78,33 @@ $(document).ready(function(){
 
 
 const displayMemberHtml = (elementID,data) => {
-    let displayData = "";
-    for(var i = 0; i < data.length; i++){
-        displayData += `
-            <div id="${data[i].cardID}" class="user-profile-box">
-                    <table>
-                        <tbody class="tableBody">
-                                    <tr>
-                                       <td style="padding: 80px;">Image</td> 
-                                    </tr>
-                                    <tr>
-                                        <td>${data[i].lastName}, ${data[i].firstName}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>${data[i].cardID}</td>
-                                    </tr>
-                                    
-                        </tbody>
-                    </table>
-                </div>
-        `
-        $(elementID).html(displayData);
+    if(data.length == 0){
+        $(elementID).html('');
+    }else{
+        let displayData = "";
+        for(var i = 0; i < data.length; i++){
+            displayData += `
+                <div class="user-profile-box" style="cursor: pointer;" onclick="window.location='/dashboard/viewmember?id=${data[i].cardID}';">
+                        <table>
+                            <tbody class="tableBody">
+                                        <tr>
+                                           <td style="padding: 80px;">Image</td> 
+                                        </tr>
+                                        <tr>
+                                            <td>${data[i].lastName}, ${data[i].firstName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>${data[i].cardID}</td>
+                                        </tr>
+                                        
+                            </tbody>
+                        </table>
+                    </div>
+            `
+            $(elementID).html(displayData);
+        }
     }
+   
     
 
 }

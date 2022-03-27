@@ -9,25 +9,34 @@ dotenv.config({path:'config.env'});
 
 
 exports.homeRoutes = (req,res)=>{
+    
+    axios.get(process.env.URL+process.env.PORT+'/api/active_members')
+    .then(function(response){
+        if(lodash.isEmpty(response.data)){
+            res.render('dashboard',{users:response.data});
+        }else{
+            res.render('dashboard',{users:response.data});
+        }
+        
+       
+        
+    })
+    .catch(err=>{
+        res.send(err);
+    });
     if(req.query.id){
         console.log(req.query.id);
-        // axios.get(process.env.URL+process.env.PORT+'/api/members')
-        // .then(function(response){
-        //     res.render('dashboard',{users:response.data})
-        // })
-        // .catch(err=>{
-        //     res.send(err);
-        // });
-    }else{
-        axios.get(process.env.URL+process.env.PORT+'/api/active_members')
-        .then(function(response){
-            res.render('dashboard',{users:response.data})
-            //console.log(response.data);
-        })
-        .catch(err=>{
-            res.send(err);
-        });
     }
+    // else{
+    //     axios.get(process.env.URL+process.env.PORT+'/api/active_members')
+    //     .then(function(response){
+    //         res.render('dashboard',{users:response.data})
+    //         //console.log(response.data);
+    //     })
+    //     .catch(err=>{
+    //         res.send(err);
+    //     });
+    // }
 
     
 }

@@ -4,7 +4,7 @@ const passport = require('passport');
 require('../middleware/passport-setup');
 const services = require('../services/render.js');
 const controller = require('../controller/controller.js');
-const userDB = require('../model/model.js');
+const {userDB} = require('../model/model.js');
 const upload = require('../middleware/multer');
 
 

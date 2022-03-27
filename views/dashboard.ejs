@@ -19,27 +19,27 @@
         <div id="membersDashboardDisplay" class="container-item">
             <form action="/"method="POST">
                 <% for(var i = 0; i < users.length; i++){ %>
-                <a href="/dashboard/viewmember?id=<%=users[i].cardID%>">
-                    <div class="user-profile-box">
-                        <table>
-                            <tbody class="tableBody">
+                
+                <div class="user-profile-box" style="cursor: pointer;" onclick="window.location='/dashboard/viewmember?id=<%=users[i].cardID%>';">
+                    <table>
+                        <tbody class="tableBody">
+                            
                                 
+                                    <tr>
+                                    <td style="padding: 80px;">Image</td> 
+                                    </tr>
+                                    <tr>
+                                        <td><%=users[i].lastName +', '+users[i].firstName%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><%=users[i].cardID%></td>
+                                    </tr>
                                     
-                                        <tr>
-                                        <td style="padding: 80px;">Image</td> 
-                                        </tr>
-                                        <tr>
-                                            <td><%=users[i].lastName +', '+users[i].firstName%></td>
-                                        </tr>
-                                        <tr>
-                                            <td><%=users[i].cardID%></td>
-                                        </tr>
-                                        
-                                    
-                            </tbody>
-                        </table>
-                    </div>
-                </a>
+                                
+                        </tbody>
+                    </table>
+                </div>
+            
                 <% } %>
                 
             </form>
