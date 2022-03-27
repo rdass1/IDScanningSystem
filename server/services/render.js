@@ -24,9 +24,6 @@ exports.homeRoutes = (req,res)=>{
     .catch(err=>{
         res.send(err);
     });
-    if(req.query.id){
-        console.log(req.query.id);
-    }
     // else{
     //     axios.get(process.env.URL+process.env.PORT+'/api/active_members')
     //     .then(function(response){
@@ -55,8 +52,21 @@ exports.actives = (req, res) => {
 
 exports.viewmember = (req,res,next) => {
     if(req.query.id){
-        console.log(req.query.id);
-        res.status(200).redirect('/dashboard');
+        axios.get(process.env.URL+process.env.PORT+'/api/members?id='+req.query.id)
+        .then(function(response){
+            if(!lodash.isEmpty(response.data)){
+                res.render('viewmember',{user:response.data});
+            }else{
+                res.send("can't get user");
+            }
+            
+            
+        })
+        .catch(err=>{
+            res.send(err);
+        });
+        // console.log(req.query.id);
+        // res.status(200).redirect('/dashboard');
         
     }else{
         res.status(404).redirect('/dashboard');

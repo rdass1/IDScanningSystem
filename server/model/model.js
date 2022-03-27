@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema({
         default: Date
     },
     address: {
-        address: String,
+        street: String,
         aptSuite: String,
         city: String,
         state: String,
@@ -109,7 +109,7 @@ const buildingsSchema = new mongoose.Schema({
     name: String,
     company: String,
     address: {
-        address: String,
+        street: String,
         city: String,
         state: String,
         zipCode: Number
@@ -144,6 +144,6 @@ const userDB2 = mongoose.model('member',userSchema);
 // const buildingsDB = mongoose.model('',buildingsSchema);
 // const classesDB = mongoose.model('',classesSchema);
 // ,facilityUsageDB,locationsDB,buildingsDB,classesDB
-exports.userDB2= userDB2;
-exports.userDB = userDB;
+// exports.userDB2= userDB2;
+exports.userDB = userDB2;
 

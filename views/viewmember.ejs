@@ -9,7 +9,11 @@
 <body>
     <div class="container">
         <div class="container-item">
-            
+            <h1><%=user.firstName%>'s Page</h1>
+            <div>
+                <%=user.notes[0].message%>
+            </div>
+            <a href="/dashboard">Dashboard</a>
         </div>
     </div>
 </body>
