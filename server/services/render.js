@@ -44,6 +44,16 @@ exports.actives = (req, res) => {
     
 }
 
+exports.viewmember = (req,res,next) => {
+    if(req.query.id){
+        console.log(req.query.id);
+        res.status(200).redirect('/dashboard');
+        
+    }else{
+        res.status(404).redirect('/dashboard');
+    }
+}
+
 exports.index = (req, res) =>{
     res.render('index');
 }

@@ -86,7 +86,7 @@ route.get('/logout', (req,res)=>{
 
 route.get('/dashboard',services.homeRoutes);
 route.get('/dashboard/actives',services.actives);
-route.post('/dashboard',services.actives);
+route.get('/dashboard/viewmember',services.viewmember);
 
 //Images Routes
 route.post('/upload', upload.single('file') ,(req,res) =>{

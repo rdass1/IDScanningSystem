@@ -14,19 +14,7 @@ $(document).ready(function(){
                     "method":"GET",
                 }).done(function(data){
                     
-                    var displayData = "";
-                    for(var i = 0; i < data.length; i++){
-                        displayData += `
-                        <tr>
-                        <td>${i}</td>
-                        <td>${data[i].cardID}</td>
-                        <td>${data[i].firstName}</td>
-                        <td>${data[i].lastname}</td>
-                        <td>${data[i].lastname}</td>
-                        </tr>
-                        `
-                    }
-                    $("#tableBody").html(displayData);
+                    displayMemberHtml("#membersDashboardDisplay",data);
                     
                 });
             }
@@ -42,22 +30,23 @@ $(document).ready(function(){
                 "url":"/api/members",
                 "method":"GET",
             }).done(function(data){
-                var test = 'test';
-                var displayData = "";
-                for(var i = 0; i < data.length; i++){
-                    displayData += `
-                    <div >
-                        <tr style='cursor: pointer;' onclick="test(${data[i].cardID})">
-                        <td>${i}</td>
-                        <td>${data[i].cardID}</td>
-                        <td>${data[i].firstName}</td>
-                        <td>${data[i].lastname}</td>
-                        <td>${data[i].lastname}</td>
-                        </tr>
-                    </div>
-                    `
-                }
-                $("#tableBody").html(displayData);
+                // var test = 'test';
+                // var displayData = "";
+                // for(var i = 0; i < data.length; i++){
+                //     displayData += `
+                //     <div >
+                //         <tr style='cursor: pointer;' onclick="test(${data[i].cardID})">
+                //         <td>${i}</td>
+                //         <td>${data[i].cardID}</td>
+                //         <td>${data[i].firstName}</td>
+                //         <td>${data[i].lastname}</td>
+                //         <td>${data[i].lastname}</td>
+                //         </tr>
+                //     </div>
+                //     `
+                // }
+                // $("#tableBody").html(displayData);
+                displayMemberHtml("#membersDashboardDisplay",data);
             
             });
         }else{
@@ -65,19 +54,20 @@ $(document).ready(function(){
                 "url":"/api/active_members",
                 "method":"GET",
             }).done(function(data){
-                var displayData = "";
-                for(var i = 0; i < data.length; i++){
-                    displayData += `
-                    <tr>
-                    <td>${i}</td>
-                    <td>${data[i].cardID}</td>
-                    <td>${data[i].firstName}</td>
-                    <td>${data[i].lastname}</td>
-                    <td>${data[i].lastname}</td>
-                    </tr>
-                    `
-                }
-                $("#tableBody").html(displayData);
+                // var displayData = "";
+                // for(var i = 0; i < data.length; i++){
+                //     displayData += `
+                //     <tr>
+                //     <td>${i}</td>
+                //     <td>${data[i].cardID}</td>
+                //     <td>${data[i].firstName}</td>
+                //     <td>${data[i].lastname}</td>
+                //     <td>${data[i].lastname}</td>
+                //     </tr>
+                //     `
+                // }
+                // $("#tableBody").html(displayData);
+                displayMemberHtml("#membersDashboardDisplay",data);
                 
             });
         }
@@ -85,3 +75,31 @@ $(document).ready(function(){
 
     });
 });
+
+
+const displayMemberHtml = (elementID,data) => {
+    let displayData = "";
+    for(var i = 0; i < data.length; i++){
+        displayData += `
+            <div id="${data[i].cardID}" class="user-profile-box">
+                    <table>
+                        <tbody class="tableBody">
+                                    <tr>
+                                       <td style="padding: 80px;">Image</td> 
+                                    </tr>
+                                    <tr>
+                                        <td>${data[i].lastName}, ${data[i].firstName}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>${data[i].cardID}</td>
+                                    </tr>
+                                    
+                        </tbody>
+                    </table>
+                </div>
+        `
+        $(elementID).html(displayData);
+    }
+    
+
+}

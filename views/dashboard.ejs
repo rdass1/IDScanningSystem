@@ -13,36 +13,46 @@
         <div>
             <form id="activesOnlyForm" action="/dashboard" method="POST">
                 <input id="activesOnlyCheckBox"type="checkbox" name="activesOnly" value="Active Members Only" ></input>
+                <label for="activesOnly">Display All Members</label>
             </form>
         </div>
-        <div>
+        <div id="membersDashboardDisplay" class="container-item">
             <form action="/"method="POST">
-
-                <table>
-                    <thead>
-                       
-                        <tr>
-                            <th></th>
-                            <th>ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <%- include('include/_show')%>
-                    </tbody>
-                </table>
+                <% for(var i = 0; i < users.length; i++){ %>
+                <a href="/dashboard/viewmember?id=<%=users[i].cardID%>">
+                    <div class="user-profile-box">
+                        <table>
+                            <tbody class="tableBody">
+                                
+                                    
+                                        <tr>
+                                        <td style="padding: 80px;">Image</td> 
+                                        </tr>
+                                        <tr>
+                                            <td><%=users[i].lastName +', '+users[i].firstName%></td>
+                                        </tr>
+                                        <tr>
+                                            <td><%=users[i].cardID%></td>
+                                        </tr>
+                                        
+                                    
+                            </tbody>
+                        </table>
+                    </div>
+                </a>
+                <% } %>
+                
             </form>
         </div>
         
-        <div class="container-item">
+        <!-- <div class="container-item">
             <h3>Images test</h3>
             <form action="/upload" method="POST" enctype="multipart/form-data">
                 <input type="file" name="file" id="file">
                 <label for="file">Choose File</label>
                 <input type="Submit" value="submit">
             </form>
-        </div>
+        </div> -->
         
     </div>
 </main>
