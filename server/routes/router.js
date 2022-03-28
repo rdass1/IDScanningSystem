@@ -6,6 +6,7 @@ const services = require('../services/render.js');
 const controller = require('../controller/controller.js');
 const {userDB} = require('../model/model.js');
 const upload = require('../middleware/multer');
+const { runInContext } = require('lodash');
 
 
 /**
@@ -84,9 +85,21 @@ route.get('/logout', (req,res)=>{
     res.send('Logged OUt');
 });
 
+//Dashboard Routes
+
 route.get('/dashboard',services.homeRoutes);
-route.get('/dashboard/actives',services.actives);
 route.get('/dashboard/viewmember',services.viewmember);
+
+
+//Building Routes
+route.get('/buildings',services.building);
+route.get('/buildings/add_building',services.createBuilding);
+
+//Location Routes
+route.get('/locations',services.location);
+
+
+
 
 //Images Routes
 route.post('/upload', upload.single('file') ,(req,res) =>{
@@ -95,10 +108,19 @@ route.post('/upload', upload.single('file') ,(req,res) =>{
 });
 
 
-//API
+//Member API
 route.post('/api/members',controller.create);
 route.get('/api/members',controller.find);
 route.get('/api/active_members',controller.activeMember);
+
+//Building API
+route.get('/api/building',controller.findBuilding);
+route.post('/api/create_building',controller.createBuilding);
+
+//Location API
+route.get('/api/locations',controller.findLocation);
+
+
 
 module.exports = route;
 

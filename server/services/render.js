@@ -38,18 +38,6 @@ exports.homeRoutes = (req,res)=>{
     
 }
 
-exports.actives = (req, res) => {
-    // if(!req.body){
-    //     res.status(400).send({message:"Content cant be empty!"});
-    //     return;
-    // }
-    // res.status(200).send();
-    console.log(lodash.isEmpty(req.body));
-    //console.log(req.body);
-    res.render('index');
-    
-}
-
 exports.viewmember = (req,res,next) => {
     if(req.query.id){
         axios.get(process.env.URL+process.env.PORT+'/api/members?id='+req.query.id)
@@ -71,6 +59,30 @@ exports.viewmember = (req,res,next) => {
     }else{
         res.status(404).redirect('/dashboard');
     }
+}
+
+exports.createBuilding = (req,res) => {
+    res.render('create_building');
+}
+
+exports.building = (req,res) => {
+    axios.get(process.env.URL+process.env.PORT+'/api/building')
+    .then(function(response){
+        res.render('buildings',{buildings:response.data});
+    })
+    .catch(err=>{
+        res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+    });
+}
+
+exports.location = (req,res) => {
+    axios.get(process.env.URL+process.env.PORT+'/api/locations')
+    .then(function(response){
+        res.render('locations',{locations:response.data});
+    })
+    .catch(err=>{
+        res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+    });
 }
 
 exports.index = (req, res) =>{

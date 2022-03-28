@@ -110,6 +110,7 @@ const buildingsSchema = new mongoose.Schema({
     company: String,
     address: {
         street: String,
+        aptSuite: String,
         city: String,
         state: String,
         zipCode: Number
@@ -122,8 +123,8 @@ const classesSchema = new mongoose.Schema({
     subject: String,
     locationObjID: mongoose.ObjectId,
     buildingObjID: mongoose.ObjectId,
-    startTime: Date,
-    endTime: Date
+    startTime: String,
+    endTime: String
 },{ collection : 'classes'});
 
 
@@ -139,11 +140,28 @@ var schema = new mongoose.Schema({
 //const userDB = mongoose.model('memberInfo', new mongoose.Schema({}));
 const userDB = mongoose.model('', schema);
 const userDB2 = mongoose.model('member',userSchema);
-// const facilityUsageDB = mongoose.model('',facilityUsageSchema);
-// const locationsDB = mongoose.model('',locationsSchema);
-// const buildingsDB = mongoose.model('',buildingsSchema);
-// const classesDB = mongoose.model('',classesSchema);
+const facilityUsageDB = mongoose.model('facilityUsage',facilityUsageSchema);
+const locationsDB = mongoose.model('locations',locationsSchema);
+const buildingsDB = mongoose.model('buildings',buildingsSchema);
+const classesDB = mongoose.model('classes',classesSchema);
 // ,facilityUsageDB,locationsDB,buildingsDB,classesDB
 // exports.userDB2= userDB2;
 exports.userDB = userDB2;
+exports.facilityUsageDB = facilityUsageDB;
+exports.locationsDB = locationsDB;
+exports.buildingsDB = buildingsDB;
+exports.classesDB = classesDB;
+
+
+// $replaceRoot: { newRoot: { $mergeObjects: [ "$locations", "$$ROOT" ] } }
+
+// {
+//     $replaceRoot: { 
+//         newRoot: { 
+//             $mergeObjects: ["$$ROOT","$locations"]
+//         }
+//     }
+// }
+
+
 

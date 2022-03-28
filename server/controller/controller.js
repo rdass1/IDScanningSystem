@@ -1,4 +1,5 @@
 const {userDB} = require('../model/model.js');
+const models = require('../model/model');
 
 
 //create and save new user
@@ -54,6 +55,78 @@ exports.activeMember = (req,res) => {
     .then(user=>{
         res.send(user);
     }).catch(err=>{
-        res.status(500).send({message:err.message || "Error occured while trying to retrive data"})
+        res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
     })
+}
+
+
+//Classes Controller
+exports.createClass = (req, res) => {
+
+}
+
+//Buildings Controller
+exports.createBuilding = (req,res)=>{
+    const building = models.buildingsDB({
+        name: req.body.name,
+        company: req.body.company,
+        address: {
+            street: req.body.street,
+            aptSuite: req.body.aptSuite,
+            city: req.body.city,
+            state: req.body.state,
+            zipCode: req.body.zipCode
+
+        }
+    });
+
+    building.save(building)
+    .then(data=>{
+        console.log(data);
+        res.status(201).redirect('/buildings');
+    })
+    .catch(err=>{
+        res.status(500).send({message:err.message || "Error occurred while trying save data"});
+    })
+}
+
+exports.findBuilding = (req,res)=>{
+    if(req.query.name){
+        models.buildingsDB.find({name:req.query.name})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }else{
+        models.buildingsDB.find()
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        })
+    }
+    
+}
+
+exports.findLocation = (req,res) => {
+    if(req.query.name){
+        models.locationsDB.find({name:req.query.name})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }else{
+        models.locationsDB.find()
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        })
+    }
 }
