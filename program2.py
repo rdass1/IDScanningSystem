@@ -20,8 +20,8 @@ client = MongoClient("mongodb+srv://access01:access01@cluster0.9mxcz.mongodb.net
 db=client["id_scanning_database"]["memberInfo"]
 
 
-
 device_list = list_ports.comports()
+port= None;
 for device in device_list:
     if (device.vid != None or device.pid != None):
         if ('{:04X}'.format(device.vid) == scanner["VID"]and
@@ -29,17 +29,16 @@ for device in device_list:
             port = device.device
             break
         port = None
+if(port == None):
+    quit();
 ser = serial.Serial(port, 19200, timeout = 0)
 while True:
     
     try:
         line = ser.readline().decode()
         if len(line) > 0 and line.startswith("AB",0,2) and line[2:].isdigit() and len(line[2:]) == 10:
-            print(line)
             me = db.find_one({"cardID":line},{"_id":0,"cardID":1})
-            me2 = db.update_one({"cardID":line},[{"$set":{"active": {"$not":"$active"}}}])
-            print(me)
+            me2 = db.update_one({"cardID":line},[{"$set":{"status.active":{"$not":"$status.active"}}}])
     except Exception as e:
         print(e)
-        pass
-
+        break
