@@ -5,12 +5,12 @@ function test(){
     
     const user = new db.userDB({
         cardID: "AB"+parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(10).toString().replace(".", "")),
-        MRNum: "2021-202",
+        MRNum: "2021-600",
         role: "Employee",
-        firstName: "Rishon",
-        middleName: "Noel",
-        lastName: "Dass",
-        DOB: new Date('12/31/2001'),
+        firstName: "Sean",
+        middleName: "",
+        lastName: "Graney",
+        DOB: new Date('11/02/2000'),
         gender: "male",
         pronoun: "He/Him",
         address: {
@@ -62,7 +62,7 @@ function test(){
         roomNumber: "36",
         floorNumber: "2"
     });
-    locations.save(locations)
+    user.save(user)
     .then(data =>{
         console.log('saved sucessfully');
         console.log(data);
