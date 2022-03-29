@@ -111,6 +111,21 @@ exports.findBuilding = (req,res)=>{
     
 }
 
+exports.deleteBuilding = (req,res) => {
+    //console.log(req.params.id);
+    if(req.params.id){
+        models.buildingsDB.deleteOne({_id:req.params.id})
+        .then(data=>{
+            res.sendStatus(200);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
+        })
+    }else{
+        res.sendStatus(400);
+    }
+}
+
 exports.findLocation = (req,res) => {
     if(req.query.name){
         models.locationsDB.aggregate([
@@ -154,5 +169,36 @@ exports.findLocation = (req,res) => {
         .catch(err=>{
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
         })
+    }
+}
+
+exports.createLocation = (req,res) => {
+    const location = models.locationsDB({
+        buildingObjID: req.body.building,
+        name: req.body.name,
+        roomNumber: req.body.roomNumber,
+        floorNumber: req.body.floorNumber
+    })
+    location.save(location)
+    .then(data=>{
+        res.status(201).redirect('/locations');
+    })
+    .catch(err=>{
+        res.status(500).send({message:err.message || "Error occurred while trying save data"});
+    })
+}
+
+exports.deleteLocation = (req,res) => {
+    //console.log(req.params.id);
+    if(req.params.id){
+        models.locationsDB.deleteOne({_id:req.params.id})
+        .then(data=>{
+            res.sendStatus(200);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
+        })
+    }else{
+        res.sendStatus(400);
     }
 }
