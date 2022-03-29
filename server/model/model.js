@@ -61,6 +61,7 @@ const userSchema = new mongoose.Schema({
         state: String,
         zipCode: Number
     },
+    email: String,
     phone: Number,
     notes: [notesObj],
     classes: [userClassObjID],

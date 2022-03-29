@@ -15,26 +15,26 @@
             <tbody>
                 <tr>
                     <th>Name:</th>
-                    <td><%=buildings[i].name%></td>
+                    <td><%=locations[i].name%></td>
                     
                     
                 </tr>
                 <tr>
-                    <th>Company:</th>
-                    <td><%=buildings[i].company%></td>
+                    <th>Building:</th>
+                    <td><%=locations[i].building.name%></td>
                     
                 </tr>
                 <tr>
-                    <th>Address:</th>
-                    <td>
-                        <%=buildings[i].address.street%><br>
-                        <%if(buildings[i].address.aptSuite != ""){%>
-                            <%=buildings[i].address.aptSuite%><br>
-                        <%}%>
-                        <%=buildings[i].address.city%><br>
-                        <%=buildings[i].address.state%><br>
-                        <%=buildings[i].address.zipCode%><br>
-                    </td>
+                    <%if(locations[i].roomNumber != ""){%>
+                        <th>Room Number:</th>
+                        <td><%=locations[i].roomNumber%></td>
+                    <%}%>
+                </tr>
+                <tr>
+                    <%if(locations[i].floorNumber != ""){%>
+                        <th>Floor Number:</th>
+                        <td><%=locations[i].floorNumber%></td>
+                    <%}%>
                 </tr>
             </tbody>
         </table>

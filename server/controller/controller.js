@@ -113,7 +113,21 @@ exports.findBuilding = (req,res)=>{
 
 exports.findLocation = (req,res) => {
     if(req.query.name){
-        models.locationsDB.find({name:req.query.name})
+        models.locationsDB.aggregate([
+            {
+                $match:{
+                    name : req.query.name
+                }
+            },
+            {
+                $lookup:{
+                    from: "buildings",
+                    localField: "buildingObjID",
+                    foreignField: "_id",
+                    as: "building"
+                }
+            }
+        ])
         .then(data => {
             res.send(data);
         })
@@ -121,7 +135,19 @@ exports.findLocation = (req,res) => {
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
         });
     }else{
-        models.locationsDB.find()
+        models.locationsDB.aggregate([
+            {
+                $lookup:{
+                    from: "buildings",
+                    localField: "buildingObjID",
+                    foreignField: "_id",
+                    as: "building"
+                }
+            },
+            {
+                $unwind: "$building"
+            }
+        ])
         .then(data => {
             res.send(data);
         })

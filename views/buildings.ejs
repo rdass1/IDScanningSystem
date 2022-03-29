@@ -9,31 +9,31 @@
 <body>
     <a href="/dashboard">Dashboard</a>
     <a href="/buildings/add_building">Add Building</a>
-    <%for(var i = 0; i < locations.length; i++){%>
+    <%for(var i = 0; i < buildings.length; i++){%>
     <div style="background-color:rgba(0, 47, 255, 0.966); color:white; margin:20px">
         <table>
             <tbody>
                 <tr>
                     <th>Name:</th>
-                    <td><%=locations[i].name%></td>
+                    <td><%=buildings[i].name%></td>
                     
                     
                 </tr>
                 <tr>
                     <th>Company:</th>
-                    <td><%=locations[i].company%></td>
+                    <td><%=buildings[i].company%></td>
                     
                 </tr>
                 <tr>
                     <th>Address:</th>
                     <td>
-                        <%=locations[i].address.street%><br>
-                        <%if(locations[i].address.aptSuite != ""){%>
-                            <%=locations[i].address.aptSuite%><br>
+                        <%=buildings[i].address.street%><br>
+                        <%if(buildings[i].address.aptSuite != ""){%>
+                            <%=buildings[i].address.aptSuite%><br>
                         <%}%>
-                        <%=locations[i].address.city%><br>
-                        <%=locations[i].address.state%><br>
-                        <%=locations[i].address.zipCode%><br>
+                        <%=buildings[i].address.city%><br>
+                        <%=buildings[i].address.state%><br>
+                        <%=buildings[i].address.zipCode%><br>
                     </td>
                 </tr>
             </tbody>
