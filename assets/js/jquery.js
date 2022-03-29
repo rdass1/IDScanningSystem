@@ -27,6 +27,9 @@ $(document).ready(function(){
     
 
 
+    
+
+
     $("#activesOnlyForm").on("change","input:checkbox",function(){
         if(this.checked){
             $.ajax({
@@ -97,6 +100,8 @@ $(document).ready(function(){
        
     });
 });
+
+
 
 
 const displayMemberHtml = (elementID,data) => {
