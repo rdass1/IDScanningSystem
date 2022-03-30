@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="../assets/css/tailwind.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/buildings/add_building">Add Building</a>
+        
+        <button class="bg-sky-600 hover:bg-sky-700">test</button>
+       
+        
+        <div class="building-container"style="background-color:rgba(0, 47, 255, 0.966); color:white; margin:20px">
+            <div class="building-container-item">BuildingName</div>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Company:</th>
+                        <td>Company</td>
+                        
+                    </tr>
+                    <tr>
+                        <th>Address:</th>
+                        <td>
+                            <%=buildings[i].address.street%><br>
+                            <%if(buildings[i].address.aptSuite != ""){%>
+                                <%=buildings[i].address.aptSuite%><br>
+                            <%}%>
+                            <%=buildings[i].address.city%><br>
+                            <%=buildings[i].address.state%><br>
+                            <%=buildings[i].address.zipCode%><br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <form action="/api/building/delete_building/<%buildings[i]._id%>" method="POST">
+                <input type="submit" value="Delete">
+            </form> -->
+            <!-- <a href="" data-id="<%=buildings[i]._id%>">Deleted</a> -->
+            <button class="buildingDeleteBtnJQ" data-id="<%=buildings[i]._id%>">Delete</button>
+        </div>
+    </main>
+    <script src="/js/buildings.js"></script>
+</body>
+</html>

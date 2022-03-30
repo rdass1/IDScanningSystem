@@ -100,6 +100,12 @@ route.get('/locations',services.location);
 route.get('/locations/add_location',services.createLocation);
 
 
+//Classes Routes
+// route.get('/classes',services.class);
+// route.get('/classes/add_class',services.createClass)
+
+
+
 
 
 //Images Routes
@@ -123,6 +129,11 @@ route.delete('/api/building/:id',controller.deleteBuilding);
 route.get('/api/locations',controller.findLocation);
 route.post('/api/create_location',controller.createLocation);
 route.delete('/api/locations/:id',controller.deleteLocation);
+
+//Classes API
+// route.get('/api/classes',controller.findClass);
+// route.post('/api/create_class',controller.createClass);
+// route.delete('/api/classes/:id',controller.deleteClass);
 
 
 

@@ -10,7 +10,7 @@ $(document).ready(async () =>{
     const ports = await navigator.serial.getPorts();
     console.log(ports[0]);
     await ports[0].open({ baudRate: 9600});
-    const reader = ports[0].readable.getReader();
+    const reader = ports[0].readable.getReader({mode:"byob"});
     while(true){
         await reader.read()
         .then(({value,done})=>{

@@ -96,6 +96,28 @@ exports.location = (req,res) => {
     });
 }
 
+exports.class = (req,res) => {
+    axios.get(process.env.URL+process.env.PORT+'/api/classes')
+    .then(function(response){
+        res.render('classes',{classes:response.data});
+    })
+    .catch(err=>{
+        res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+    });
+}
+
+
+exports.createClass = (req,res) => {
+    axios.get(process.env.URL+process.env.PORT+'/api/buildings')
+    .then(function(response){
+        
+    })
+    .catch(err=>{
+        res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+    });
+    res.render('create_location',{buildings:response.data});
+}
+
 
 
 exports.index = (req, res) =>{

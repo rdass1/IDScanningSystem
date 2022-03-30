@@ -100,13 +100,22 @@ exports.findBuilding = (req,res)=>{
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
         });
     }else{
-        models.buildingsDB.find()
+        models.buildingsDB.aggregate([
+            {
+                $lookup:{
+                    from: "locations",
+                    localField: "_id",
+                    foreignField: "buildingObjID",
+                    as: "locations"
+                }
+            }
+        ])
         .then(data => {
             res.send(data);
         })
         .catch(err=>{
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
-        })
+        });
     }
     
 }
@@ -192,6 +201,62 @@ exports.deleteLocation = (req,res) => {
     //console.log(req.params.id);
     if(req.params.id){
         models.locationsDB.deleteOne({_id:req.params.id})
+        .then(data=>{
+            res.sendStatus(200);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
+        })
+    }else{
+        res.sendStatus(400);
+    }
+}
+
+//Classes
+exports.findClasses = (req,res)=>{
+    if(req.query.name){
+        models.classesDB.find({name:req.query.name})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }else{
+        models.classesDB.find()
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        })
+    }
+    
+}
+
+exports.createClass = (req,res) => {
+    const location = models.locationsDB({
+        name: req.body.name,
+        teacher: req.body.teacher,
+        subject: req.body.subject,
+        locationObjID: req.body.location,
+        buildingObjID: req.body.building,
+        startTime: req.body.startTime,
+        endTime: req.body.endTime
+    })
+    location.save(location)
+    .then(data=>{
+        res.status(201).redirect('/locations');
+    })
+    .catch(err=>{
+        res.status(500).send({message:err.message || "Error occurred while trying save data"});
+    })
+}
+
+exports.deleteClass = (req,res) => {
+    //console.log(req.params.id);
+    if(req.params.id){
+        models.classesDB.deleteOne({_id:req.params.id})
         .then(data=>{
             res.sendStatus(200);
         })
