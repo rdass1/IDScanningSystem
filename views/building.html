@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="../assets/css/tailwind.css" rel="stylesheet">
+    <link href="../assets/css/dist/tailwind.css" rel="stylesheet">
+    
     <title>Document</title>
 </head>
 <body>
@@ -13,11 +14,20 @@
         <a href="/dashboard">Dashboard</a>
         <a href="/buildings/add_building">Add Building</a>
         
-        <button class="bg-sky-600 hover:bg-sky-700">test</button>
+        <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4">
+            <div class="shrink-0">
+              <div>Img</div>
+            </div>
+            <div>
+              <div class="text-xl font-medium text-black">ChitChat</div>
+              <p class="text-slate-500">You have a new message!</p>
+            </div>
+          </div>
        
         
         <div class="building-container"style="background-color:rgba(0, 47, 255, 0.966); color:white; margin:20px">
             <div class="building-container-item">BuildingName</div>
+            
             <table>
                 <tbody>
                     <tr>

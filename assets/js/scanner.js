@@ -3,23 +3,42 @@ if ("serial" in navigator) {
   }
 
 $(document).ready(async () =>{
+    start();
+    
+});
+
+async function start(){
     $("#ScannerSelectBtn").click(async () =>{
-        const port = await navigator.serial.requestPort();
+        var port = await navigator.serial.requestPort();
         
     });
     const ports = await navigator.serial.getPorts();
     console.log(ports[0]);
-    await ports[0].open({ baudRate: 9600});
-    const reader = ports[0].readable.getReader({mode:"byob"});
-    while(true){
-        await reader.read()
-        .then(({value,done})=>{
+    var port = ports[0];
+    await port.open({ baudRate: 9600, bufferSize: 1024, flowControl:"hardware"});
+    while (port.readable) {
+        const reader = port.readable.getReader();
+        try {
+          while (true) {
+            const { value, done } = await reader.read({ baudRate: 9600, bufferSize: 1024, flowControl:"hardware"});
+            if (done) {
+              // |reader| has been canceled.
+              console.log('reader has been canceled')
+              //break;
+            }
+            // Do something with |value|...
             const string = new TextDecoder().decode(value);
             console.log(value);
             console.log(string);
             $("#testingID").html(string);
-        }); 
-    }   
-    
-});
+          }
+        } catch (error) {
+          // Handle |error|...
+        } finally {
+          reader.releaseLock();
+        }
+      }
+}
+
+
 
