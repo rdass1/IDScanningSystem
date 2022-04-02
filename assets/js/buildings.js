@@ -38,14 +38,4 @@ const showNav = (flag) => {
     }
 }
 
-const showNav2 = (flag) => {
-    if(flag) {
-        nav.classList.toggle("translate-y-0");
-        open.classList.toggle("hidden");
-        close.classList.toggle("hidden");
-        //main.classList.toggle("-translate-y-72");
-        //nav.classList.toggle("translate-y-0");
-    }
-}
-
 
