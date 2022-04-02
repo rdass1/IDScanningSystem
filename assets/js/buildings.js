@@ -27,6 +27,7 @@ let main = document.getElementById("main");
 let mainGrid = document.getElementById("main-grid");
 let wrapper = document.getElementById("nav-wrapper");
 
+
 const showNav = (flag) => {
     if (flag) {
         nav.classList.toggle("-translate-x-full");
@@ -38,4 +39,13 @@ const showNav = (flag) => {
     }
 }
 
+let open2 = document.getElementById('nav-toggle-open2');
+let close2 = document.getElementById('nav-toggle-close2');
 
+const showNav2 = (flag) => {
+    if(flag){
+        nav.classList.toggle("-translate-y-0");
+        open2.classList.toggle("hidden");
+        close2.classList.toggle("hidden");
+    }
+}
