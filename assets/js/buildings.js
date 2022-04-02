@@ -24,6 +24,8 @@ let nav = document.getElementById("main-nav");
 let open = document.getElementById("nav-toggle-open");
 let close = document.getElementById("nav-toggle-close")
 let main = document.getElementById("main");
+let mainGrid = document.getElementById("main-grid");
+let wrapper = document.getElementById("nav-wrapper");
 
 const showNav = (flag) => {
     if (flag) {
@@ -32,9 +34,7 @@ const showNav = (flag) => {
         open.classList.toggle("hidden");
         close.classList.toggle("hidden");
         main.classList.toggle("-translate-x-72");
-        main.classList.toggle("translate-x-0");
-        
-
+        main.classList.toggle("w-full");
     }
 }
 

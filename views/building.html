@@ -30,10 +30,10 @@
         </div>
         <!--/Logo & Title-->
     </div>
-    <div class="xl:flex justify-start">
-        <nav id="main-nav"class="ease-in-out transition">
+    <div id="nav-wrapper"class="">
+        <nav id="main-nav"class="xl:fixed ease-in-out transition transform  translate-x-0 xl:w-72" >
             <!--Main Nav-->
-            <div id="main-nav-body"  class="w-screen xl:rounded-r transform  translate-x-0  ease-in-out transition duration-500 flex justify-start items-start h-80 bg-gray-900 flex-col xl:w-96 xl:h-screen">
+            <div id="main-nav-body"  class="sm:w-screen xl:rounded-r transform  translate-x-0  ease-in-out transition duration-500 flex justify-start items-start h-80 bg-gray-900 flex-col xl:w-full xl:h-screen">
                 <div class="hidden xl:flex justify-start p-6 items-center space-x-3">
                    <img src="../assets/img/nav/logo.svg" alt="logo" width="40">
                         <p class="text-2xl leading-6 text-white">Above and Beyond</p>                
@@ -68,65 +68,323 @@
             </div>
             <!--/Main Nav-->
         </nav>
-        <main id="main" class="m-3 w-fit ease-in-out transition bg-red-300 xl:w-full">
-            
-            <div class="py-5 w-full hidden xl:block">
+        <div id="main" class="px-3 ease-in-out transition xl:ml-72">
+            <div class="py-6 px-3 w-full hidden xl:block">
                 <button onclick="showNav(true)" aria-label="nav-toggle-open" id="nav-toggle-open" class="hidden focus:outline-none focus:ring-2" >
-                    <img width="24" src="../assets/img/nav/menu-logo.svg" alt="close"/>
+                    <img width="34" src="../assets/img/nav/menu-logo.svg" alt="close"/>
                 </button>  
                 <button onclick="showNav(true)" aria-label="nav-toggle-open" id="nav-toggle-close" class="focus:outline-none focus:ring-2" >
-                    <img width="24" src="../assets/img/nav/close-logo.svg" alt="close"/>
+                    <img width="34" src="../assets/img/nav/close-logo.svg" alt="close"/>
                 </button>  
             </div>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/buildings/add_building">Add Building</a>
-            <div class="max-w-sm bg-gray-700 rounded shadow-lg " style="background-color: #eeeeee;">
-                <div class="w-full text-center">Building Name</div>
-                <div class="w-full text-center">Company name</div>
-                <div class="w-full text-center">Street, Apt/Suite, City, State, ZipCode</div>
-                <div class="container flex justify-center">
-                  <table class=" w-10/12 " style="width:95%">
-                    <thead class="flex bg-gray-800 text-white rounded-t-lg" >
-                      <tr class="flex w-full mb-0">
-                        <th class="p-2 w-2/5">Location</th>
-                        <th class="p-2 w-2/5">Room</th>
-                        <th class="p-2 w-2/5">Floor</th>
-                        <th  class="p-2 w-1/5"></th>
-                      </tr>
-                    </thead>
-                    <!-- Remove the nasty inline CSS fixed height on production and replace it with a CSS class — this is just for demonstration purposes! -->
-                    <tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll h-20 text-center mb-3" style="width: 365px">
-                      <tr class="flex w-full odd:bg-white even:bg-neutral-200">
-                        <td class="p-2
-                         w-2/5 overflow-x-hidden bg-red-500">Front-Desk</td>
-                        <td class="p-2
-                         w-2/5 bg-red-200">01</td>
-                        <td class="p-2
-                         w-2/5 bg-red-300">12</td>
-                         <td class="p-2
-                         w-1/5 bg-red-400">12</td>
-                      </tr>
-                      <tr class="flex w-full odd:bg-white even:bg-neutral-200">
-                        <td class="p-2
-                         w-1/3">Dogs</td>
-                        <td class="p-2
-                         w-1/3">Cats</td>
-                        <td class="p-2
-                         w-1/3">Birds</td>
-                      </tr>
-                      <tr class="flex w-full odd:bg-white even:bg-table-gray">
-                        <td class="p-2
-                         w-1/3">Dogs</td>
-                        <td class="p-2
-                         w-1/3">Cats</td>
-                        <td class="p-2
-                         w-1/3">Birds</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-        </main>
+            <main id="main-grid" class="m-3 ease-in-out transition grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                
+                <!-- <a href="/dashboard">Dashboard</a>
+                <a href="/buildings/add_building">Add Building</a> -->
+                <div class="w-full bg-gray-700 rounded shadow-lg " style="background-color: #eeeeee;">
+                    <div class="w-full text-center">Building Name</div>
+                    <div class="w-full text-center">Company name</div>
+                    <div class="w-full text-center">Street, Apt/Suite, City, State, ZipCode</div>
+                    <div class="container flex justify-center w-full">
+                      <table class="w-11/12 ml-2 md:ml-0">
+                        <thead class="flex bg-gray-800 text-white rounded-t-lg " >
+                          <tr class="flex w-full">
+                            <th class="p-2 w-4/12">Location</th>
+                            <th class="p-2 w-4/12">Room</th>
+                            <th class="p-2 w-4/12">Floor</th>
+                            <th  class="p-2 w-2/12"></th>
+                          </tr>
+                        </thead>
+                        <!-- Remove the nasty inline CSS fixed height on production and replace it with a CSS class — this is just for demonstration purposes! -->
+                        <tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll h-20 text-center mb-3 xl:w-full md:w-full" >
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded shadow-lg " style="background-color: #eeeeee;">
+                    <div class="w-full text-center">Building Name</div>
+                    <div class="w-full text-center">Company name</div>
+                    <div class="w-full text-center">Street, Apt/Suite, City, State, ZipCode</div>
+                    <div class="container flex justify-center w-full">
+                      <table class="w-11/12">
+                        <thead class="flex bg-gray-800 text-white rounded-t-lg " >
+                          <tr class="flex md:w-full xl:w-full mb-0">
+                            <th class="p-2 w-4/12">Location</th>
+                            <th class="p-2 w-4/12">Room</th>
+                            <th class="p-2 w-4/12">Floor</th>
+                            <th  class="p-2 w-2/12"></th>
+                          </tr>
+                        </thead>
+                        <!-- Remove the nasty inline CSS fixed height on production and replace it with a CSS class — this is just for demonstration purposes! -->
+                        <tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll h-20 text-center mb-3 xl:w-full md:w-full" >
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded shadow-lg " style="background-color: #eeeeee;">
+                    <div class="w-full text-center">Building Name</div>
+                    <div class="w-full text-center">Company name</div>
+                    <div class="w-full text-center">Street, Apt/Suite, City, State, ZipCode</div>
+                    <div class="container flex justify-center w-full">
+                      <table class="w-11/12">
+                        <thead class="flex bg-gray-800 text-white rounded-t-lg " >
+                          <tr class="flex md:w-full xl:w-full mb-0">
+                            <th class="p-2 w-4/12">Location</th>
+                            <th class="p-2 w-4/12">Room</th>
+                            <th class="p-2 w-4/12">Floor</th>
+                            <th  class="p-2 w-2/12"></th>
+                          </tr>
+                        </thead>
+                        <!-- Remove the nasty inline CSS fixed height on production and replace it with a CSS class — this is just for demonstration purposes! -->
+                        <tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll h-20 text-center mb-3 xl:w-full md:w-full" >
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded shadow-lg " style="background-color: #eeeeee;">
+                    <div class="w-full text-center">Building Name</div>
+                    <div class="w-full text-center">Company name</div>
+                    <div class="w-full text-center">Street, Apt/Suite, City, State, ZipCode</div>
+                    <div class="container flex justify-center w-full">
+                      <table class="w-11/12">
+                        <thead class="flex bg-gray-800 text-white rounded-t-lg " >
+                          <tr class="flex md:w-full xl:w-full mb-0">
+                            <th class="p-2 w-4/12">Location</th>
+                            <th class="p-2 w-4/12">Room</th>
+                            <th class="p-2 w-4/12">Floor</th>
+                            <th  class="p-2 w-2/12"></th>
+                          </tr>
+                        </thead>
+                        <!-- Remove the nasty inline CSS fixed height on production and replace it with a CSS class — this is just for demonstration purposes! -->
+                        <tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll h-20 text-center mb-3 xl:w-full md:w-full" >
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded shadow-lg " style="background-color: #eeeeee;">
+                    <div class="w-full text-center">Building Name</div>
+                    <div class="w-full text-center">Company name</div>
+                    <div class="w-full text-center">Street, Apt/Suite, City, State, ZipCode</div>
+                    <div class="container flex justify-center w-full">
+                      <table class="w-11/12">
+                        <thead class="flex bg-gray-800 text-white rounded-t-lg " >
+                          <tr class="flex md:w-full xl:w-full mb-0">
+                            <th class="p-2 w-4/12">Location</th>
+                            <th class="p-2 w-4/12">Room</th>
+                            <th class="p-2 w-4/12">Floor</th>
+                            <th  class="p-2 w-2/12"></th>
+                          </tr>
+                        </thead>
+                        <!-- Remove the nasty inline CSS fixed height on production and replace it with a CSS class — this is just for demonstration purposes! -->
+                        <tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll h-20 text-center mb-3 xl:w-full md:w-full" >
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="w-full bg-gray-700 rounded shadow-lg " style="background-color: #eeeeee;">
+                    <div class="w-full text-center">Building Name</div>
+                    <div class="w-full text-center">Company name</div>
+                    <div class="w-full text-center">Street, Apt/Suite, City, State, ZipCode</div>
+                    <div class="container flex justify-center w-full">
+                      <table class="w-11/12">
+                        <thead class="flex bg-gray-800 text-white rounded-t-lg " >
+                          <tr class="flex md:w-full xl:w-full mb-0">
+                            <th class="p-2 w-4/12">Location</th>
+                            <th class="p-2 w-4/12">Room</th>
+                            <th class="p-2 w-4/12">Floor</th>
+                            <th  class="p-2 w-2/12"></th>
+                          </tr>
+                        </thead>
+                        <!-- Remove the nasty inline CSS fixed height on production and replace it with a CSS class — this is just for demonstration purposes! -->
+                        <tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll h-20 text-center mb-3 xl:w-full md:w-full" >
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
+                            <td class="p-2
+                             w-4/12 overflow-x-hidden">Front-Desk</td>
+                            <td class="p-2
+                             w-4/12 ">01</td>
+                            <td class="p-2
+                             w-4/12">12</td>
+                             <td class="mt-3
+                             w-1/12"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  
+            </main>
+        </div>
+        
     </div>
     
     <script src="../assets/js/buildings.js"></script>
