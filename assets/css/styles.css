@@ -7,8 +7,7 @@
 .user-profile-box{
     background-color:rgb(14, 214, 104);
     width: fit-content;
-    margin: 15px;
-    float: left;
+    margin: 0px;
 }
 
 .user-profile-box > a {

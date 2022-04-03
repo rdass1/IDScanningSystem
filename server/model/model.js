@@ -68,6 +68,7 @@ const userSchema = new mongoose.Schema({
     status: {
         active: Boolean,
         flag: Boolean,
+        updatedAt: Date,
         locationObjID: {
             type:mongoose.ObjectId,
         },

@@ -427,12 +427,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .container {
   width: 100%;
 }
-@media (min-width: 320px) {
-
-  .container {
-    max-width: 320px;
-  }
-}
 @media (min-width: 640px) {
 
   .container {
@@ -525,6 +519,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-20 {
   height: 5rem;
 }
+.h-72 {
+  height: 18rem;
+}
 .w-screen {
   width: 100vw;
 }
@@ -539,6 +536,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-1\/6 {
   width: 16.666667%;
+}
+.basis-1\/12 {
+  flex-basis: 8.333333%;
+}
+.basis-10\/12 {
+  flex-basis: 83.333333%;
 }
 .translate-y-0 {
   --tw-translate-y: 0px;
@@ -593,6 +596,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .gap-6 {
   gap: 1.5rem;
+}
+.gap-10 {
+  gap: 2.5rem;
 }
 .space-x-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
@@ -649,6 +655,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
+.bg-red-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
+}
+.bg-green-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(134 239 172 / var(--tw-bg-opacity));
+}
 .p-6 {
   padding: 1.5rem;
 }
@@ -657,6 +671,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .p-3 {
   padding: 0.75rem;
+}
+.p-20 {
+  padding: 5rem;
 }
 .px-6 {
   padding-left: 1.5rem;
@@ -681,6 +698,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 .pl-4 {
   padding-left: 1rem;
@@ -797,6 +818,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 @media (min-width: 1280px) {
 
@@ -839,6 +864,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .xl\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .xl\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .xl\:space-y-7 > :not([hidden]) ~ :not([hidden]) {

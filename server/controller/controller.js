@@ -51,7 +51,11 @@ exports.login = (req, res) => {
 }
 
 exports.activeMember = (req,res) => {
-    userDB.find({'status.active':'true'})
+    userDB.find({'status.active':'true'},null,{
+        sort: {
+            "status.updatedAt": -1
+        },
+    })
     .then(user=>{
         res.send(user);
     }).catch(err=>{

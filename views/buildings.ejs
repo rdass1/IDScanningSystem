@@ -104,7 +104,13 @@
                 <div class="w-full bg-gray-700 rounded shadow-lg " style="background-color: #eeeeee;">
                     <div class="w-full text-center"><%=buildings[i].name%></div>
                     <div class="w-full text-center"><%=buildings[i].company%></div>
-                    <div class="w-full text-center"><%=buildingsp%>, Apt/Suite, City, State, ZipCode</div>
+                    <div class="w-full text-center">
+                        <%if(buildings[i].address.aptSuite != ""){%>
+                        <%=buildings[i].address.street+', '+buildings[i].address.aptSuite + ', '+ buildings[i].address.city+ ', '+ buildings[i].address.state+ ', '+ buildings[i].address.zipCode %>
+                        <%}else{%>
+                        <%=buildings[i].address.street+ ', '+ buildings[i].address.city+ ', '+ buildings[i].address.state+ ', '+ buildings[i].address.zipCode%>
+                        <%}%>
+                    </div>
                     <div class="flex justify-center w-full">
                       <table class="w-11/12">
                         <thead class="flex bg-gray-800 text-white rounded-t-lg w-full" >
@@ -164,6 +170,7 @@
         
     </div>
     
+    <script src="/js/navbar.js"></script>
     <script src="/js/buildings.js"></script>
 </body>
 </html>
