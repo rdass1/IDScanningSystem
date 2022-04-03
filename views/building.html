@@ -31,14 +31,14 @@
         <!--/Logo & Title-->
     </div>
     <div id="nav-wrapper"class="">
-        <nav id="main-nav"class="fixed top-16 xl:top-0 z-40 ease-in-out transition transform  translate-x-0 xl:w-72 -translate-y-full xl:translate-y-0" >
+        <nav id="main-nav"class="w-full fixed top-20 md:top-16 xl:top-0 z-40 ease-in-out transition transform  translate-x-0 xl:w-80 -translate-y-full xl:translate-y-0" >
             <!--Main Nav-->
-            <div id="main-nav-body"  class="sm:w-screen xl:rounded-r transform  translate-x-0  ease-in-out transition duration-500 flex justify-start items-start h-80 bg-gray-900 flex-col xl:w-full xl:h-screen">
+            <div id="main-nav-body"  class=" xl:rounded-r transform  translate-x-0  ease-in-out transition duration-500 flex justify-start items-start h-80 bg-gray-900 flex-col xl:w-full xl:h-screen">
                 <div class="hidden xl:flex justify-start p-6 items-center space-x-3">
                    <img src="../assets/img/nav/logo.svg" alt="logo" width="40">
                         <p class="text-2xl leading-6 text-white">Above and Beyond</p>                
                 </div>
-                <div class="mt-6 flex flex-col justify-start items-center  pl-4 w-full border-gray-600 border-b space-y-3 pb-5 ">
+                <div class="mt-6 flex flex-col justify-start items-center  pl-4 w-full border-gray-600 border-b space-y-5 xl:space-y-7 pb-5 h-full">
                     <button class="flex jusitfy-start items-center space-x-6 w-full  focus:outline-none  focus:text-red-400  text-white rounded ">
                         <img class="fill-stroke " src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sidebar2-svg4.svg" alt="dashboard" />
                         <p class="text-base leading-4 ">Dashboard</p>                    
@@ -60,7 +60,7 @@
                             <p class="text-base leading-4 ">Facilities</p>                    
                     </button>
                 </div>
-                <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full  ">
+                <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full py-3 mb-2">
                     <div class=" flex justify-between items-center w-full">
                         <div class="flex justify-center items-center  space-x-2">
                             <div>
@@ -80,15 +80,25 @@
             </div>
             <!--/Main Nav-->
         </nav>
-        <div id="main" class="px-3 ease-in-out transition xl:ml-72 pt-28 xl:pt-0">
-            <div class="py-6 px-3 w-full hidden xl:block">
-                <button onclick="showNav(true)" aria-label="nav-toggle-open" id="nav-toggle-open" class="hidden focus:outline-none focus:ring-2" >
-                    <img width="34" src="../assets/img/nav/menu-logo.svg" alt="close"/>
-                </button>  
-                <button onclick="showNav(true)" aria-label="nav-toggle-close" id="nav-toggle-close" class="focus:outline-none focus:ring-2" >
-                    <img width="34" src="../assets/img/nav/close-logo.svg" alt="close"/>
-                </button>  
+        <div id="main" class="px-3 ease-in-out transition xl:ml-80 pt-28 xl:pt-0">
+            <div class="flex justify-end w-full">
+                <div class="py-6 px-3 w-full hidden xl:block">
+                    <button onclick="showNav(true)" aria-label="nav-toggle-open" id="nav-toggle-open" class="hidden focus:outline-none focus:ring-2" >
+                        <img width="34" src="../assets/img/nav/menu-logo.svg" alt="close"/>
+                    </button>  
+                    <button onclick="showNav(true)" aria-label="nav-toggle-close" id="nav-toggle-close" class="focus:outline-none focus:ring-2" >
+                        <img width="34" src="../assets/img/nav/close-logo.svg" alt="close"/>
+                    </button>  
+                </div>
+                <div class="py-0 xl:py-6 px-4">
+                    <a href="">
+                        <img width="40" alt="add" src="../assets/img/buildings/square-plus-solid.svg" style="filter: invert(62%) sepia(84%) saturate(2926%) hue-rotate(78deg) brightness(107%) contrast(109%);
+                        ">
+                    </a>
+                </div>
+
             </div>
+            
             <main id="main-grid" class="m-3 ease-in-out transition grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                 
                 <!-- <a href="/dashboard">Dashboard</a>
@@ -136,8 +146,16 @@
                           </tr>
                         </tbody>
                       </table>
+                    
+                    
+                    
                     </div>
-                  </div>
+                    <div class="flex justify-end">
+                        <a href="" class="p-3"><img width="20" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a>
+                    </div>
+                </div>
+                <div>
+                </div>
                   
                 
            

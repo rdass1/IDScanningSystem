@@ -34,7 +34,7 @@ const showNav = (flag) => {
         nav.classList.toggle("translate-x-0");
         open.classList.toggle("hidden");
         close.classList.toggle("hidden");
-        main.classList.toggle("-translate-x-72");
+        main.classList.toggle("-translate-x-80");
         main.classList.toggle("w-full");
     }
 }
