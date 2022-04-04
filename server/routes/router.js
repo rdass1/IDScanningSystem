@@ -97,6 +97,13 @@ route.get('/buildings/add_building',services.createBuilding);
 
 //Location Routes
 route.get('/locations',services.location);
+route.get('/locations/add_location',services.createLocation);
+
+
+//Classes Routes
+// route.get('/classes',services.class);
+// route.get('/classes/add_class',services.createClass)
+
 
 
 
@@ -116,9 +123,17 @@ route.get('/api/active_members',controller.activeMember);
 //Building API
 route.get('/api/building',controller.findBuilding);
 route.post('/api/create_building',controller.createBuilding);
+route.delete('/api/building/:id',controller.deleteBuilding);
 
 //Location API
 route.get('/api/locations',controller.findLocation);
+route.post('/api/create_location',controller.createLocation);
+route.delete('/api/locations/:id',controller.deleteLocation);
+
+//Classes API
+// route.get('/api/classes',controller.findClass);
+// route.post('/api/create_class',controller.createClass);
+// route.delete('/api/classes/:id',controller.deleteClass);
 
 
 

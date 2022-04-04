@@ -5,10 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="/css/dist/tailwind.css" rel="stylesheet">
-    <title>Facilities</title>
+    <!-- <link href="../assets/css/dist/tailwind.css" rel="stylesheet"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    
+    <title>Document</title>
 </head>
-<body>
+<body class="">
     <div class="xl:hidden h-fit w-screen bg-gray-700  translate-y-0 fixed top-0 right-0 left-0 z-50" >
         <!--Logo & Title-->
         <div class="w-full bg-gray-900 xl:hidden flex justify-between p-6 items-center ">
@@ -96,81 +99,111 @@
 
             </div>
             
-            <main id="main-grid" class="m-3 ease-in-out transition grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                
-                <!-- <a href="/dashboard">Dashboard</a>
-                <a href="/buildings/add_building">Add Building</a> -->
-                <%for(var i = 0; i < buildings.length; i++){%>
-                <div class="w-full bg-gray-700 rounded shadow-lg " style="background-color: #eeeeee;">
-                    <div class="w-full text-center"><%=buildings[i].name%></div>
-                    <div class="w-full text-center"><%=buildings[i].company%></div>
-                    <div class="w-full text-center">
-                        <%if(buildings[i].address.aptSuite != ""){%>
-                        <%=buildings[i].address.street+', '+buildings[i].address.aptSuite + ', '+ buildings[i].address.city+ ', '+ buildings[i].address.state+ ', '+ buildings[i].address.zipCode %>
-                        <%}else{%>
-                        <%=buildings[i].address.street+ ', '+ buildings[i].address.city+ ', '+ buildings[i].address.state+ ', '+ buildings[i].address.zipCode%>
-                        <%}%>
+            <main id="main-grid" class="m-3 ease-in-out transition w-0">
+                <div class="flex ">
+                    <div class="flex flex-col items-center ">
+                        <div class="mx-4 px-16 py-24 bg-rose-600">Image</div>
+                        <div class="p-2">
+                            <button class="bg-green-500 text-white px-3 py-1 rounded">Edit</button>
+                            <button class="bg-amber-500 rounded text-white px-3 py-1">Flag</button>
+                            <button class="bg-rose-600 rounded text-white px-3 py-1">Delete</button>
+                        </div>
                     </div>
-                    <div class="flex justify-center w-full">
-                      <table class="w-11/12">
-                        <thead class="flex bg-gray-800 text-white rounded-t-lg w-full" >
-                          <tr class="flex w-full">
-                            <th class="p-2 w-2/4">Location</th>
-                            <th class="p-2 w-2/4">Room</th>
-                            <th class="p-2 w-2/4">Floor</th>
-                            <th  class="p-2 w-1/6">
-                                <a href="">
-                                    <img width="20" alt="add" src="/img/buildings/square-plus-solid.svg" style="filter: invert(62%) sepia(84%) saturate(2926%) hue-rotate(78deg) brightness(107%) contrast(109%);
-                                    ">
-                                </a>
-                            </th>
-                          </tr>
-                        </thead>
-                        <!-- Remove the nasty inline CSS fixed height on production and replace it with a CSS class — this is just for demonstration purposes! -->
-                        <tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll h-20 text-center mb-3 xl:w-full md:w-full" >
-                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
-                            <td class=" p-2
-                             w-2/4 overflow-x-hidden">Front-Desk</td>
-                            <td class=" p-2
-                             w-2/4">N/A</td>
-                            <td class=" p-2
-                             w-2/4">N/A</td>
-                             <td class="p-3
-                             w-1/6"><a href=""><img width="16" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
-                          </tr>
-                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
-                            <td class=" p-2
-                             w-2/4 overflow-x-hidden">Rec Room</td>
-                            <td class=" p-2
-                             w-2/4">12</td>
-                            <td class=" p-2
-                             w-2/4">0</td>
-                             <td class="p-3
-                             w-1/6"><a href=""><img width="16" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    
-                    
-                    
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        First Name:
+                                    </td>
+                                    <td>
+                                        John Doe
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>ID:</td>
+                                    <td>AB1234567</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>MR#:</td>
+                                    <td>2020-143</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>Role:</td>
+                                    <td>Employee</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>DOB:</td>
+                                    <td>12/31/2001</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>Gender:</td>
+                                    <td>Male</td>
+                                </tr>
+                                <tr>
+                                    <td>ProNoun:</td>
+                                    <td>He/Him</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>Reg.Date:</td>
+                                    <td>4/3/2022</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="flex justify-end">
-                        <a href="" class="p-3"><img width="20" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a>
+                    <div>
+                        <table>
+                            <tr>
+                                <td>Email:</td>
+                                <td>rdass1@hawk.iit.edu</td>
+                            </tr>
+                            <tr>
+                                <td>Phone:</td>
+                                <td>123456790</td>
+                            </tr>
+                            <tr>
+                                <td valign="top" class="">Address:</td>
+                                <td class="pt-8">
+                                    <table>
+                                        <tr>
+                                            <td>Street:</td>
+                                            <td class="pl-4">3140 S. Michigan Ave</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Apt/Suite:</td>
+                                            <td class="pl-4">304</td>
+                                        </tr>
+                                        <tr>
+                                            <td>City:</td>
+                                            <td class="pl-4">Chicago</td>
+                                        </tr>
+                                        <tr>
+                                            <td>State:</td>
+                                            <td class="pl-4">IL</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ZipCode:</td>
+                                            <td class="pl-4">60616</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
-                <%}%>
-                <div>
-                </div>
-                  
-                
-           
-                  
+
+            
             </main>
         </div>
         
     </div>
-    
-    <script src="/js/navbar.js"></script>
-    <script src="/js/buildings.js"></script>
+    <script src="../assets/js/navbar.js"></script>
 </body>
 </html>

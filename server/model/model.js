@@ -61,12 +61,14 @@ const userSchema = new mongoose.Schema({
         state: String,
         zipCode: Number
     },
+    email: String,
     phone: Number,
     notes: [notesObj],
     classes: [userClassObjID],
     status: {
         active: Boolean,
         flag: Boolean,
+        updatedAt: Date,
         locationObjID: {
             type:mongoose.ObjectId,
         },

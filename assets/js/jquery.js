@@ -8,13 +8,14 @@ $(document).ready(function(){
 
     eventSource.addEventListener("message",function(e){
         try{
+            console.log('update');
             if(!document. getElementById('activesOnlyCheckBox'). checked){
                 $.ajax({
                     "url":"/api/active_members",
                     "method":"GET",
                 }).done(function(data){
                     
-                    displayMemberHtml("#membersDashboardDisplay",data);
+                    displayMemberHtml("#main-grid",data);
                     
                 });
             }
@@ -22,6 +23,12 @@ $(document).ready(function(){
 
         }
     });
+
+
+    
+
+
+    
 
 
     $("#activesOnlyForm").on("change","input:checkbox",function(){
@@ -46,7 +53,7 @@ $(document).ready(function(){
                 //     `
                 // }
                 // $("#tableBody").html(displayData);
-                displayMemberHtml("#membersDashboardDisplay",data);
+                displayMemberHtml("#main-grid",data);
             
             });
         }else{
@@ -67,14 +74,35 @@ $(document).ready(function(){
                 //     `
                 // }
                 // $("#tableBody").html(displayData);
-                displayMemberHtml("#membersDashboardDisplay",data);
+                displayMemberHtml("#main-grid",data);
                 
             });
         }
        
 
     });
+
+    
+
+    $(".buildingDeleteBtnJQ").click(function(){
+        if(confirm("Do you really want to delete this building?")){
+            $.ajax({
+                "url":"/api/building/"+$(this).attr("data-id"),
+                "method":"DELETE",
+            }).done(function(data){
+                
+              location.reload();
+                
+            }).fail(function(data){
+                alert("Error couldn't delete that building!");
+                location.reload();
+            });
+        }
+       
+    });
 });
+
+
 
 
 const displayMemberHtml = (elementID,data) => {
@@ -84,24 +112,29 @@ const displayMemberHtml = (elementID,data) => {
         let displayData = "";
         for(var i = 0; i < data.length; i++){
             displayData += `
-                <div class="user-profile-box" style="cursor: pointer;" onclick="window.location='/dashboard/viewmember?id=${data[i].cardID}';">
-                        <table>
-                            <tbody class="tableBody">
-                                        <tr>
-                                           <td style="padding: 80px;">Image</td> 
-                                        </tr>
-                                        <tr>
-                                            <td>${data[i].lastName}, ${data[i].firstName}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>${data[i].cardID}</td>
-                                        </tr>
-                                        
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="w-full h-72" style="cursor: pointer;" onclick="window.location='/dashboard/viewmember?id=<%=users[i].cardID%>';">
+                    <table class="w-full h-full">
+                        <tbody class="w-full">
+                            
+                                
+                                    <tr class="w-full bg-red-400">
+                                    <td class="p-20">Image</td> 
+                                    </tr>
+                                    <tr class="w-full bg-green-300">
+                                        <td>${data[i].lastName}, ${data[i].firstName}</td>
+                                    </tr>
+                                    <tr class="w-full bg-green-300">
+                                        <td>${data[i].cardID}</td>
+                                    </tr>
+                                    
+                                
+                        </tbody>
+                    </table>
+                </div>
             `
             $(elementID).html(displayData);
+            
+            
         }
     }
    

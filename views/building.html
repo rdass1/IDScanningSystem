@@ -5,15 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="/css/dist/tailwind.css" rel="stylesheet">
-    <title>Facilities</title>
+    <link href="../assets/css/dist/tailwind.css" rel="stylesheet">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    
+    
+    <title>Document</title>
 </head>
-<body>
+<body class="">
     <div class="xl:hidden h-fit w-screen bg-gray-700  translate-y-0 fixed top-0 right-0 left-0 z-50" >
         <!--Logo & Title-->
         <div class="w-full bg-gray-900 xl:hidden flex justify-between p-6 items-center ">
             <div class="flex justify-between items-center space-x-3">
-            <img src="/img/nav/logo.svg" alt="logo" width="40" />
+            <img src="../assets/img/nav/logo.svg" alt="logo" width="40" />
                 <p class="text-2xl leading-6 text-white">Above and Beyond</p>    
             </div>
             <div  aria-label="toggler" class="flex justify-center items-center">
@@ -32,7 +35,7 @@
             <!--Main Nav-->
             <div id="main-nav-body"  class=" xl:rounded-r transform  translate-x-0  ease-in-out transition duration-500 flex justify-start items-start h-80 bg-gray-900 flex-col xl:w-full xl:h-screen">
                 <div class="hidden xl:flex justify-start p-6 items-center space-x-3">
-                   <img src="/img/nav/logo.svg" alt="logo" width="40">
+                   <img src="../assets/img/nav/logo.svg" alt="logo" width="40">
                         <p class="text-2xl leading-6 text-white">Above and Beyond</p>                
                 </div>
                 <div class="mt-6 flex flex-col justify-start items-center  pl-4 w-full border-gray-600 border-b space-y-5 xl:space-y-7 pb-5 h-full">
@@ -81,15 +84,15 @@
             <div class="flex justify-end w-full">
                 <div class="py-6 px-3 w-full hidden xl:block">
                     <button onclick="showNav(true)" aria-label="nav-toggle-open" id="nav-toggle-open" class="hidden focus:outline-none focus:ring-2" >
-                        <img width="34" src="/img/nav/menu-logo.svg" alt="close"/>
+                        <img width="34" src="../assets/img/nav/menu-logo.svg" alt="close"/>
                     </button>  
                     <button onclick="showNav(true)" aria-label="nav-toggle-close" id="nav-toggle-close" class="focus:outline-none focus:ring-2" >
-                        <img width="34" src="/img/nav/close-logo.svg" alt="close"/>
+                        <img width="34" src="../assets/img/nav/close-logo.svg" alt="close"/>
                     </button>  
                 </div>
                 <div class="py-0 xl:py-6 px-4">
                     <a href="">
-                        <img width="40" alt="add" src="/img/buildings/square-plus-solid.svg" style="filter: invert(62%) sepia(84%) saturate(2926%) hue-rotate(78deg) brightness(107%) contrast(109%);
+                        <img width="40" alt="add" src="../assets/img/buildings/square-plus-solid.svg" style="filter: invert(62%) sepia(84%) saturate(2926%) hue-rotate(78deg) brightness(107%) contrast(109%);
                         ">
                     </a>
                 </div>
@@ -100,17 +103,10 @@
                 
                 <!-- <a href="/dashboard">Dashboard</a>
                 <a href="/buildings/add_building">Add Building</a> -->
-                <%for(var i = 0; i < buildings.length; i++){%>
                 <div class="w-full bg-gray-700 rounded shadow-lg " style="background-color: #eeeeee;">
-                    <div class="w-full text-center"><%=buildings[i].name%></div>
-                    <div class="w-full text-center"><%=buildings[i].company%></div>
-                    <div class="w-full text-center">
-                        <%if(buildings[i].address.aptSuite != ""){%>
-                        <%=buildings[i].address.street+', '+buildings[i].address.aptSuite + ', '+ buildings[i].address.city+ ', '+ buildings[i].address.state+ ', '+ buildings[i].address.zipCode %>
-                        <%}else{%>
-                        <%=buildings[i].address.street+ ', '+ buildings[i].address.city+ ', '+ buildings[i].address.state+ ', '+ buildings[i].address.zipCode%>
-                        <%}%>
-                    </div>
+                    <div class="w-full text-center">Building Name</div>
+                    <div class="w-full text-center">Company name</div>
+                    <div class="w-full text-center">Street, Apt/Suite, City, State, ZipCode</div>
                     <div class="flex justify-center w-full">
                       <table class="w-11/12">
                         <thead class="flex bg-gray-800 text-white rounded-t-lg w-full" >
@@ -120,7 +116,7 @@
                             <th class="p-2 w-2/4">Floor</th>
                             <th  class="p-2 w-1/6">
                                 <a href="">
-                                    <img width="20" alt="add" src="/img/buildings/square-plus-solid.svg" style="filter: invert(62%) sepia(84%) saturate(2926%) hue-rotate(78deg) brightness(107%) contrast(109%);
+                                    <img width="20" alt="add" src="../assets/img/buildings/square-plus-solid.svg" style="filter: invert(62%) sepia(84%) saturate(2926%) hue-rotate(78deg) brightness(107%) contrast(109%);
                                     ">
                                 </a>
                             </th>
@@ -136,7 +132,7 @@
                             <td class=" p-2
                              w-2/4">N/A</td>
                              <td class="p-3
-                             w-1/6"><a href=""><img width="16" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                             w-1/6"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
                           </tr>
                           <tr class="flex w-full odd:bg-white even:bg-neutral-200">
                             <td class=" p-2
@@ -146,7 +142,7 @@
                             <td class=" p-2
                              w-2/4">0</td>
                              <td class="p-3
-                             w-1/6"><a href=""><img width="16" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                             w-1/6"><a href=""><img width="16" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
                           </tr>
                         </tbody>
                       </table>
@@ -155,10 +151,9 @@
                     
                     </div>
                     <div class="flex justify-end">
-                        <a href="" class="p-3"><img width="20" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a>
+                        <a href="" class="p-3"><img width="20" src="../assets/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a>
                     </div>
                 </div>
-                <%}%>
                 <div>
                 </div>
                   
@@ -170,7 +165,6 @@
         
     </div>
     
-    <script src="/js/navbar.js"></script>
-    <script src="/js/buildings.js"></script>
+    <script src="../assets/js/buildings.js"></script>
 </body>
 </html>
