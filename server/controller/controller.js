@@ -194,7 +194,7 @@ exports.createLocation = (req,res) => {
     })
     location.save(location)
     .then(data=>{
-        res.status(201).redirect('/locations');
+        res.status(201).redirect('/buildings');
     })
     .catch(err=>{
         res.status(500).send({message:err.message || "Error occurred while trying save data"});

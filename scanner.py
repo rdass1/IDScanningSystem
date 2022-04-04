@@ -4,6 +4,9 @@ import serial
 import time
 from serial.tools import list_ports
 from pymongo import MongoClient
+from datetime import datetime
+from pprint import pprint
+from bson.objectid import ObjectId
 
 
 scanner = {
@@ -36,8 +39,76 @@ while True:
     try:
         line = ser.readline().decode()
         if len(line) > 0 and line.startswith("AB",0,2) and line[2:].isdigit() and len(line[2:]) == 10:
-            me = db.find_one({"cardID":line},{"_id":0,"cardID":1})
-            me2 = db.update_one({"cardID":line},[{"$set":{"status.active":{"$not":"$status.active"}}}])
+            print(line)
+            
+            # user = db.aggregate([
+            #             {
+            #                 "$match": {
+            #                     "cardID": line,
+            #                 }
+            #             },
+            #             {
+            #                 "$lookup": {
+            #                     "from" : "facilityUsage",
+            #                     "localField" : "_id",
+            #                     "foreignField": "userObjID",
+            #                     "as": "logs",
+            #                 }
+            #             },{
+            #                 "$addFields": {
+            #                     "testing" : {
+            #                         "$arrayElemAt": [
+            #                                             {
+            #                                                 "$filter": {
+            #                                                     "input": "$logs.logs",
+            #                                                     "as": "log",
+            #                                                     "cond": {
+            #                                                         # "$eq": [ "$$log._id", ObjectId('624a4e46df77d99f892d7f15')]
+            #                                                         "$match": {
+            #                                                                 "$$log": {
+            #                                                                 "$elemMatch": {
+            #                                                                     "locationObjID": ObjectId('624149564def087a29e442cc'),
+                                                                                
+            #                                                                 }
+            #                                                                 }
+            #                                                             }
+            #                                                     }
+            #                                                 }
+            #                                             }, 0
+            #                                         ]
+            #                     }
+            #                 }
+            #             },
+            #             {"$unwind": { "path": "$logs", "preserveNullAndEmptyArrays": True }},
+            #             {"$project": {"cardID": 1, "logs" : "$testing"}}, 
+            #                     #"logs": {"$slice" : [{"$reverseArray": "$testing"},0,500]}
+            #             ])
+            # logs = list(user)[0]["logs"]
+            # pprint(logs)
+            
+            me2 = db.update_one({"cardID":line},[{"$set":{"status.active":{"$not":"$status.active",}}},{"$set" : {"status.updatedAt":datetime.now()}}]);
+            
     except Exception as e:
         print(e)
         break
+    
+
+    
+    # 
+    #                 "$lookup" : {
+    #                     "from" : "facilityUsage",
+    #                     "localField": "_id",
+    #                     "foreignField": "userObjID",
+    #                     "as" : "logs"
+    #                 }
+    #             },
+    #             {
+    #                 "$sort" : {
+    #                     "$logs.date" : "-1"
+    #                 }
+    #             },
+    #             {
+    #                 "$cond" : {
+    #                     "if" : {"$eq":["$logs"]}
+    #                 }
+    #             }
