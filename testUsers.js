@@ -98,75 +98,77 @@ var test = [classObjID= {
 console.log(test[0]);
 console.log(new Date('11:30 am'));
 
-const test = db.buildings.aggregate([
-    {
+// const test42 = db.buildings.aggregate([
+//     {
         
-        $lookup:{
-            from: "locations",
-            localField: "_id",
-            foreignField: "buildingObjID",
-            as: "locations"
-        }
-    },
-    {
-        $project: {
-            __v: 0,
-            "locations.buildingObjID": 0,
+//         $lookup:{
+//             from: "locations",
+//             localField: "_id",
+//             foreignField: "buildingObjID",
+//             as: "locations"
+//         }
+//     },
+//     {
+//         $project: {
+//             __v: 0,
+//             "locations.buildingObjID": 0,
 
-        }
-    }
-]).pretty();
+//         }
+//     }
+// ]).pretty();
 
-const test2 = db.classes.aggregate([
-    {
-        $lookup:{
-            from: "locations",
-            localField: "locationObjID",
-            foreignField: "_id",
-            as: "locations"
-        }
-    },
-    {
-        $lookup:{
-            from: "buildings",
-            localField: "buildingObjID",
-            foreignField: "_id",
-            as: "buildings"
-        }
-    },
-    {
-        $project:{
-            __v : 0,
-            "locations.__v":0,
-            "buildings.__v":0
-        }
-    }
-]).pretty();
+// const test2 = db.classes.aggregate([
+//     {
+//         $lookup:{
+//             from: "locations",
+//             localField: "locationObjID",
+//             foreignField: "_id",
+//             as: "locations"
+//         }
+//     },
+//     {
+//         $lookup:{
+//             from: "buildings",
+//             localField: "buildingObjID",
+//             foreignField: "_id",
+//             as: "buildings"
+//         }
+//     },
+//     {
+//         $project:{
+//             __v : 0,
+//             "locations.__v":0,
+//             "buildings.__v":0
+//         }
+//     }
+// ]).pretty();
 
-const test3 = db.classes.aggregate([
-    {
-        $lookup:{
-            from: "locations",
-            localField: "locationObjID",
-            foreignField: "_id",
-            as: "locations"
-        }
-    },
-    {
-        $lookup:{
-            from: "buildings",
-            localField: "buildingObjID",
-            foreignField: "_id",
-            as: "buildings"
-        }
-    },
-    {
-        $project:{
-            __v : 0,
-            "locations.__v":0,
-            "buildings.__v":0
-        }
-    }
-]).pretty()
+// const test3 = db.classes.aggregate([
+//     {
+//         $lookup:{
+//             from: "locations",
+//             localField: "locationObjID",
+//             foreignField: "_id",
+//             as: "locations"
+//         }
+//     },
+//     {
+//         $lookup:{
+//             from: "buildings",
+//             localField: "buildingObjID",
+//             foreignField: "_id",
+//             as: "buildings"
+//         }
+//     },
+//     {
+//         $project:{
+//             __v : 0,
+//             "locations.__v":0,
+//             "buildings.__v":0
+//         }
+//     }
+// ]).pretty();
+
+// const test4 = db.memberInfo.update();
 
 

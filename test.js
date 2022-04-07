@@ -62,15 +62,34 @@ function test(){
         roomNumber: "36",
         floorNumber: "2"
     });
-    user.save(user)
-    .then(data =>{
-        console.log('saved sucessfully');
-        console.log(data);
-    })
-    .catch(err=>{
-        console.log("There was an error");
-        console.log(err);
+
+    const facilityUsage = new db.facilityUsageDB({
+        userObjID : "624004e77e3b5f7849f7f36c",
+        locationObjID: "624149cc8804f09323a10238",
+        buildingObjID: "624148ef0da4f2e606e015f8",
+        timeIn: Date.now()
     });
+    // facilityUsage.save(facilityUsage)
+    // .then(data =>{
+    //     console.log('saved sucessfully');
+    //     console.log(data);
+    // })
+    // .catch(err=>{
+    //     console.log("There was an error");
+    //     console.log(err);
+    // });
+
+    // db.facilityUsageDB.updateOne({"userObjID" : "624004e77e3b5f7849f7f36c"},{
+    //     $push: {
+    //         logs: {
+                
+    //         }
+    //     }
+    // }
+    // )
+    // .then(data =>{
+    //     console.log(data);
+    // })
     
 }
 

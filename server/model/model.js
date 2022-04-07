@@ -80,14 +80,15 @@ const userSchema = new mongoose.Schema({
 },{ collection : 'memberInfo'});
 
 const logsObj = {
-    date: Date,
+    date: {
+        type: Date,
+        default: Date.now
+    },
     locationObjID: {
         type:mongoose.ObjectId,
-        default: "No-location"
     },
     buildingObjID: {
         type:mongoose.ObjectId,
-        default: "No-Building"
     },
     timeIn: Date,
     timeOut: Date,
@@ -97,7 +98,19 @@ const logsObj = {
 
 const facilityUsageSchema = new mongoose.Schema({
     userObjID: mongoose.ObjectId,
-    logs: [logsObj]
+    date: {
+        type: Date,
+        default: Date.now
+    },
+    locationObjID: {
+        type:mongoose.ObjectId,
+    },
+    buildingObjID: {
+        type:mongoose.ObjectId,
+    },
+    timeIn: Date,
+    timeOut: Date,
+    hours: Number,
 },{ collection : 'facilityUsage' });
 
 const locationsSchema = new mongoose.Schema({
