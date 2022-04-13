@@ -92,7 +92,7 @@ route.get('/dashboard/viewmember',services.viewmember);
 
 
 //Building Routes
-route.get('/buildings',services.building);
+route.get('/facilities',services.building);
 route.get('/buildings/add_building',services.createBuilding);
 
 //Location Routes

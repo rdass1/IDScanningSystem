@@ -27,6 +27,9 @@
         </div>
         <!--/Logo & Title-->
     </div>
+
+    
+
     <div id="nav-wrapper"class="">
         <nav id="main-nav"class="w-full fixed top-20 md:top-16 xl:top-0 z-40 ease-in-out transition transform  translate-x-0 xl:w-80 -translate-y-full xl:translate-y-0" >
             <!--Main Nav-->
@@ -88,7 +91,7 @@
                     </button>  
                 </div>
                 <div class="py-0 xl:py-6 px-4">
-                    <a href="/buildings/add_building">
+                    <a href="">
                         <img width="40" alt="add" src="/img/buildings/square-plus-solid.svg" style="filter: invert(62%) sepia(84%) saturate(2926%) hue-rotate(78deg) brightness(107%) contrast(109%);
                         ">
                     </a>
@@ -128,26 +131,18 @@
                         </thead>
                         <!-- Remove the nasty inline CSS fixed height on production and replace it with a CSS class — this is just for demonstration purposes! -->
                         <tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll h-20 text-center mb-3 xl:w-full md:w-full" >
+                            <%for(var j = 0; j < buildings[i].locations.length;j++){%>
                           <tr class="flex w-full odd:bg-white even:bg-neutral-200">
                             <td class=" p-2
-                             w-2/4 overflow-x-hidden">Front-Desk</td>
+                             w-2/4 overflow-x-hidden"><%=buildings[i].locations[j].name%></td>
                             <td class=" p-2
-                             w-2/4">N/A</td>
+                             w-2/4"><%=buildings[i].locations[j].roomNumber%></td>
                             <td class=" p-2
-                             w-2/4">N/A</td>
+                             w-2/4"><%=buildings[i].locations[j].floorNumber%></td>
                              <td class="p-3
-                             w-1/6"><a href=""><img width="16" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
+                             w-1/6"><a class= "locationDeleteBtnJQ" data-id="<%=buildings[i].locations[j]._id%>" href=""><img width="16" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
                           </tr>
-                          <tr class="flex w-full odd:bg-white even:bg-neutral-200">
-                            <td class=" p-2
-                             w-2/4 overflow-x-hidden">Rec Room</td>
-                            <td class=" p-2
-                             w-2/4">12</td>
-                            <td class=" p-2
-                             w-2/4">0</td>
-                             <td class="p-3
-                             w-1/6"><a href=""><img width="16" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a></td>
-                          </tr>
+                          <%}%>
                         </tbody>
                       </table>
                     
@@ -155,7 +150,7 @@
                     
                     </div>
                     <div class="flex justify-end">
-                        <a href="" class="p-3"><img width="20" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a>
+                        <a data-id="<%=buildings[i]._id%>" href="" class="p-3 buildingDeleteBtnJQ"><img width="20" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a>
                     </div>
                 </div>
                 <%}%>
@@ -169,8 +164,11 @@
         </div>
         
     </div>
+
+
+   
     
     <script src="/js/navbar.js"></script>
-    <script src="/js/buildings.js"></script>
+    <script src="/js/facilities.js"></script>
 </body>
 </html>

@@ -68,7 +68,7 @@ exports.createBuilding = (req,res) => {
 exports.building = (req,res) => {
     axios.get(process.env.URL+process.env.PORT+'/api/building')
     .then(function(response){
-        res.render('buildings',{buildings:response.data});
+        res.render('facilities',{buildings:response.data});
     })
     .catch(err=>{
         res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
