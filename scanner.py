@@ -12,9 +12,15 @@ from bson.objectid import ObjectId
 scanner = {
     "location": "front-desk",
     "building": "mainBuilding",
-    "VID": "0525",
-    "PID": "A4A7"
+    "VID": "067B",
+    "PID": "2303"
 }
+
+#Hand held scanner
+#VID: 0525 PID: A4A7
+
+#Desktop scanner
+#VID: 067B PID: 2303
 
 
 
