@@ -4,7 +4,8 @@ let close = document.getElementById("nav-toggle-close")
 let main = document.getElementById("main");
 let mainGrid = document.getElementById("main-grid");
 let wrapper = document.getElementById("nav-wrapper");
-
+let modal = document.getElementById("add-modal-background");
+let modal2 = document.getElementById("add-modal-background-location");
 
 const showNav = (flag) => {
     if (flag) {
@@ -14,6 +15,8 @@ const showNav = (flag) => {
         close.classList.toggle("hidden");
         main.classList.toggle("-translate-x-80");
         main.classList.toggle("w-full");
+        modal.classList.toggle("xl:ml-80")
+        modal2.classList.toggle("xl:ml-80")
         
     }
 }

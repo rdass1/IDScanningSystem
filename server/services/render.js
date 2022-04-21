@@ -96,7 +96,7 @@ exports.location = (req,res) => {
     });
 }
 
-exports.class = (req,res) => {
+exports.classes = (req,res) => {
     axios.get(process.env.URL+process.env.PORT+'/api/classes')
     .then(function(response){
         res.render('classes',{classes:response.data});

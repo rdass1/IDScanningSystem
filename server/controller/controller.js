@@ -87,7 +87,7 @@ exports.createBuilding = (req,res)=>{
     building.save(building)
     .then(data=>{
         console.log(data);
-        res.status(201).redirect('/buildings');
+        res.status(201).redirect('/facilities');
     })
     .catch(err=>{
         res.status(500).send({message:err.message || "Error occurred while trying save data"});
@@ -129,7 +129,12 @@ exports.deleteBuilding = (req,res) => {
     if(req.params.id){
         models.buildingsDB.deleteOne({_id:req.params.id})
         .then(data=>{
-            res.sendStatus(200);
+            models.locationsDB.deleteMany({buildingObjID:req.params.id}).then(data=>{
+                res.status(200).redirect('/facilities');
+            })
+            .catch(err=>{
+                res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
+            })
         })
         .catch(err=>{
             res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
@@ -194,7 +199,8 @@ exports.createLocation = (req,res) => {
     })
     location.save(location)
     .then(data=>{
-        res.status(201).redirect('/buildings');
+        console.log(data);
+        res.status(201).redirect('/facilities');
     })
     .catch(err=>{
         res.status(500).send({message:err.message || "Error occurred while trying save data"});
@@ -227,30 +233,69 @@ exports.findClasses = (req,res)=>{
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
         });
     }else{
-        models.classesDB.find()
+        // models.classesDB.find()
+        // .then(data => {
+        //     res.send(data);
+        // })
+        // .catch(err=>{
+        //     res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        // })
+
+        models.classesDB.aggregate([
+            {
+                $lookup:{
+                    from: "locations",
+                    localField: "locationObjID",
+                    foreignField: "_id",
+                    as: "location"
+                }
+                
+            },
+            {
+                $lookup:{
+                    from: "buildings",
+                    localField: "buildingObjID",
+                    foreignField: "_id",
+                    as: "building"
+                }
+                
+            }
+        ])
         .then(data => {
             res.send(data);
         })
         .catch(err=>{
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
-        })
+        });
     }
     
 }
 
 exports.createClass = (req,res) => {
-    const location = models.locationsDB({
+    let tConvert = (time) => {
+        // Check correct time format and split into components
+        time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+        if (time.length > 1) { // If time format correct
+          time = time.slice (1);  // Remove full string match value
+          time[5] = +time[0] < 12 ? 'am' : 'pm'; // Set AM/PM
+          time[0] = +time[0] % 12 || 12; // Adjust hours
+        }
+        return time.join (''); // return adjusted time or original string
+    }
+    let newStartTime = tConvert(req.body.startTime);
+    let newEndTime = tConvert(req.body.endTime);
+    const classes = models.classesDB({
         name: req.body.name,
         teacher: req.body.teacher,
         subject: req.body.subject,
         locationObjID: req.body.location,
         buildingObjID: req.body.building,
-        startTime: req.body.startTime,
-        endTime: req.body.endTime
-    })
-    location.save(location)
+        startTime: newStartTime,
+        endTime: newEndTime
+    });
+    classes.save(classes)
     .then(data=>{
-        res.status(201).redirect('/locations');
+        res.status(201).redirect('/classes');
     })
     .catch(err=>{
         res.status(500).send({message:err.message || "Error occurred while trying save data"});
