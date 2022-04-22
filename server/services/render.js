@@ -119,6 +119,17 @@ exports.createClass = (req,res) => {
 }
 
 
+exports.logs = (req,res) => {
+    axios.get(process.env.URL+process.env.PORT+'/api/logs')
+    .then(function(response){
+        res.render('logs',{logs:response.data});
+    })
+    .catch(err=>{
+        res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+    });
+}
+
+
 
 exports.index = (req, res) =>{
     res.render('index');

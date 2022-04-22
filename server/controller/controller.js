@@ -64,11 +64,6 @@ exports.activeMember = (req,res) => {
 }
 
 
-//Classes Controller
-exports.createClass = (req, res) => {
-
-}
-
 //Buildings Controller
 exports.createBuilding = (req,res)=>{
     const building = models.buildingsDB({
@@ -315,4 +310,32 @@ exports.deleteClass = (req,res) => {
     }else{
         res.sendStatus(400);
     }
+}
+
+exports.findLogs = (req,res) => {
+    if(req.query.name){
+        models.facilityUsageDB.find({name:req.query.name},null,{
+            sort: {
+                "timeIn": -1
+            },
+        })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }else{
+        models.facilityUsageDB.find()
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        })
+    }
+}
+
+exports.deleteLogs = (req,res) => {
+    
 }

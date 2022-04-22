@@ -4,16 +4,18 @@ import serial
 import time
 from serial.tools import list_ports
 from pymongo import MongoClient
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from pprint import pprint
 from bson.objectid import ObjectId
 
 
 scanner = {
     "location": "front-desk",
-    "building": "mainBuilding",
-    "VID": "067B",
-    "PID": "2303"
+    "locationObjID" : "624149564def087a29e442ec",
+    "building": "Above and Beyond Main-Building",
+    "buildingObjID" : "624148ef0da4f2e606e015f8",
+    "VID": "0525",
+    "PID": "A4A7"
 }
 
 #Hand held scanner
@@ -25,7 +27,7 @@ scanner = {
 
 
 client = MongoClient("mongodb+srv://access01:access01@cluster0.9mxcz.mongodb.net/id_scanning_database?retryWrites=true&w=majority")
-db=client["id_scanning_database"]["memberInfo"]
+db=client["id_scanning_database"]
 
 
 device_list = list_ports.comports()
@@ -44,55 +46,73 @@ while True:
     
     try:
         line = ser.readline().decode()
+        line = line[:12]
         if len(line) > 0 and line.startswith("AB",0,2) and line[2:].isdigit() and len(line[2:]) == 10:
             print(line)
             
-            # user = db.aggregate([
-            #             {
-            #                 "$match": {
-            #                     "cardID": line,
-            #                 }
-            #             },
-            #             {
-            #                 "$lookup": {
-            #                     "from" : "facilityUsage",
-            #                     "localField" : "_id",
-            #                     "foreignField": "userObjID",
-            #                     "as": "logs",
-            #                 }
-            #             },{
-            #                 "$addFields": {
-            #                     "testing" : {
-            #                         "$arrayElemAt": [
-            #                                             {
-            #                                                 "$filter": {
-            #                                                     "input": "$logs.logs",
-            #                                                     "as": "log",
-            #                                                     "cond": {
-            #                                                         # "$eq": [ "$$log._id", ObjectId('624a4e46df77d99f892d7f15')]
-            #                                                         "$match": {
-            #                                                                 "$$log": {
-            #                                                                 "$elemMatch": {
-            #                                                                     "locationObjID": ObjectId('624149564def087a29e442cc'),
-                                                                                
-            #                                                                 }
-            #                                                                 }
-            #                                                             }
-            #                                                     }
-            #                                                 }
-            #                                             }, 0
-            #                                         ]
-            #                     }
-            #                 }
-            #             },
-            #             {"$unwind": { "path": "$logs", "preserveNullAndEmptyArrays": True }},
-            #             {"$project": {"cardID": 1, "logs" : "$testing"}}, 
-            #                     #"logs": {"$slice" : [{"$reverseArray": "$testing"},0,500]}
-            #             ])
-            # logs = list(user)[0]["logs"]
-            # pprint(logs)
+            user = db["memberInfo"].aggregate([
+                        {
+                            "$match": {
+                                "cardID": line,
+                            }
+                        }, 
+                        {
+                            "$lookup": {
+                                "from" : "facilityUsage",
+                                "localField" : "_id",
+                                "foreignField": "userObjID",
+                                "as": "logs",
+                                "pipeline": [
+                                    {
+                                        "$match": {
+                                            "buildingObjID": ObjectId(scanner["buildingObjID"]),
+                                            "locationObjID": ObjectId(scanner["locationObjID"])
+                                        }    
+                                    },
+                                    {
+                                        '$sort': {  'timeIn': -1 }
+                                    },
+                                    {"$limit" : 10}
+                                ]
+                            }
+                        }
+                        ])
+            userObj= list(user)[0]
+            # userObj["logs"] = userObj["logs"][::-1]
+            #pprint(userObj["logs"])
             
-            me2 = db.update_one({"cardID":line},[{"$set":{"status.active":{"$not":"$status.active",}}},{"$set" : {"status.updatedAt":datetime.now()}}]);
+           
+            updateUser = db["memberInfo"].update_one({"cardID":line},[{"$set":{"status.active":{"$not":"$status.active",}}},{"$set" : {"status.updatedAt":datetime.now()}}]);
+            
+            if(len(userObj["logs"]) > 0 and userObj["logs"][0]["timeOut"] == ""):
+                
+                timeIn = userObj["logs"][0]["timeIn"]
+                timeDelta = datetime.now() - timeIn
+                print(timeDelta)
+                updateLog = db["facilityUsage"].update_one({"_id" : userObj["logs"][0]["_id"]},[
+                    {
+                        "$set": {
+                            "timeOut" : datetime.now(),
+                            "timeTotal" : str(datetime.now() - userObj["logs"][0]["timeIn"])
+                        }
+                    }
+                    
+                ])
+            else: 
+                log = {
+                    "userObjID" : userObj["_id"],
+                    "userCardID" : userObj["cardID"],
+                    "userName" : userObj["lastName"]+", "+userObj["firstName"],
+                    "date" : str(date.today()),
+                    "locationObjID" : ObjectId(scanner["locationObjID"]),
+                    "locationBuilding" : scanner["location"]+", "+scanner["building"],
+                    "buildingObjID" : ObjectId(scanner["buildingObjID"]),
+                    "timeIn" : datetime.now(),
+                    "timeOut" : "",
+                    "timeTotal" : ""
+                    
+                }
+                createLog = db["facilityUsage"].insert_one(log)
             
     except Exception as e:
         print(e)
