@@ -99,8 +99,11 @@
 
             </div>
             
-            <main id="main-grid" class="m-3 ease-in-out transition w-0">
-                <div class="flex ">
+            <main id="main-grid" class="m-3 ease-in-out transition">
+                <script>
+                    const user = <%
+                </script>
+                <div class="flex">
                     <div class="flex flex-col items-center ">
                         <div class="mx-4 px-16 py-24 bg-rose-600">Image</div>
                         <div class="p-2">
@@ -162,7 +165,7 @@
                         <table>
                             <tr>
                                 <td>Email:</td>
-                                <td>rdass1@hawk.iit.edu</td>
+                                <td>example@example.com</td>
                             </tr>
                             <tr>
                                 <td>Phone:</td>
@@ -170,33 +173,29 @@
                             </tr>
                             <tr>
                                 <td valign="top" class="">Address:</td>
-                                <td class="pt-8">
-                                    <table>
-                                        <tr>
-                                            <td>Street:</td>
-                                            <td class="pl-4">3140 S. Michigan Ave</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Apt/Suite:</td>
-                                            <td class="pl-4">304</td>
-                                        </tr>
-                                        <tr>
-                                            <td>City:</td>
-                                            <td class="pl-4">Chicago</td>
-                                        </tr>
-                                        <tr>
-                                            <td>State:</td>
-                                            <td class="pl-4">IL</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ZipCode:</td>
-                                            <td class="pl-4">60616</td>
-                                        </tr>
-                                    </table>
+                                <td class="">
+                                    Street, Apt/Suite, City, State, ZipCode
                                 </td>
                             </tr>
                         </table>
                     </div>
+                </div>
+                <div class="flex">
+                    <button id="logsBtn" class="m-0 rounded-t-md focus:text-gray-900 focus:drop-shadow-md text-gray-400 w-24 h-8" style="background-color: #F9FAFB;">Logs</button>
+                    <button id="classesBtn" class="m-0 rounded-t-md focus:text-gray-900 focus:drop-shadow-md text-gray-400 w-24 h-8" style="background-color: #F9FAFB;">Classes</button>
+                    <button id="notesBtn" class="m-0 rounded-t-md focus:text-gray-900 focus:drop-shadow-md text-gray-400 w-24 h-8" style="background-color: #F9FAFB;">Notes</button>
+                    
+                </div>
+                <div id="displayUserTable" class="flex">
+                    <div class=" flex flex-col-reverse w-36">
+                        <div class="bg-gray-600">Date by: Dan H.</div>
+                        <div>Date by: Anna</div>
+                    </div>
+                    <div class="bg-green-400 w-full">
+                        message
+                    </div>
+                    
+                    <text></text>
                 </div>
 
             
@@ -204,6 +203,7 @@
         </div>
         
     </div>
-    <script src="../assets/js/navbar.js"></script>
+    <script src="/js/navbar.js"></script>
+    <script src="/js/viewmember.js"></script>
 </body>
 </html>
