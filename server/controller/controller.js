@@ -32,12 +32,41 @@ exports.find = (req,res) =>{
             {
                 $lookup:{
                     from: "memberClasses",
-                    localField: "_id",
-                    foreignField: "userObjID",
+                    let: {userid : "$_id"},
+                    pipeline : [
+                        {
+                            $match : {
+                                $expr: {
+                                    $eq:["$userObjID","$$userid"]
+                                }
+                            }
+                        },
+                        {
+                            $lookup : {
+                                from: "classes",
+                                let: {classesid: "$classObjID"},
+                                pipeline:[
+                                    {
+                                        $match : {
+                                            $expr: {
+                                                $eq:["$_id","$$classesid"]
+                                            }
+                                        }
+                                        
+                                    }
+                                ],
+                                as: "classInfo"
+                            }
+                        },
+                        {
+                            $unwind : "$classInfo"
+                        }
+                    ],
                     as: "classesList",
                     
                 }
             }
+            
         ])
         .then(data => {
             res.send(data);
@@ -251,40 +280,40 @@ exports.findClasses = (req,res)=>{
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
         });
     }else{
-        // models.classesDB.find()
-        // .then(data => {
-        //     res.send(data);
-        // })
-        // .catch(err=>{
-        //     res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
-        // })
-
-        models.classesDB.aggregate([
-            {
-                $lookup:{
-                    from: "locations",
-                    localField: "locationObjID",
-                    foreignField: "_id",
-                    as: "location"
-                }
-                
-            },
-            {
-                $lookup:{
-                    from: "buildings",
-                    localField: "buildingObjID",
-                    foreignField: "_id",
-                    as: "building"
-                }
-                
-            }
-        ])
+        models.classesDB.find()
         .then(data => {
             res.send(data);
         })
         .catch(err=>{
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
-        });
+        })
+
+        // models.classesDB.aggregate([
+        //     {
+        //         $lookup:{
+        //             from: "locations",
+        //             localField: "locationObjID",
+        //             foreignField: "_id",
+        //             as: "location"
+        //         }
+                
+        //     },
+        //     {
+        //         $lookup:{
+        //             from: "buildings",
+        //             localField: "buildingObjID",
+        //             foreignField: "_id",
+        //             as: "building"
+        //         }
+                
+        //     }
+        // ])
+        // .then(data => {
+        //     res.send(data);
+        // })
+        // .catch(err=>{
+        //     res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        // });
     }
     
 }
@@ -360,5 +389,5 @@ exports.findLogs = (req,res) => {
 }
 
 exports.deleteLogs = (req,res) => {
-    
+
 }

@@ -135,8 +135,8 @@ const classesSchema = new mongoose.Schema({
     name: String,
     teacher: String,
     subject: String,
-    locationObjID: mongoose.ObjectId,
-    buildingObjID: mongoose.ObjectId,
+    locationObjID: String,
+    buildingObjID: String,
     startTime: String,
     endTime: String
 },{ collection : 'classes'});

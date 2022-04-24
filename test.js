@@ -72,7 +72,7 @@ function test(){
 
     const userClasses = new db.userClassesDB({
         userObjID: "624004e77e3b5f7849f7f36c",
-        classObjID: "624147bacc4e75dd7075065a"
+        classObjID: "6265ce45a9cc1c803bf76cc2"
     }); 
     userClasses.save(userClasses)
     .then(data =>{

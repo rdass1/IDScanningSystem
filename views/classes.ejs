@@ -121,7 +121,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create Building</button>
+                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create Class</button>
                     
                 </form>
             </div>
@@ -155,9 +155,7 @@
                         <div class="w-full text-center"><%=classes[i].name%></div>
                         <div class="w-full text-center"><%=classes[i].teacher%></div>
                         <div class="w-full text-center"><%=classes[i].subject%></div>
-                        <%if(classes[i].location.length != 0 && classes[i].building.length){%>
-                            <div class="w-full text-center"><%=classes[i].location[0].name%>, <%=classes[i].building[0].name%></div>
-                        <%}%>
+                        <div class="w-full text-center"><%=classes[i].locationObjID%>, <%=classes[i].buildingObjID%></div>
                         <div class="w-full text-center"><%=classes[i].startTime%>-<%=classes[i].endTime%></div>
                         <div class="flex justify-end">
                             <a data-id="<%=classes[i]._id%>" href="" class="p-3 classesDeleteBtnJQ"><img width="20" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a>

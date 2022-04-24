@@ -604,9 +604,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .min-w-full {
   min-width: 100%;
 }
-.min-w-full {
-  min-width: 100%;
-}
 .basis-1\/12 {
   flex-basis: 8.333333%;
 }
