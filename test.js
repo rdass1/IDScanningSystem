@@ -69,27 +69,20 @@ function test(){
         buildingObjID: "624148ef0da4f2e606e015f8",
         timeIn: Date.now()
     });
-    // facilityUsage.save(facilityUsage)
-    // .then(data =>{
-    //     console.log('saved sucessfully');
-    //     console.log(data);
-    // })
-    // .catch(err=>{
-    //     console.log("There was an error");
-    //     console.log(err);
-    // });
 
-    // db.facilityUsageDB.updateOne({"userObjID" : "624004e77e3b5f7849f7f36c"},{
-    //     $push: {
-    //         logs: {
-                
-    //         }
-    //     }
-    // }
-    // )
-    // .then(data =>{
-    //     console.log(data);
-    // })
+    const userClasses = new db.userClassesDB({
+        userObjID: "624004e77e3b5f7849f7f36c",
+        classObjID: "624147bacc4e75dd7075065a"
+    }); 
+    userClasses.save(userClasses)
+    .then(data =>{
+        console.log('saved sucessfully');
+        console.log(data);
+    })
+    .catch(err=>{
+        console.log("There was an error");
+        console.log(err);
+    });
     
 }
 

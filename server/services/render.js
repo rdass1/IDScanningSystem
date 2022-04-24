@@ -43,7 +43,7 @@ exports.viewmember = (req,res,next) => {
         axios.get(process.env.URL+process.env.PORT+'/api/members?id='+req.query.id)
         .then(function(response){
             if(!lodash.isEmpty(response.data)){
-                res.render('viewmember',{user:response.data});
+                res.render('viewmember',{user:response.data[0]});
             }else{
                 res.send("can't get user");
             }

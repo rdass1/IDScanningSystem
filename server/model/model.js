@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
     cardID: {
         type: String,
         index: true,
-        unique: true
+         unique: true
     },
     MRNum: String,
     role : String,
@@ -63,7 +63,7 @@ const userSchema = new mongoose.Schema({
     },
     email: String,
     phone: Number,
-    notes: [notesObj],
+    notes: String,
     classes: [userClassObjID],
     status: {
         active: Boolean,
@@ -141,6 +141,12 @@ const classesSchema = new mongoose.Schema({
     endTime: String
 },{ collection : 'classes'});
 
+const userClassesSchema = new mongoose.Schema({
+    userObjID: mongoose.ObjectId,
+    classObjID: mongoose.ObjectId
+
+},{collection: 'memberClasses'});
+
 
 var schema = new mongoose.Schema({
     cardID: String,
@@ -158,6 +164,7 @@ const facilityUsageDB = mongoose.model('facilityUsage',facilityUsageSchema);
 const locationsDB = mongoose.model('locations',locationsSchema);
 const buildingsDB = mongoose.model('buildings',buildingsSchema);
 const classesDB = mongoose.model('classes',classesSchema);
+const userClassesDB = mongoose.model('userClasses',userClassesSchema);
 // ,facilityUsageDB,locationsDB,buildingsDB,classesDB
 // exports.userDB2= userDB2;
 exports.userDB = userDB2;
@@ -165,7 +172,7 @@ exports.facilityUsageDB = facilityUsageDB;
 exports.locationsDB = locationsDB;
 exports.buildingsDB = buildingsDB;
 exports.classesDB = classesDB;
-
+exports.userClassesDB = userClassesDB;
 
 // $replaceRoot: { newRoot: { $mergeObjects: [ "$locations", "$$ROOT" ] } }
 

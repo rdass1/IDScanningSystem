@@ -15,12 +15,35 @@ exports.create = (req,res)=>{
 
 exports.find = (req,res) =>{
     if(req.query.id){
-        userDB.findOne({"cardID":req.query.id})
-        .then(user =>{
-            res.send(user);
+        models.userDB.aggregate([
+            {
+                $match:{
+                    cardID : req.query.id
+                }
+            },
+            {
+                $lookup:{
+                    from: "facilityUsage",
+                    localField: "_id",
+                    foreignField: "userObjID",
+                    as: "logs"
+                }
+            },
+            {
+                $lookup:{
+                    from: "memberClasses",
+                    localField: "_id",
+                    foreignField: "userObjID",
+                    as: "classesList",
+                    
+                }
+            }
+        ])
+        .then(data => {
+            res.send(data);
         })
-        .catch(err => {
-            res.status(500).send({message:err.message || "Error occurred while trying to get data"});
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
         });
     }else{
         userDB.find()
