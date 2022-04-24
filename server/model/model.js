@@ -99,8 +99,7 @@ const logsObj = {
 const facilityUsageSchema = new mongoose.Schema({
     userObjID: mongoose.ObjectId,
     date: {
-        type: Date,
-        default: Date.now
+        type: String,
     },
     locationObjID: {
         type:mongoose.ObjectId,
