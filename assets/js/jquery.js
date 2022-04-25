@@ -112,7 +112,7 @@ const displayMemberHtml = (elementID,data) => {
         let displayData = "";
         for(var i = 0; i < data.length; i++){
             displayData += `
-                <div class="w-full h-72" style="cursor: pointer;" onclick="window.location='/dashboard/viewmember?id=<%=users[i].cardID%>';">
+                <div class="w-full h-72" style="cursor: pointer;" onclick="window.location='/members/view?id=${data[i].cardID}';">
                     <table class="w-full h-full">
                         <tbody class="w-full">
                             

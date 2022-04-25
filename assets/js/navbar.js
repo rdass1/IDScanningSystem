@@ -26,7 +26,7 @@ let close2 = document.getElementById('nav-toggle-close2');
 
 const showNav2 = (flag) => {
     if(flag){
-        nav.classList.toggle("-translate-y-0");
+        nav.classList.toggle("translate-y-20");
         open2.classList.toggle("hidden");
         close2.classList.toggle("hidden");
     }

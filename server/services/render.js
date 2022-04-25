@@ -43,6 +43,8 @@ exports.viewmember = (req,res,next) => {
         axios.get(process.env.URL+process.env.PORT+'/api/members?id='+req.query.id)
         .then(function(response){
             if(!lodash.isEmpty(response.data)){
+                if(response.data[0].DOB != null)
+                    response.data[0].DOB = response.data[0].DOB.substring(0,10);
                 res.render('viewmember',{user:response.data[0]});
             }else{
                 res.send("can't get user");
@@ -133,4 +135,22 @@ exports.logs = (req,res) => {
 
 exports.index = (req, res) =>{
     res.render('index');
+}
+
+//Members
+exports.allMembers = (req,res) => {
+    axios.get(process.env.URL+process.env.PORT+'/api/members')
+    .then(function(response){
+        if(lodash.isEmpty(response.data)){
+            res.render('members',{users:response.data});
+        }else{
+            res.render('members',{users:response.data});
+        }
+        
+       
+        
+    })
+    .catch(err=>{
+        res.send(err);
+    });
 }

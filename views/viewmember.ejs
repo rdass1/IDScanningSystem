@@ -30,8 +30,9 @@
         </div>
         <!--/Logo & Title-->
     </div>
+    
     <div id="nav-wrapper"class="">
-        <nav id="main-nav"class="w-full fixed top-20 md:top-16 xl:top-0 z-40 ease-in-out transition transform  translate-x-0 xl:w-80 -translate-y-full xl:translate-y-0" >
+        <nav id="main-nav"class="w-full fixed xl:top-0 z-20 ease-in-out transition transform  translate-x-0 xl:w-80 -translate-y-full xl:translate-y-0" >
             <!--Main Nav-->
             <div id="main-nav-body"  class=" xl:rounded-r transform  translate-x-0  ease-in-out transition duration-500 flex justify-start items-start h-80 bg-gray-900 flex-col xl:w-full xl:h-screen">
                 <div class="hidden xl:flex justify-start p-6 items-center space-x-3">
@@ -39,23 +40,23 @@
                         <p class="text-2xl leading-6 text-white">Above and Beyond</p>                
                 </div>
                 <div class="mt-6 flex flex-col justify-start items-center  pl-4 w-full border-gray-600 border-b space-y-5 xl:space-y-7 pb-5 h-full">
-                    <button class="flex jusitfy-start items-center space-x-6 w-full  focus:outline-none  focus:text-red-400  text-white rounded ">
+                    <button class="flex jusitfy-start items-center space-x-6 w-full  focus:outline-none focus:text-indigo-400  text-white rounded " onclick="window.location='/dashboard';">
                         <img class="fill-stroke " src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sidebar2-svg4.svg" alt="dashboard" />
                         <p class="text-base leading-4 ">Dashboard</p>                    
                     </button>
-                    <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded ">
+                    <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white text-indigo-400 focus:text-indigo-400   rounded " onclick="window.location='/members';">
                         <img class="fill-stroke" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sidebar2-svg5.svg" alt="users" />    
                             <p class="text-base leading-4 ">Members</p>                    
                     </button>
-                    <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded ">
+                    <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded " onclick="window.location='/logs';">
                         <img class="fill-stroke" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sidebar2-svg5.svg" alt="users" />    
                             <p class="text-base leading-4 ">Logs</p>                    
                     </button>
-                    <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded ">
+                    <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded " onclick="window.location='/classes';">
                         <img class="fill-stroke" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sidebar2-svg5.svg" alt="users" />    
                             <p class="text-base leading-4 ">Classes</p>                    
                     </button>
-                    <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded ">
+                    <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded " onclick="window.location='/facilities';">
                         <img class="fill-stroke" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sidebar2-svg5.svg" alt="users" />    
                             <p class="text-base leading-4 ">Facilities</p>                    
                     </button>
@@ -80,28 +81,82 @@
             </div>
             <!--/Main Nav-->
         </nav>
-        <div id="add-modal-background" class="hidden bg-black bg-opacity-50 fixed inset-0 z-10 flex justify-center items-center xl:ml-80">
-            <div class="relative w-96 bg-white rounded-lg shadow dark:bg-gray-800" style="height:30rem;">
+        <div id="edit-modal-background" class="hidden bg-black bg-opacity-50 fixed inset-0 z-10 flex justify-center items-center xl:ml-80">
+            <div class="relative w-96 bg-white rounded-lg shadow dark:bg-gray-800" style="height:35rem; width:30rem;">
                 <div class="flex justify-end p-2">
-                    <button id="add-modal-close" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                    <button id="edit-modal-close" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
                     </button>
                 </div>
-                <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="/api/add_user_class" method="POST">
-                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">Add Class</h3>
-                    <div class="overflow-y-scroll m-0">
-                       
+                
+                <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="/api/members_edit/<%=user._id%>" method="POST">
+                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">Edit Member</h3>
+                    <div class="overflow-y-scroll m-0" style="height:24rem">
                         <div>
-                            <label for="classObjID" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Classes</label>
-                            <select id="list-all-classes" name="classObjID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
-                            </select>
-                            
+                            <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First Name</label>
+                            <input type="text" name="firstName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required value="<%=user.firstName%>">
                         </div>
-                        <input hidden name="id" value="<%=user._id%>">
-                        <input hidden name="cardID" value="<%=user.cardID%>">
+                        <div>
+                            <label for="middleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Middle Name</label>
+                            <input type="text" name="middleName"class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.middleName%>">
+                        </div>
+                        <div>
+                            <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Last Name</label>
+                            <input type="text" name="lastName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required value="<%=user.lastName%>">
+                        </div>
+                        <div>
+                            <label for="mrNum" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">MR#</label>
+                            <input type="text" name="mrNum" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.MRNum%>">
+                        </div>
+                        <div>
+                            <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Role</label>
+                            <input type="text" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required value="<%=user.role%>">
+                        </div>
+                        <div>
+                            <label for="dob" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date of Birth</label>
+                            <input type="date" name="dob" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
+                            value="<%=user.DOB%>">
+                        </div>
+                        <div>
+                            <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Gender</label>
+                            <input type="text" name="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.gender%>">
+                        </div>
+                        <div>
+                            <label for="pronoun" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Pronoun</label>
+                            <input type="text" name="pronoun" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.pronoun%>">
+                        </div>
+                        <div>
+                            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Phone Number</label>
+                            <input type="text" name="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.phone%>">
+                        </div>
+                        <div>
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
+                            <input type="text" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.email%>">
+                        </div>
+                        <div>
+                            <label for="street" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Address</label>
+                            <input type="text" name="street" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.address.street%>">
+                        </div>
+                        <div>
+                            <label for="aptSuite" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Apt/Suite</label>
+                            <input type="text" name="aptSuite" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.address.aptSuite%>">
+                        </div>
+                        <div>
+                            <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">City</label>
+                            <input type="text" name="city" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.address.city%>">
+                        </div>
+                        <div>
+                            <label for="state" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">State</label>
+                            <input name="state" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.address.state%>">
+                        </div>
+                        <div>
+                            <label for="zipCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">ZipCode</label>
+                            <input type="text" name="zipCode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.address.zipCode%>">
+                        </div>
+                        <input hidden type="text" name="cardID" value="<%=user.cardID%>">
                     </div>
 
-                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
                     
                 </form>
             </div>
@@ -127,16 +182,16 @@
             
             <main id="main-grid" class="m-3 ease-in-out transition">
                 <script>
-                    const user = '<%- JSON.stringify(user) %>'
+                    const userID = '<%=user.cardID%>'
                 </script>
                 <div class="flex">
                     
                     <div class="flex flex-col items-center ">
                         <div class="mx-4 px-16 py-24 bg-rose-600">Image</div>
                         <div class="p-2">
-                            <button class="bg-green-500 text-white px-3 py-1 rounded">Edit</button>
+                            <button id="edit-modal" class="bg-green-500 text-white px-3 py-1 rounded">Edit</button>
                             <button class="bg-amber-500 rounded text-white px-3 py-1">Flag</button>
-                            <button class="bg-rose-600 rounded text-white px-3 py-1">Delete</button>
+                            <button id="deleteUserBtn"data-id="<%=user._id%>"class="bg-rose-600 rounded text-white px-3 py-1">Delete</button>
                         </div>
                     </div>
                     <div>

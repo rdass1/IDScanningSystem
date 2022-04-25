@@ -1,14 +1,36 @@
 $(document).ready(function(){
-    let userObj = JSON.parse(user);
+    let userObj
+      $.ajax({
+        "url":"/api/members?id="+userID,
+        "method":"GET",
+    }).done(function(data){
+        userObj = data[0];
+        
+    });
     $("#notesBtn").click(() => {
+        var parseText = ``;
+        var lines = userObj.notes.split("\\n");
+        for(var i = 0; i < lines.length;i++){
+          parseText += lines[i]+"\n";
+        }
         displayText = `
-            <textarea class="w-full h-full border-2" style="resize:none;" readonly>${userObj.notes}</textarea>
+            <form action="/api/members_notes/${userObj._id}" method="POST">
+              <textarea name="notes" id="notesTextArea" class="w-full h-full border-2" style="resize:none;height:18rem">${parseText}</textarea>
+              <input hidden name="cardID" value="${userObj.cardID}">
+              <button id="saveBtn" type="submit" class="hidden w-20 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+            </form>
+            
         `;
         $("#displayUserTable").html(displayText);
+
+        $("#notesTextArea").on('input propertychange',()=>{
+          let saveBtn = document.getElementById('saveBtn');
+          saveBtn.classList.remove('hidden');
+        })
     });
 
     $("#logsBtn").click(() => {
-        var displayText = `<div class="flex flex-col w-full">
+        var displayText = `<div class="flex flex-col w-full" style="height:20rem;">
         <div class="overflow-x-auto ">
                       <div class="py-4 inline-block w-full">
                         <div class="overflow-x-auto ">
@@ -37,7 +59,9 @@ $(document).ready(function(){
                   </tr>
                 </thead class="border-b">
                 <tbody>`;
+            let timeCount = 0;
             for(var i = 0; i < userObj.logs.length;i++){
+                timeCount += userObj.logs[i].timeTotal.toString().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [userObj.logs[i].timeTotal];
                 displayText += `
                 <tr class="bg-white border-b">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${i}</td>
@@ -69,12 +93,12 @@ $(document).ready(function(){
                   </div>`;
 
             $("#displayUserTable").html(displayText);
-            
+            console.log(timeCount);
     })
 
     $("#classesBtn").click(() => {
         var displayText = `
-        <div class="flex justify-end py-2 px-4 w-full">
+        <div class="flex justify-end py-2 px-4 w-full style="height:20rem;"">
                     <button id="add-modal">
                         <img width="30" alt="add" src="/img/buildings/square-plus-solid.svg" style="filter: invert(62%) sepia(84%) saturate(2926%) hue-rotate(78deg) brightness(107%) contrast(109%);
                         ">
@@ -83,7 +107,7 @@ $(document).ready(function(){
         
         
         
-            <div class="overflow-x-auto overflow-y-scroll h-40">
+            <div class="overflow-x-auto overflow-y-scroll h-full">
                 <div class="py-4 inline-block w-full">
                   <div class="overflow-x-auto">
                     <table class="text-center w-full">
@@ -116,7 +140,9 @@ $(document).ready(function(){
                   </tr>
                 </thead class="border-b">
                 <tbody>`;
+            
             for(var i = 0; i < userObj.classesList.length;i++){
+                
                 displayText += `
                 <tr class="bg-white border-b">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${i}</td>
@@ -195,8 +221,28 @@ $(document).ready(function(){
                 }
             });
     });
-
+    let modalBackground = document.getElementById('edit-modal-background');
+      $("#edit-modal").click(() => {
+          modalBackground.classList.toggle('hidden'); 
+      });
+      $("#edit-modal-close").click(() => {
+          modalBackground.classList.toggle('hidden');
+      });
     
-
+      $("#deleteUserBtn").click(()=>{
+        if(confirm("Do you really want to delete the user and all their data?")){
+          $.ajax({
+            "url":"/api/members_delete/"+userObj._id,
+            "method":"POST",
+            }).done(function(data){
+              
+              window.location.href = "/members"
+                    
+            }).fail(function(data){
+                alert("Error couldn't delete that user!");
+                location.reload();
+            });
+        }
+      })
     
 });

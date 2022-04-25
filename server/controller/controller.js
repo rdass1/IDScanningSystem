@@ -5,13 +5,41 @@ const models = require('../model/model');
 //create and save new user
 
 exports.create = (req,res)=>{
-    //validate request
-    if(!req.body){
-        res.status(400).send({message:"Content cant be empty!"});
-        return;
-    }
-    console.log(req.body);
+    const user = models.userDB({
+        cardID: "AB"+parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(10).toString().replace(".", "")),
+        MRNum: req.body.mrNum,
+        role: req.body.role,
+        firstName: req.body.firstName,
+        middleName: req.body.middleName,
+        lastName: req.body.lastName,
+        DOB: req.body.dob,
+        gender: req.body.gender,
+        pronoun: req.body.pronoun,
+        address: {
+            street: req.body.street,
+            aptSuite: req.body.aptSuite,
+            city: req.body.city,
+            state: req.body.state,
+            zipCode: req.body.zipCode
+        },
+        phone: req.body.phone,
+        email: req.body.email,
+        notes: "",
+        status: {
+            active: false,
+            flag: false
+        }
+    });
+
+    user.save(user)
+    .then(data=>{
+        res.status(201).redirect('/members');
+    })
+    .catch(err=>{
+        res.status(500).send({message:err.message || "Error occurred while trying save data"});
+    })
 }
+
 
 exports.find = (req,res) =>{
     if(req.query.id){
@@ -26,6 +54,13 @@ exports.find = (req,res) =>{
                     from: "facilityUsage",
                     localField: "_id",
                     foreignField: "userObjID",
+                    pipeline: [
+                        {
+                            $sort : {
+                                timeIn : -1
+                            }
+                        }
+                    ],
                     as: "logs"
                 }
             },
@@ -90,12 +125,94 @@ exports.find = (req,res) =>{
     
 }
 
-exports.update = (req, res) => {
-
+exports.updateUser = (req, res) => {
+    if(req.params.id){
+        models.userDB.updateOne({_id:req.params.id},{
+            MRNum: req.body.mrNum,
+            role: req.body.role,
+            firstName: req.body.firstName,
+            middleName: req.body.middleName,
+            lastName: req.body.lastName,
+            DOB: req.body.dob,
+            gender: req.body.gender,
+            pronoun: req.body.pronoun,
+            address: {
+                street: req.body.street,
+                aptSuite: req.body.aptSuite,
+                city: req.body.city,
+                state: req.body.state,
+                zipCode: req.body.zipCode
+            },
+            phone: req.body.phone,
+            email: req.body.email,
+        })
+        .then(data => {
+            res.status(200).redirect('/members/view?id='+req.body.cardID);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
+        });
+    }else{
+        res.sendStatus(400);
+    }
 }
 
-exports.delete = (req, res) => {
-
+exports.updateUserNotes = (req,res) => {
+    if(req.params.id){
+        
+        if(req.body.notes != ""){
+            let result = '';
+            let lines= req.body.notes.split("\n");
+            for(var i=0; i<lines.length; i++){
+                if(i==0){
+                result += "" + lines[i].trim();  
+                }
+                else if(lines[i].startsWith(" ")){
+                    result += " " + lines[i].trim();  
+                  }else{
+                result += "\\n" + lines[i].trim();  
+                }    
+            }
+            models.userDB.updateOne({_id:req.params.id},{
+                notes: result
+            })
+            .then(data => {
+                res.status(200).redirect('/members/view?id='+req.body.cardID);
+            })
+            .catch(err=>{
+                res.status(500).send({message:err.message || "Error occurred while trying to save data"});
+            });
+        }else{
+            models.userDB.updateOne({_id:req.params.id},{
+                notes: ""
+            })
+            .then(data => {
+                res.status(200).redirect('/members/view?id='+req.body.cardID);
+            })
+            .catch(err=>{
+                res.status(500).send({message:err.message || "Error occurred while trying to save data"});
+            });
+        }
+        
+        
+    }else{
+        res.sendStatus(400);
+    }
+}
+exports.deleteUser = (req, res) => {
+    
+    if(req.params.id){
+        models.userDB.deleteOne({_id:req.params.id})
+        .then(data=>{
+            
+            res.status(200).redirect('/members');
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
+        });
+    }else{
+        res.sendStatus(400);
+    }
 }
 
 exports.login = (req, res) => {
@@ -321,7 +438,7 @@ exports.findClasses = (req,res)=>{
 exports.createClass = (req,res) => {
     let tConvert = (time) => {
         // Check correct time format and split into components
-        time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+        time = time.toString().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
         if (time.length > 1) { // If time format correct
           time = time.slice (1);  // Remove full string match value
           time[5] = +time[0] < 12 ? 'am' : 'pm'; // Set AM/PM
@@ -371,7 +488,7 @@ exports.createUserClass = (req,res) => {
     });
     classes.save(classes)
     .then(data=>{
-        res.status(201).redirect('/dashboard/viewmember?id='+req.body.cardID);
+        res.status(201).redirect('/members/view?id='+req.body.cardID);
     })
     .catch(err=>{
         res.status(500).send({message:err.message || "Error occurred while trying save data"});

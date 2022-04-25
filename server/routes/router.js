@@ -88,7 +88,7 @@ route.get('/logout', (req,res)=>{
 //Dashboard Routes
 
 route.get('/dashboard',services.homeRoutes);
-route.get('/dashboard/viewmember',services.viewmember);
+
 
 
 //Building Routes
@@ -104,8 +104,12 @@ route.get('/classes',services.classes);
 
 
 
-//Logs Routes\
+//Logs Routes
 route.get('/logs',services.logs);
+
+//Members Routes
+route.get('/members',services.allMembers);
+route.get('/members/view',services.viewmember);
 
 
 //Classes Routes
@@ -125,8 +129,11 @@ route.post('/upload', upload.single('file') ,(req,res) =>{
 
 //Member API
 route.post('/api/members',controller.create);
+route.post('/api/members_edit/:id',controller.updateUser);
+route.post('/api/members_notes/:id',controller.updateUserNotes);
 route.get('/api/members',controller.find);
 route.get('/api/active_members',controller.activeMember);
+route.post('/api/members_delete/:id',controller.deleteUser);
 
 //Building API
 route.get('/api/building',controller.findBuilding);

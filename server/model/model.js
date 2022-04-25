@@ -64,7 +64,6 @@ const userSchema = new mongoose.Schema({
     email: String,
     phone: Number,
     notes: String,
-    classes: [userClassObjID],
     status: {
         active: Boolean,
         flag: Boolean,

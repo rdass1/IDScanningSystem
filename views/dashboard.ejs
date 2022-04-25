@@ -22,7 +22,7 @@
     <!--/Logo & Title-->
 </div>
 <div id="nav-wrapper"class="">
-    <nav id="main-nav"class="w-full fixed top-20 md:top-16 xl:top-0 z-40 ease-in-out transition transform  translate-x-0 xl:w-80 -translate-y-full xl:translate-y-0" >
+    <nav id="main-nav"class="w-full fixed z-20 ease-in-out transition transform  translate-x-0 xl:w-80 -translate-y-full xl:translate-y-0" >
         <!--Main Nav-->
         <div id="main-nav-body"  class=" xl:rounded-r transform  translate-x-0  ease-in-out transition duration-500 flex justify-start items-start h-80 bg-gray-900 flex-col xl:w-full xl:h-screen">
             <div class="hidden xl:flex justify-start p-6 items-center space-x-3">
@@ -30,23 +30,23 @@
                     <p class="text-2xl leading-6 text-white">Above and Beyond</p>                
             </div>
             <div class="mt-6 flex flex-col justify-start items-center  pl-4 w-full border-gray-600 border-b space-y-5 xl:space-y-7 pb-5 h-full">
-                <button class="flex jusitfy-start items-center space-x-6 w-full  focus:outline-none  focus:text-red-400  text-white rounded ">
+                <button class="flex jusitfy-start items-center space-x-6 w-full  focus:outline-none text-indigo-400 focus:text-indigo-400  text-white rounded " onclick="window.location='/dashboard';">
                     <img class="fill-stroke " src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sidebar2-svg4.svg" alt="dashboard" />
                     <p class="text-base leading-4 ">Dashboard</p>                    
                 </button>
-                <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded ">
+                <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded " onclick="window.location='/members';">
                     <img class="fill-stroke" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sidebar2-svg5.svg" alt="users" />    
                         <p class="text-base leading-4 ">Members</p>                    
                 </button>
-                <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded ">
+                <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white  focus:text-indigo-400   rounded " onclick="window.location='/logs';">
                     <img class="fill-stroke" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sidebar2-svg5.svg" alt="users" />    
                         <p class="text-base leading-4 ">Logs</p>                    
                 </button>
-                <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded ">
+                <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded " onclick="window.location='/classes';">
                     <img class="fill-stroke" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sidebar2-svg5.svg" alt="users" />    
                         <p class="text-base leading-4 ">Classes</p>                    
                 </button>
-                <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded ">
+                <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded " onclick="window.location='/facilities';">
                     <img class="fill-stroke" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sidebar2-svg5.svg" alt="users" />    
                         <p class="text-base leading-4 ">Facilities</p>                    
                 </button>
@@ -99,7 +99,7 @@
         <main id="main-grid" class="m-3 ease-in-out transition grid gap-10 md:grid-cols-3 xl:grid-cols-4">
             <% for(var i = 0; i < users.length; i++){ %>
                     
-                <div class="w-full h-72" style="cursor: pointer;" onclick="window.location='/dashboard/viewmember?id=<%=users[i].cardID%>';">
+                <div class="w-full h-72" style="cursor: pointer;" onclick="window.location='/members/view?id=<%=users[i].cardID%>';">
                     <table class="w-full h-full">
                         <tbody class="w-full">
                             
