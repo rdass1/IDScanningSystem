@@ -102,6 +102,8 @@ route.get('/locations/add_location',services.createLocation);
 //Classes Routes
 route.get('/classes',services.classes);
 
+
+
 //Logs Routes\
 route.get('/logs',services.logs);
 
@@ -140,6 +142,10 @@ route.delete('/api/locations/:id',controller.deleteLocation);
 route.get('/api/classes',controller.findClasses);
 route.post('/api/create_class',controller.createClass);
 route.delete('/api/classes/:id',controller.deleteClass);
+
+//UserClasses API
+route.post('/api/add_user_class',controller.createUserClass);
+route.delete('/api/userClass/:id',controller.deleteUserClass);
 
 //Logs API
 route.get('/api/logs',controller.findLogs);

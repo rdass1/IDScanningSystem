@@ -364,6 +364,35 @@ exports.deleteClass = (req,res) => {
     }
 }
 
+exports.createUserClass = (req,res) => {
+    const classes = models.userClassesDB({
+        userObjID: req.body.id,
+        classObjID: req.body.classObjID,
+    });
+    classes.save(classes)
+    .then(data=>{
+        res.status(201).redirect('/dashboard/viewmember?id='+req.body.cardID);
+    })
+    .catch(err=>{
+        res.status(500).send({message:err.message || "Error occurred while trying save data"});
+    })
+}
+
+exports.deleteUserClass = (req,res) => {
+    console.log(req.params.id);
+    if(req.params.id){
+        models.userClassesDB.deleteOne({_id:req.params.id})
+        .then(data=>{
+            res.sendStatus(200);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
+        })
+    }else{
+        res.sendStatus(400);
+    }
+}
+
 exports.findLogs = (req,res) => {
     if(req.query.name){
         models.facilityUsageDB.find({name:req.query.name},null,{
