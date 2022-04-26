@@ -99,7 +99,7 @@ $(document).ready(function(){
     $("#classesBtn").click(() => {
         var displayText = `
         <div class="flex justify-end py-2 px-4 w-full style="height:20rem;"">
-                    <button id="add-modal">
+                    <button id="add-class-modal">
                         <img width="30" alt="add" src="/img/buildings/square-plus-solid.svg" style="filter: invert(62%) sepia(84%) saturate(2926%) hue-rotate(78deg) brightness(107%) contrast(109%);
                         ">
                     </button> 
@@ -182,8 +182,8 @@ $(document).ready(function(){
                   </div>`;
 
             $("#displayUserTable").html(displayText);
-            let modalBackground = document.getElementById('add-modal-background');
-            $("#add-modal").click(() => {
+            let modalBackground = document.getElementById('add-class-modal-background');
+            $("#add-class-modal").click(() => {
                 modalBackground.classList.toggle('hidden');
                 $.ajax({
                     "url":"/api/classes",
@@ -201,7 +201,7 @@ $(document).ready(function(){
                     
                 });
             });
-            $("#add-modal-close").click(() => {
+            $("#close-add-class-modal-background").click(() => {
                 modalBackground.classList.toggle('hidden');
             });
             $(".classDeleteBtnJQ").click((e) => {

@@ -204,7 +204,7 @@ exports.deleteUser = (req, res) => {
     if(req.params.id){
         models.userDB.deleteOne({_id:req.params.id})
         .then(data=>{
-            
+
             res.status(200).redirect('/members');
         })
         .catch(err=>{
@@ -399,6 +399,7 @@ exports.findClasses = (req,res)=>{
     }else{
         models.classesDB.find()
         .then(data => {
+            console.log('RETRIEVE CLASSES')
             res.send(data);
         })
         .catch(err=>{
@@ -488,6 +489,7 @@ exports.createUserClass = (req,res) => {
     });
     classes.save(classes)
     .then(data=>{
+        console.log(data);
         res.status(201).redirect('/members/view?id='+req.body.cardID);
     })
     .catch(err=>{
