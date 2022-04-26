@@ -524,7 +524,11 @@ exports.findLogs = (req,res) => {
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
         });
     }else{
-        models.facilityUsageDB.find()
+        models.facilityUsageDB.find(null,null,{
+            sort: {
+                "timeIn": -1
+            },
+        })
         .then(data => {
             res.send(data);
         })

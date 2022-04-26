@@ -199,45 +199,45 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        First Name:
+                                        Name:
                                     </td>
                                     <td>
-                                        <%=user.firstName%>
+                                        <%=user.lastName%> , <%=user.firstName%>
                                     </td>
                                     
                                 </tr>
                                 <tr>
                                     <td>ID:</td>
-                                    <td>AB1234567</td>
+                                    <td> <%=user.cardID%></td>
                                     
                                 </tr>
                                 <tr>
                                     <td>MR#:</td>
-                                    <td>2020-143</td>
+                                    <td> <%=user.MRNum%></td>
                                     
                                 </tr>
                                 <tr>
                                     <td>Role:</td>
-                                    <td>Employee</td>
+                                    <td> <%=user.role%></td>
                                     
                                 </tr>
                                 <tr>
                                     <td>DOB:</td>
-                                    <td>12/31/2001</td>
+                                    <td> <%=user.DOB%></td>
                                     
                                 </tr>
                                 <tr>
                                     <td>Gender:</td>
-                                    <td>Male</td>
+                                    <td> <%=user.gender%></td>
                                 </tr>
                                 <tr>
                                     <td>ProNoun:</td>
-                                    <td>He/Him</td>
+                                    <td> <%=user.pronoun%></td>
                                     
                                 </tr>
                                 <tr>
                                     <td>Reg.Date:</td>
-                                    <td>4/3/2022</td>
+                                    <td><%=user.regDate.substring(4,16)%></td>
                                 </tr>
                                 
                             </tbody>
@@ -247,16 +247,16 @@
                         <table>
                             <tr>
                                 <td>Email:</td>
-                                <td>example@example.com</td>
+                                <td> <%=user.email%></td>
                             </tr>
                             <tr>
                                 <td>Phone:</td>
-                                <td>123456790</td>
+                                <td> <%=user.phone%></td>
                             </tr>
                             <tr>
                                 <td valign="top" class="">Address:</td>
                                 <td class="">
-                                    Street, Apt/Suite, City, State, ZipCode
+                                    <%=user.address.street%>, <%=user.address.aptSuite%>, <%=user.address.city%>, <%=user.address.state%>,  <%=user.address.zipCode%>
                                 </td>
                             </tr>
                         </table>
