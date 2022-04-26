@@ -104,9 +104,6 @@ $(document).ready(function(){
                         ">
                     </button> 
                 </div>
-        
-        
-        
             <div class="overflow-x-auto overflow-y-scroll h-full">
                 <div class="py-4 inline-block w-full">
                   <div class="overflow-x-auto">

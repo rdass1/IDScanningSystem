@@ -14,8 +14,8 @@ scanner = {
     "locationObjID" : "624149564def087a29e442ec",
     "building": "Above and Beyond Main-Building",
     "buildingObjID" : "624148ef0da4f2e606e015f8",
-    "VID": "0525",
-    "PID": "A4A7"
+    "VID": "067B",
+    "PID": "2303"
 }
 
 #Hand held scanner
