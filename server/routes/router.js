@@ -121,9 +121,9 @@ route.get('/members/view',services.viewmember);
 
 
 //Images Routes
-route.post('/upload', upload.single('file') ,(req,res) =>{
+route.post('/api/uploadMemberImage', upload.single('memberIDImage','id','cardID') ,(req,res) =>{
     console.log(req.file);
-    res.sendStatus(200);
+    res.status(200).redirect("/members/view?id="+req.body.cardID);
 });
 
 
@@ -151,9 +151,10 @@ route.post('/api/create_class',controller.createClass);
 route.delete('/api/classes/:id',controller.deleteClass);
 
 //UserClasses API
+route.get('/api/userClasses/:id',controller.userClasses);
 route.post('/api/add_user_class',controller.createUserClass);
 route.delete('/api/userClass/:id',controller.deleteUserClass);
-
+route.post('/api/user_flag/:id/:flag',controller.userFlag);
 //Logs API
 route.get('/api/logs',controller.findLogs);
 route.delete('/api/logs/:id',controller.deleteLogs);

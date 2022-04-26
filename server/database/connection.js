@@ -8,10 +8,8 @@ const connectDB = async ()=>{
             useUnifiedTopology: true,
         });
         
-        // con.once('open', () =>{
-        //     gfs = Grid(con.db, mongoose.mongo);
-        //     gfs.collection('memberImages');
-        // });
+        // gfs = Grid(con.db, mongoose.mongo);
+        // gfs.collection('memberImages');
         console.log(`MongoDB connected: ${con.connection.host}`);
     }catch(err){
         console.log(err);

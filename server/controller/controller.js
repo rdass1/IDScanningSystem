@@ -204,12 +204,48 @@ exports.deleteUser = (req, res) => {
     if(req.params.id){
         models.userDB.deleteOne({_id:req.params.id})
         .then(data=>{
-
-            res.status(200).redirect('/members');
+            models.facilityUsageDB.deleteMany({userObjID:req.params.id})
+            .then(data=>{
+                models.userClassesDB.deleteMany({userObjID:req.params.id})
+                .then(data=>{
+                    res.status(200).redirect('/members');
+                })
+                .catch(err=>{
+                    res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
+                });
+            })
+            .catch(err=>{
+                res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
+            });
+            
         })
         .catch(err=>{
             res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
         });
+    }else{
+        res.sendStatus(400);
+    }
+}
+
+exports.userFlag = (req,res) => {
+    
+    if(req.params.id){
+        let status = {
+            "status.flag" : true,
+            "status.updatedAt": Date.now()
+        };
+        if(req.params.flag == "false"){
+            status = {
+                "status.flag" : false,
+            }
+        }
+        models.userDB.updateOne({_id:req.params.id},status)
+        .then(data=>{
+            res.sendStatus(200);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
+        })
     }else{
         res.sendStatus(400);
     }
@@ -482,6 +518,35 @@ exports.deleteClass = (req,res) => {
     }
 }
 
+exports.userClasses = (req,res) => {
+    if(req.params.id){
+        models.userClassesDB.aggregate([
+            {
+                $match: {
+                    userObjID:req.params.id
+                }
+            },
+            {
+                $lookup : {
+                    from: "classes",
+                    localField: "classObjID",
+                    foreignField: "_id",
+                    as: "classInfo"
+                }
+            }
+        ])
+        .then(data=>{
+            console.log(data)
+            res.status(200).send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to get data"});
+        })
+    }else{
+        res.sendStatus(400);
+    }
+}
+
 exports.createUserClass = (req,res) => {
     const classes = models.userClassesDB({
         userObjID: req.body.id,
@@ -498,7 +563,6 @@ exports.createUserClass = (req,res) => {
 }
 
 exports.deleteUserClass = (req,res) => {
-    console.log(req.params.id);
     if(req.params.id){
         models.userClassesDB.deleteOne({_id:req.params.id})
         .then(data=>{
@@ -510,7 +574,10 @@ exports.deleteUserClass = (req,res) => {
     }else{
         res.sendStatus(400);
     }
+
 }
+
+
 
 exports.findLogs = (req,res) => {
     if(req.query.name){

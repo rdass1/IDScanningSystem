@@ -186,6 +186,29 @@
                 </form>
             </div>
         </div>
+        <div id="id-modal-background" class="hidden bg-black bg-opacity-50 fixed inset-0 z-10 flex justify-center items-center xl:ml-80">
+            <div class="relative w-96 bg-white rounded-lg shadow dark:bg-gray-800" style="width:30rem;">
+                <div class="flex justify-end p-2">
+                    <button id="close-id-modal-background" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                    </button>
+                </div>
+                <form class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8" action="/api/uploadMemberImage" method="POST" enctype="multipart/form-data">
+                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">ID Card</h3>
+                    <div class="">
+                        <div>
+                            <label for="memberIDImage" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Picture</label>
+                            <input type="file" id="" name="memberIDImage" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                        </div>
+                    </div>
+                    <input name="cardID" hidden type="text" value="<%=user.cardID%>">
+                    <input name="id" hidden type="text" value="<%=user._id%>">    
+
+                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+                    
+                </form>
+            </div>
+        </div>
         <div id="main" class="px-3 ease-in-out transition xl:ml-80 pt-28 xl:pt-0">
             <div class="flex justify-end w-full">
                 <div class="py-6 px-3 w-full hidden xl:block">
@@ -196,98 +219,102 @@
                         <img width="34" src="/img/nav/close-logo.svg" alt="close"/>
                     </button>  
                 </div>
-                <div class="py-0 xl:py-6 px-4">
+                
+                <!-- <div class="py-0 xl:py-6 px-4">
                     <a href="">
                         <img width="40" alt="add" src="/img/buildings/square-plus-solid.svg" style="filter: invert(62%) sepia(84%) saturate(2926%) hue-rotate(78deg) brightness(107%) contrast(109%);
                         ">
                     </a>
-                </div>
+                </div> -->
 
+            </div>
+            <div class="flex justify-end w-full">
+                <div class="mr-4">
+                    <button id="id-modal" class="bg-sky-500 rounded text-white px-8 py-2" >ID</button>
+                </div>
+                <div class="mr-4">
+                    <button  class="bg-red-600 rounded text-white px-6 py-2" onclick="window.location.href='/members';">Back</button>
+                </div>
             </div>
             
             <main id="main-grid" class="m-3 ease-in-out transition">
                 <script>
                     const userID = '<%=user.cardID%>'
                 </script>
-                <div class="flex">
+                <div class="flex flex-wrap" >
                     
-                    <div class="flex flex-col items-center ">
+                    <div class="flex flex-col items-center w-30">
                         <div class="mx-4 px-16 py-24 bg-rose-600">Image</div>
                         <div class="p-2">
                             <button id="edit-modal" class="bg-green-500 text-white px-3 py-1 rounded">Edit</button>
-                            <button class="bg-amber-500 rounded text-white px-3 py-1">Flag</button>
+                            <button id="flagBtn" class="bg-amber-500 rounded text-white px-3 py-1">Flag</button>
                             <button id="deleteUserBtn"data-id="<%=user._id%>"class="bg-rose-600 rounded text-white px-3 py-1">Delete</button>
                         </div>
                     </div>
-                    <div>
-                        <table>
-                            <tbody>
-                                <tr>
+                    <div class="grow w-96" style="background-color:#F8F8F8;">
+                        <table class="w-full ">
+                            <tbody class="h-60 grid grid-rows-6 grid-flow-col">
+                                <tr class="border-2 border-transparent border-b-gray-400 p-2">
                                     <td>
                                         Name:
                                     </td>
-                                    <td>
+                                    <td class="text-center w-full">
                                         <%=user.lastName%> , <%=user.firstName%>
                                     </td>
                                     
                                 </tr>
-                                <tr>
+                                <tr class="border-2 border-transparent border-b-gray-400 p-2">
                                     <td>ID:</td>
-                                    <td> <%=user.cardID%></td>
+                                    <td class="text-center w-full"> <%=user.cardID%></td>
                                     
                                 </tr>
-                                <tr>
+                                <tr class="border-2 border-gray-50 border-b-gray-400 p-2 border-transparent">
                                     <td>MR#:</td>
-                                    <td> <%=user.MRNum%></td>
+                                    <td class="text-center w-full"> <%=user.MRNum%></td>
                                     
                                 </tr>
-                                <tr>
+                                <tr class="border-2 border-b-gray-400 p-2 border-transparent">
                                     <td>Role:</td>
-                                    <td> <%=user.role%></td>
+                                    <td class="text-center w-full"> <%=user.role%></td>
                                     
                                 </tr>
-                                <tr>
+                                <tr class="border-2 border-b-gray-400 p-2 border-transparent">
                                     <td>DOB:</td>
-                                    <td> <%=user.DOB%></td>
+                                    <td class="text-center w-full"> <%=user.DOB%></td>
                                     
                                 </tr>
-                                <tr>
+                                <tr class="border-2 border-b-gray-400 p-2 border-transparent">
                                     <td>Gender:</td>
-                                    <td> <%=user.gender%></td>
+                                    <td class="text-center w-full"> <%=user.gender%></td>
                                 </tr>
-                                <tr>
+                                <tr class="border-2 border-b-gray-400 p-2 border-transparent">
                                     <td>ProNoun:</td>
-                                    <td> <%=user.pronoun%></td>
+                                    <td class="text-center w-full"> <%=user.pronoun%></td>
                                     
                                 </tr>
-                                <tr>
+                                <tr class="border-2 border-b-gray-400 p-2 border-transparent">
                                     <td>Reg.Date:</td>
-                                    <td><%=user.regDate.substring(4,16)%></td>
+                                    <td class="text-center w-full"><%=user.regDate.substring(4,16)%></td>
                                 </tr>
-                                
+                                <tr class="border-2 border-b-gray-400 p-2 border-transparent">
+                                    <td>Email:</td>
+                                    <td class="text-center w-full"> <%=user.email%></td>
+                                </tr>
+                                <tr class="border-2 border-b-gray-400 p-2 border-transparent">
+                                    <td>Phone:</td>
+                                    <td class="text-center w-full"> <%=user.phone%></td>
+                                </tr>
+                                <tr class="border-2 border-b-gray-400 p-2 border-transparent">
+                                    <td valign="top" class="">Address:</td>
+                                    <td class="text-center w-full">
+                                        <%=user.address.street%>, <%=user.address.aptSuite%>, <%=user.address.city%>, <%=user.address.state%>,  <%=user.address.zipCode%>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div>
-                        <table>
-                            <tr>
-                                <td>Email:</td>
-                                <td> <%=user.email%></td>
-                            </tr>
-                            <tr>
-                                <td>Phone:</td>
-                                <td> <%=user.phone%></td>
-                            </tr>
-                            <tr>
-                                <td valign="top" class="">Address:</td>
-                                <td class="">
-                                    <%=user.address.street%>, <%=user.address.aptSuite%>, <%=user.address.city%>, <%=user.address.state%>,  <%=user.address.zipCode%>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
                 </div>
-                <div class="flex">
+                <div class="flex pt-4">
                     <button id="logsBtn" class="m-0 rounded-t-md focus:text-gray-900 focus:drop-shadow-md text-gray-400 w-24 h-8 bg-gray-50 focus:bg-white">Logs</button>
                     <button id="classesBtn" class="m-0 rounded-t-md focus:text-gray-900 focus:drop-shadow-md text-gray-400 w-24 h-8 bg-gray-50 focus:bg-white"">Classes</button>
                     <button id="notesBtn" class="m-0 rounded-t-md focus:text-gray-900 focus:drop-shadow-md text-gray-400 w-24 h-8 bg-gray-50 focus:bg-white"">Notes</button>

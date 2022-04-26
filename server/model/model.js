@@ -163,7 +163,7 @@ const facilityUsageDB = mongoose.model('facilityUsage',facilityUsageSchema);
 const locationsDB = mongoose.model('locations',locationsSchema);
 const buildingsDB = mongoose.model('buildings',buildingsSchema);
 const classesDB = mongoose.model('classes',classesSchema);
-const userClassesDB = mongoose.model('userClasses',userClassesSchema);
+const userClassesDB = mongoose.model('memberClasses',userClassesSchema);
 // ,facilityUsageDB,locationsDB,buildingsDB,classesDB
 // exports.userDB2= userDB2;
 exports.userDB = userDB2;

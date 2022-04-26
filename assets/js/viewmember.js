@@ -5,14 +5,21 @@ $(document).ready(function(){
         "method":"GET",
     }).done(function(data){
         userObj = data[0];
-        
+        if(userObj.status.flag){
+          $("#flagBtn").html("Unflag");
+        }else{
+          $("#flagBtn").html("Flag");
+        }
     });
     $("#notesBtn").click(() => {
         var parseText = ``;
-        var lines = userObj.notes.split("\\n");
-        for(var i = 0; i < lines.length;i++){
-          parseText += lines[i]+"\n";
+        if(userObj.notes != ""){
+          var lines = userObj.notes.split("\\n");
+          for(var i = 0; i < lines.length;i++){
+            parseText += lines[i]+"\n";
+          }
         }
+        
         displayText = `
             <form action="/api/members_notes/${userObj._id}" method="POST">
               <textarea name="notes" id="notesTextArea" class="w-full h-full border-2" style="resize:none;height:18rem">${parseText}</textarea>
@@ -59,9 +66,7 @@ $(document).ready(function(){
                   </tr>
                 </thead class="border-b">
                 <tbody>`;
-            let timeCount = 0;
             for(var i = 0; i < userObj.logs.length;i++){
-                timeCount += userObj.logs[i].timeTotal.toString().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [userObj.logs[i].timeTotal];
                 displayText += `
                 <tr class="bg-white border-b">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${i}</td>
@@ -93,7 +98,6 @@ $(document).ready(function(){
                   </div>`;
 
             $("#displayUserTable").html(displayText);
-            console.log(timeCount);
     })
 
     $("#classesBtn").click(() => {
@@ -208,13 +212,12 @@ $(document).ready(function(){
                         "url":"/api/userClass/"+id,
                         "method":"DELETE",
                     }).done(function(data){
-                        
                       location.reload();
-                        
                     }).fail(function(data){
                         alert("Error couldn't delete that class!");
                         location.reload();
                     });
+                    
                 }
             });
     });
@@ -241,5 +244,28 @@ $(document).ready(function(){
             });
         }
       })
-    
+    let idModal = document.getElementById("id-modal-background");
+    $("#id-modal").click(() => {
+      idModal.classList.toggle('hidden'); 
+    });
+    $("#close-id-modal-background").click(() => {
+      idModal.classList.toggle('hidden');
+    });
+
+    $("#flagBtn").click(()=>{
+      let flag = true;
+      if(userObj.status.flag){
+        flag = false;
+      }
+      $.ajax({
+        "url":"/api/user_flag/"+userObj._id+"/"+flag,
+        "method":"POST",
+        }).done(function(data){
+          location.reload();
+                
+        }).fail(function(data){
+            alert("Error couldn't delete that user!");
+            location.reload();
+        });
+    });
 });
