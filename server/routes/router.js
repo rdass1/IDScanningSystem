@@ -121,8 +121,9 @@ route.get('/members/view',services.viewmember);
 
 
 //Images Routes
-route.post('/api/uploadMemberImage', upload.single('memberIDImage','id','cardID') ,(req,res) =>{
+route.post('/api/uploadMemberImage/:id/:cardID',upload.single('memberIDImage'),(req,res) =>{
     console.log(req.file);
+     
     res.status(200).redirect("/members/view?id="+req.body.cardID);
 });
 

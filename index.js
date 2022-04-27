@@ -5,7 +5,7 @@ const bodyparser = require('body-parser');
 const path = require('path');
 const passport = require('passport');
 const session = require('express-session')
-const connectDB = require('./server/database/connection.js')
+const {connectDB} = require('./server/database/connection.js')
 require('./server/middleware/passport-setup.js');
 const testing = require('./test');
 const app = express();
