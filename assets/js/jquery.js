@@ -81,25 +81,6 @@ $(document).ready(function(){
        
 
     });
-
-    
-
-    $(".buildingDeleteBtnJQ").click(function(){
-        if(confirm("Do you really want to delete this building?")){
-            $.ajax({
-                "url":"/api/building/"+$(this).attr("data-id"),
-                "method":"DELETE",
-            }).done(function(data){
-                
-              location.reload();
-                
-            }).fail(function(data){
-                alert("Error couldn't delete that building!");
-                location.reload();
-            });
-        }
-       
-    });
 });
 
 
@@ -115,10 +96,10 @@ const displayMemberHtml = (elementID,data) => {
                 <div class="w-full h-72" style="cursor: pointer;" onclick="window.location='/members/view?id=${data[i].cardID}';">
                     <table class="w-full h-full">
                         <tbody class="w-full">
-                            
-                                
                                     <tr class="w-full bg-red-400">
-                                    <td class="p-20">Image</td> 
+                                        <td align="center" class="w-full p-2">
+                                            <img class="object-scale-down w-52 h-64" src="api/getMemberImages/${data[i]._id}">
+                                        </td> 
                                     </tr>
                                     <tr class="w-full bg-green-300">
                                         <td>${data[i].lastName}, ${data[i].firstName}</td>

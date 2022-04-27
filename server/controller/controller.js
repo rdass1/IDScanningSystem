@@ -4,7 +4,7 @@ const models = require('../model/model');
 
 //create and save new user
 
-exports.create = (req,res)=>{
+exports.create = (req,res,next)=>{
     const user = models.userDB({
         cardID: "AB"+parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(10).toString().replace(".", "")),
         MRNum: req.body.mrNum,
@@ -38,6 +38,7 @@ exports.create = (req,res)=>{
     .catch(err=>{
         res.status(500).send({message:err.message || "Error occurred while trying save data"});
     })
+    console.log(req.file);
 }
 
 

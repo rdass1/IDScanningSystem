@@ -10,6 +10,7 @@ require('./server/middleware/passport-setup.js');
 const testing = require('./test');
 const app = express();
 
+
 app.set("view engine","ejs");
 
 dotenv.config({path:'config.env'});
@@ -23,6 +24,8 @@ app.use(morgan('tiny'));
 
 //MongoDB connection
 connectDB();
+
+
 
 //parse request to body parser
 app.use(bodyparser.urlencoded({extended:true}));
@@ -62,3 +65,4 @@ app.listen(PORT,()=>{
 if(process.env.TEST == "true"){
     testing();
 }
+
