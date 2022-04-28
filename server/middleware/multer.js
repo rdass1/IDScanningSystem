@@ -21,7 +21,7 @@ const storage = new GridFsStorage({
             if(files.length != 0){
                 console.log('FILES FOUND AND ARE GETTING DELETED!');
                 files.forEach((file)=>{
-                    console.log(file._id);
+                    //console.log(file._id);
                     let _id =  new mongoose.Types.ObjectId(file._id);
                     gfs.gfs.delete(_id);
                 })

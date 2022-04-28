@@ -36,12 +36,21 @@ const userClassObjID = {
 }
 
 
-
 const userSchema = new mongoose.Schema({
     cardID: {
         type: String,
         index: true,
          unique: true
+    },
+    cardIDData : {
+        ISS : {
+            type:Date,
+            default:Date
+        },
+        heightFT: Number,
+        heightIN: Number,
+        eyeColor: String,
+        hairColor: String,
     },
     MRNum: String,
     role : String,
@@ -52,7 +61,7 @@ const userSchema = new mongoose.Schema({
     gender: String,
     pronoun: String,
     regDate: {
-        type: String,
+        type: Date,
         default: Date
     },
     address: {

@@ -9,6 +9,8 @@ const upload = require('../middleware/multer');
 const { runInContext } = require('lodash');
 const mongoose = require('mongoose');
 const gfs = require('../database/connection');
+const fs = require('fs');
+const {spawn} = require('child_process');
 
 
 /**
@@ -122,12 +124,24 @@ route.get('/members/view',services.viewmember);
 
 
 
-//Images Routes
+//Images Routes & ID Routes
 route.post('/api/uploadMemberImage/:id/:cardID',upload.single('memberIDImage'),(req,res) =>{
-    console.log(req.file);
-    console.log(req.body.firstName)
-    res.status(200).redirect("/members/view?id="+req.body.cardID);
+    controller.createID(req,res);
+    if(!req.params.id || req.params.id === 'undefined') return res.status(400).send('no image id');
+    const filename = new mongoose.Types.ObjectId(req.params.id);
+    gfs.gfs.find({filename}).toArray((err,files) =>{
+        if(!files || files.length === 0){
+            console.log('no files exist!');
+        }
+        const _id = new mongoose.Types.ObjectId(files[0]._id);
+        console.log("downloading image!")
+        gfs.gfs.openDownloadStream(_id).pipe(fs.createWriteStream('./memberImages/'+files[0].filename+".png"));
+    })
+    
+    res.status(200).redirect('/members/view?id='+req.params.cardID);
 });
+
+route.get('/api/downloadMemberImage/:id/:cardID',controller.downloadImage);
 
 route.get('/api/getMemberImages/:id', ({params: id},res) => {
     if(!id || id === 'undefined') return res.status(400).send('no image id');
@@ -150,6 +164,8 @@ route.get('/members/api/getMemberImages/:id', ({params: id},res) => {
             return res.status(400).send('no files exist');
         }
         const _id = new mongoose.Types.ObjectId(files[0]._id);
+        //gfs.gfs.openDownloadStream(_id).pipe(fs.createWriteStream('./memberImages/'+files[0].filename+".png"));
+        //console.log('downloaded IMage');
         gfs.gfs.openDownloadStream(_id).pipe(res);
     })
 

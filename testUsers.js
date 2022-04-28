@@ -96,7 +96,7 @@ var test = [classObjID= {
 ]
 
 console.log(test[0]);
-console.log(new Date('11:30 am'));
+console.log(new Date("2001-12-31").getUTCFullYear);
 
 // const test42 = db.buildings.aggregate([
 //     {

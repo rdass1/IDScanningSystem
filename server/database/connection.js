@@ -15,14 +15,7 @@ const connectDB = async ()=>{
             gfs = new mongoose.mongo.GridFSBucket(mongoose.connections[0].db,{bucketName:"memberImages"});
             console.log(`MongoDB connected: ${mongoose.connection.host}`);
 
-            gfs.find({}).toArray((err,files)=>{
-                if(files.length != 0){
-                    files.forEach((file)=>{ 
-                        let _id = new mongoose.Types.ObjectId(file._id)
-                        gfs.openDownloadStream(_id).pipe(fs.createWriteStream('./memberImages/'+file.filename+".png"));
-                    });
-                }
-            });
+            
             exports.gfs = gfs;
             
 

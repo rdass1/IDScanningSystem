@@ -1,6 +1,8 @@
 const {userDB} = require('../model/model.js');
 const models = require('../model/model');
-
+const gfs = require('../database/connection');
+const mongoose = require('mongoose');
+const fs = require('fs');
 
 //create and save new user
 
@@ -39,6 +41,69 @@ exports.create = (req,res,next)=>{
         res.status(500).send({message:err.message || "Error occurred while trying save data"});
     })
     console.log(req.file);
+}
+
+exports.downloadImage = (req,res) => {
+    if(req.params.id){
+        const fileName = new mongoose.Types.ObjectId(req.params.id);
+        console.log(fileName);
+        gfs.gfs.find({fileName}).toArray((err,files)=>{
+            if(files.length != 0){
+                files.forEach((file)=>{ 
+                    let _id = new mongoose.Types.ObjectId(file._id)
+                    gfs.gfs.openDownloadStream(_id).pipe(fs.createWriteStream('./memberImages/'+file.filename+".png"));
+                });
+            }else{
+                console.log('NO FILES FOUND')
+            }
+        });
+        res.status(200).redirect('/members/view?id='+req.params.cardID);
+
+    }else{
+        res.sendStatus(400);
+    }
+    
+}
+
+exports.createID = (req,res) =>{
+    if(req.body.id){
+        models.userDB.findOneAndUpdate({_id:req.body.id},{
+            cardIDData:{
+                ISS : new Date(),
+                heightFT : req.body.memberHeightFT,
+                heightIN: req.body.memberHeightIN,
+                eyeColor: req.body.memberEyeColor,
+                hairColor: req.body.memberHairColor
+            }
+        })
+        .then(data => {
+            console.log(data.cardIDData);
+            // const fileName = new mongoose.Types.ObjectId("62420f7162eca3c8513d5ddd");
+            // console.log(fileName);
+            // gfs.gfs.find({fileName}).toArray((err,files)=>{
+            //     if(files.length != 0){
+            //         files.forEach((file)=>{ 
+            //             let _id = new mongoose.Types.ObjectId(file._id)
+            //             gfs.gfs.openDownloadStream(_id).pipe(fs.createWriteStream('./memberImages/'+file.filename+".png"));
+            //         });
+            //     }else{
+            //         console.log('NO FILES FOUND')
+            //     }
+            // });
+            return;
+
+            //res.status(200).redirect('/api/downloadMemberImage/'+req.body.id+"/"+req.body.cardID);
+            
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to update data"});
+        });
+    }else{
+        res.sendStatus(400);
+    }
+    // console.log(req.file);
+    // console.log(req.body.memberHeightFT+"' "+req.body.memberHeightIN+"\"");
+    // res.status(200).redirect("/members/view?id="+req.body.cardID);
 }
 
 

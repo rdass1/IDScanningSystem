@@ -200,11 +200,46 @@
                             <label for="memberIDImage" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Picture</label>
                             <input type="file" id="" name="memberIDImage" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                         </div>
+                        <%if(user.cardIDData !== undefined){%>
+                            <div>
+                                <label for="memberHeightFT" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Height</label>
+                                <div class="flex gap-2">
+                                    <input type="number" id="" name="memberHeightFT" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="ft" value="<%=user.cardIDData.heightFT%>">
+                                    <input type="number" id="" name="memberHeightIN" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="in" value="<%=user.cardIDData.heightIN%>">
+                                </div>
+                                
+                            </div>
+                            <div>
+                                <label for="memberEyeColor" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Eye Color</label>
+                                <input type="text" id="" name="memberEyeColor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.cardIDData.eyeColor%>">
+                            </div>
+                            <div>
+                                <label for="memberHairColor" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Hair Color</label>
+                                <input type="text" id="" name="memberHairColor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="<%=user.cardIDData.hairColor%>">
+                            </div>
+                        <%}else{%>
+                        <div>
+                            <label for="memberHeightFT" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Height</label>
+                            <div class="flex gap-2">
+                                <input type="number" id="" name="memberHeightFT" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="ft">
+                                <input type="number" id="" name="memberHeightIN" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="in">
+                            </div>
+                            
+                        </div>
+                        <div>
+                            <label for="memberEyeColor" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Eye Color</label>
+                            <input type="text" id="" name="memberEyeColor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" >
+                        </div>
+                        <div>
+                            <label for="memberHairColor" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Hair Color</label>
+                            <input type="text" id="" name="memberHairColor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                        </div>
+                        <%}%>
                     </div>
                     <input name="cardID" hidden type="text" value="<%=user.cardID%>">
                     <input name="id" hidden type="text" value="<%=user._id%>">    
 
-                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create ID</button>
                     
                 </form>
             </div>
@@ -288,8 +323,10 @@
                                 </tr>
                                 <tr class="border-2 border-b-gray-400 p-2 border-transparent">
                                     <td>DOB:</td>
-                                    <td class="text-center w-full"> <%=user.DOB%></td>
-                                    
+                                    <td class="text-center w-full"> 
+                                        <%if(user.DOB != null){%>
+                                        <%=new Date(user.DOB).getUTCMonth()%>/<%=new Date(user.DOB).getUTCDate()%>/<%=new Date(user.DOB).getUTCFullYear()%></td>
+                                        <%}%>
                                 </tr>
                                 <tr class="border-2 border-b-gray-400 p-2 border-transparent">
                                     <td>Gender:</td>
@@ -302,7 +339,8 @@
                                 </tr>
                                 <tr class="border-2 border-b-gray-400 p-2 border-transparent">
                                     <td>Reg.Date:</td>
-                                    <td class="text-center w-full"><%=user.regDate.substring(4,16)%></td>
+                                    <td class="text-center w-full">
+                                        <%= new Date(user.regDate).getUTCMonth()%>/<%= new Date(user.regDate).getUTCDate()%>/<%= new Date(user.regDate).getUTCFullYear()%></td>
                                 </tr>
                                 <tr class="border-2 border-b-gray-400 p-2 border-transparent">
                                     <td>Email:</td>
@@ -315,7 +353,9 @@
                                 <tr class="border-2 border-b-gray-400 p-2 border-transparent">
                                     <td valign="top" class="">Address:</td>
                                     <td class="text-center w-full">
+                                        <%if(user.address.street != ""){%>
                                         <%=user.address.street%>, <%=user.address.aptSuite%>, <%=user.address.city%>, <%=user.address.state%>,  <%=user.address.zipCode%>
+                                        <%}%>
                                     </td>
                                 </tr>
                             </tbody>
