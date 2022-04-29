@@ -13,13 +13,17 @@ const crypto = require('crypto');
 const storage = new GridFsStorage({
     url: process.env.MONGO_URL,
     file: (req, file) => {
-        
+        if(file){
+            console.log('valid file')
+        }else{
+            console.log('invalid file')
+        }
 
         const filename = new mongoose.Types.ObjectId(req.params.id);
 
         gfs.gfs.find({filename}).toArray((err,files)=>{
             if(files.length != 0){
-                console.log('FILES FOUND AND ARE GETTING DELETED!');
+                //console.log('FILES FOUND AND ARE GETTING DELETED!');
                 files.forEach((file)=>{
                     //console.log(file._id);
                     let _id =  new mongoose.Types.ObjectId(file._id);

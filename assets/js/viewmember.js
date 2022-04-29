@@ -37,7 +37,7 @@ $(document).ready(function(){
     });
 
     $("#logsBtn").click(() => {
-        var displayText = `<div class="flex flex-col w-full" style="height:20rem;">
+        var displayText = `<div class="flex flex-col w-full" style="height:100%;">
         <div class="overflow-x-auto ">
                       <div class="py-4 inline-block w-full">
                         <div class="overflow-x-auto ">
@@ -245,10 +245,18 @@ $(document).ready(function(){
         }
       })
     let idModal = document.getElementById("id-modal-background");
+    let form = document.getElementById("createIDCardForm");
+    let result = document.getElementById("cropperResult");
     $("#id-modal").click(() => {
       idModal.classList.toggle('hidden'); 
     });
     $("#close-id-modal-background").click(() => {
+      if(cropper !=null){
+        cropper.destroy();
+        cropper = null;
+      }
+      result.innerHTML = "";
+      form.classList.remove('hidden');
       idModal.classList.toggle('hidden');
     });
 
@@ -268,4 +276,71 @@ $(document).ready(function(){
             location.reload();
         });
     });
+
+    $("#id-print-btn").on("click", ()=>{
+      // setTimeout(() => {
+        
+      // }, 1000);
+      printJS({
+        printable : [`/memberIDImages/${userObj._id}-front.png`,`/memberIDImages/${userObj._id}-back.png`],
+        type: 'image',
+        imageStyle: 'float:left;',
+        onError: (error) =>{
+          alert(error);
+        },
+        showModal: true,
+        modalMessage: "Retrieving IDCard", 
+      });
+
+      $.ajax({
+        "url":"/api/getMemberIDCard/"+userObj._id,
+        "method":"POST",
+        }).done(function(data){
+
+        }).fail(function(data){
+            alert("Error couldn't print that ID!");
+            location.reload();
+        });
+        
+    });
+
+    let cropper;
+
+    // $("#memberIDImage").on('change',(e)=>{
+      
+      
+    //   if (e.target.files.length) {
+    //     // start file reader
+    //     const reader = new FileReader();
+    //     reader.onload = (e) => {
+    //       if (e.target.result) {
+    //         // create new image
+    //         let img = document.createElement("img");
+    //         img.id = "memberIDImageCropperImg";
+    //         img.src = e.target.result;
+    //         img.style = "width:60%"
+    //         // clean result before
+    //         result.innerHTML = "";
+    //         // append new image
+    //         result.appendChild(img);
+    //         // show save btn and options
+    //         form.classList.add('hidden');
+    //         result.classList.remove('hidden');
+    //         //save.classList.remove("hide");
+    //         //options.classList.remove("hide");
+    //         // init cropper
+    //         cropper = new Cropper(img,{
+    //           aspectRatio: 2/2,
+    //           maxSize: [10, 10, '%']
+    //         });
+            
+    //       }
+    //     };
+    //     reader.readAsDataURL(e.target.files[0]);
+        
+    //   }
+    //   console.log('INput being read!')
+    // })
+
+    
 });

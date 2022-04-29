@@ -1,9 +1,11 @@
 const {userDB} = require('../model/model.js');
 const models = require('../model/model');
 const gfs = require('../database/connection');
+const path = require('path');
 const mongoose = require('mongoose');
 const fs = require('fs');
-
+const {spawn} = require('child_process');
+const moment = require('moment')
 //create and save new user
 
 exports.create = (req,res,next)=>{
@@ -30,7 +32,8 @@ exports.create = (req,res,next)=>{
         status: {
             active: false,
             flag: false
-        }
+        },
+        regDate: moment().format()
     });
 
     user.save(user)
@@ -67,9 +70,12 @@ exports.downloadImage = (req,res) => {
 
 exports.createID = (req,res) =>{
     if(req.body.id){
+        const date = moment().format();
+        const newID = "AB"+parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(10).toString().replace(".", ""))
         models.userDB.findOneAndUpdate({_id:req.body.id},{
+            cardID: newID,
             cardIDData:{
-                ISS : new Date(),
+                ISS : date,
                 heightFT : req.body.memberHeightFT,
                 heightIN: req.body.memberHeightIN,
                 eyeColor: req.body.memberEyeColor,
@@ -77,22 +83,37 @@ exports.createID = (req,res) =>{
             }
         })
         .then(data => {
-            console.log(data.cardIDData);
-            // const fileName = new mongoose.Types.ObjectId("62420f7162eca3c8513d5ddd");
-            // console.log(fileName);
-            // gfs.gfs.find({fileName}).toArray((err,files)=>{
-            //     if(files.length != 0){
-            //         files.forEach((file)=>{ 
-            //             let _id = new mongoose.Types.ObjectId(file._id)
-            //             gfs.gfs.openDownloadStream(_id).pipe(fs.createWriteStream('./memberImages/'+file.filename+".png"));
-            //         });
-            //     }else{
-            //         console.log('NO FILES FOUND')
-            //     }
-            // });
-            return;
+            data.cardID = newID,
+            data.cardIDData = {
+                ISS : date,
+                heightFT : req.body.memberHeightFT,
+                heightIN: req.body.memberHeightIN,
+                eyeColor: req.body.memberEyeColor,
+                hairColor: req.body.memberHairColor
+            }
+            //console.log(data);
+            const idCreator = spawn('python',['./server/idCreator/idcreator.py', JSON.stringify(data)]);
+            
+            idCreator.stdout.on('data',(data)=>{
+                console.log(`stdout: ${data}`);
+            });
 
-            //res.status(200).redirect('/api/downloadMemberImage/'+req.body.id+"/"+req.body.cardID);
+            // idCreator.stderr.on('data',(data)=>{
+            //     console.error(`stderr: ${data}`);
+            // })
+
+            idCreator.on('close',(data)=>{
+                const path = `./server/memberImages/${req.body.id}.png`
+                fs.unlink(path, (err)=>{
+                    if(err){
+                        console.error(err)
+                        return
+                    }
+                    console.log("Member image removed");
+                })
+            });
+            res.status(200).redirect('/members/view?id='+newID);
+           
             
         })
         .catch(err=>{
@@ -101,9 +122,6 @@ exports.createID = (req,res) =>{
     }else{
         res.sendStatus(400);
     }
-    // console.log(req.file);
-    // console.log(req.body.memberHeightFT+"' "+req.body.memberHeightIN+"\"");
-    // res.status(200).redirect("/members/view?id="+req.body.cardID);
 }
 
 
@@ -274,6 +292,29 @@ exports.deleteUser = (req, res) => {
             .then(data=>{
                 models.userClassesDB.deleteMany({userObjID:req.params.id})
                 .then(data=>{
+                    const filename = new mongoose.Types.ObjectId(req.params.id);
+                    gfs.gfs.find({filename}).toArray((err,files)=>{
+                        if(files.length != 0){
+                            console.log('FILES FOUND AND ARE GETTING DELETED!');
+                            files.forEach((file)=>{
+                                //console.log(file._id);
+                                let _id =  new mongoose.Types.ObjectId(file._id);
+                                gfs.gfs.delete(_id);
+                            })
+                            
+                            
+                        }
+                    });
+                    const path = `./server/memberIDImages/${req.params.id}-front.png`;
+                    const path2 = `./server/memberIDImages/${req.params.id}-back.png`;
+                    fs.unlink(path, (err)=>{
+                        if(err){
+                        }
+                    });
+                    fs.unlink(path2, (err)=>{
+                        if(err){
+                        }
+                    });
                     res.status(200).redirect('/members');
                 })
                 .catch(err=>{
@@ -574,7 +615,13 @@ exports.deleteClass = (req,res) => {
     if(req.params.id){
         models.classesDB.deleteOne({_id:req.params.id})
         .then(data=>{
-            res.sendStatus(200);
+                models.userClassesDB.deleteMany({classObjID:req.params.id})
+                .then(data=>{
+                    res.sendStatus(200);
+                })
+                .catch(err=>{
+                    res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
+                })
         })
         .catch(err=>{
             res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
@@ -659,12 +706,16 @@ exports.findLogs = (req,res) => {
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
         });
     }else{
-        models.facilityUsageDB.find(null,null,{
-            sort: {
-                "timeIn": -1
+        models.facilityUsageDB.aggregate([
+            {
+                $sort: {
+                    "timeIn": -1
+                }
             },
-        })
-        .then(data => {
+            {
+                $limit: 40
+            }
+        ]).then(data => {
             res.send(data);
         })
         .catch(err=>{

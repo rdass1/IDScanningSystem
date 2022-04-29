@@ -92,25 +92,40 @@ const displayMemberHtml = (elementID,data) => {
     }else{
         let displayData = "";
         for(var i = 0; i < data.length; i++){
+            let backgroundColor = "#FFFFFF"; let flagColor = "#4ADE80"; let textColor = "#000000";
+            switch(data[i].role){
+                case "Patient":
+                    backgroundColor = "#FE6100"
+                    break;
+                case "Alumni":
+                    backgroundColor = "#DC267F"
+                    break;
+                case "Employee":
+                    backgroundColor = "#648FFF"
+                    break;
+                case "Volunteer":
+                    backgroundColor = "#785EF0"
+                    break;
+            }
+            if(data[i].status.flag ){
+                flagColor = '#E11D48'
+                textColor = '#FFFFFF'
+            }
             displayData += `
-                <div class="w-full h-72" style="cursor: pointer;" onclick="window.location='/members/view?id=${data[i].cardID}';">
-                    <table class="w-full h-full">
-                        <tbody class="w-full">
-                                    <tr class="w-full bg-red-400">
-                                        <td align="center" class="w-full p-2">
-                                            <img class="object-scale-down w-52 h-64" src="api/getMemberImages/${data[i]._id}">
-                                        </td> 
-                                    </tr>
-                                    <tr class="w-full bg-green-300">
-                                        <td>${data[i].lastName}, ${data[i].firstName}</td>
-                                    </tr>
-                                    <tr class="w-full bg-green-300">
-                                        <td>${data[i].cardID}</td>
-                                    </tr>
-                                    
-                                
-                        </tbody>
-                    </table>
+                <div class="w-56 h-50 rounded-md flex flex-col" style="cursor: pointer;background-color: ${backgroundColor}" onclick="window.location='/members/view?id=${data[i].cardID}';">
+                    <div class="m-4 ">
+                        <img class="object-scale-down w-52 h-64" src="api/getMemberImages/${data[i]._id}">
+                    </div>
+                    
+                    <div class="flex text-white flex-col rounded-b-md" style="background-color: ${flagColor};color:${textColor}">
+                        <div class="ml-2 mt-2 ">
+                        ${data[i].lastName}, ${data[i].firstName}
+                        </div>
+                        <div class="ml-2 mb-2 ">
+                        ${data[i].cardID}
+                        </div>
+                    </div>
+                    
                 </div>
             `
             $(elementID).html(displayData);

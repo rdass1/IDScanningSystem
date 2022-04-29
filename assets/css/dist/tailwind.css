@@ -457,6 +457,9 @@ Ensure the default browser behavior of the `hidden` attribute.
     max-width: 1536px;
   }
 }
+.invisible {
+  visibility: hidden;
+}
 .fixed {
   position: fixed;
 }
@@ -505,6 +508,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .m-0 {
   margin: 0px;
 }
+.m-4 {
+  margin: 1rem;
+}
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;
@@ -520,6 +526,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .ml-auto {
   margin-left: auto;
+}
+.ml-2 {
+  margin-left: 0.5rem;
+}
+.mt-2 {
+  margin-top: 0.5rem;
 }
 .mr-4 {
   margin-right: 1rem;
@@ -568,8 +580,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-64 {
   height: 16rem;
 }
-.h-72 {
-  height: 18rem;
+.h-96 {
+  height: 24rem;
 }
 .h-60 {
   height: 15rem;
@@ -597,6 +609,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-5 {
   width: 1.25rem;
+}
+.w-56 {
+  width: 14rem;
 }
 .w-52 {
   width: 13rem;
@@ -649,6 +664,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .cursor-pointer {
   cursor: pointer;
 }
+.resize {
+  resize: both;
+}
 .grid-flow-col {
   grid-auto-flow: column;
 }
@@ -687,6 +705,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .gap-10 {
   gap: 2.5rem;
+}
+.gap-2 {
+  gap: 0.5rem;
 }
 .space-x-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
@@ -734,9 +755,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 .rounded-lg {
   border-radius: 0.5rem;
 }
+.rounded-md {
+  border-radius: 0.375rem;
+}
 .rounded-t-lg {
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
+}
+.rounded-b-md {
+  border-bottom-right-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
 }
 .rounded-t-md {
   border-top-left-radius: 0.375rem;
@@ -801,17 +829,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
-.bg-red-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
-}
-.bg-green-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(134 239 172 / var(--tw-bg-opacity));
-}
 .bg-sky-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(14 165 233 / var(--tw-bg-opacity));
+}
+.bg-indigo-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(99 102 241 / var(--tw-bg-opacity));
 }
 .bg-red-600 {
   --tw-bg-opacity: 1;
@@ -1188,8 +1212,8 @@ Ensure the default browser behavior of the `hidden` attribute.
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .md\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 @media (min-width: 1024px) {
@@ -1242,8 +1266,8 @@ Ensure the default browser behavior of the `hidden` attribute.
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .xl\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  .xl\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .xl\:space-y-7 > :not([hidden]) ~ :not([hidden]) {

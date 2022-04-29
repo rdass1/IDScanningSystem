@@ -1,6 +1,7 @@
 const { default: axios } = require("axios")
 const lodash = require('lodash');
 const dotenv = require('dotenv');
+const fs = require('fs');
 
 const $ = require('jquery');
 dotenv.config({path:'config.env'});
@@ -47,7 +48,7 @@ exports.viewmember = (req,res,next) => {
                     response.data[0].DOB = response.data[0].DOB.substring(0,10);
                 res.render('viewmember',{user:response.data[0]});
             }else{
-                res.send("can't get user");
+                res.status(404).redirect('/members');
             }
             
             
@@ -139,11 +140,15 @@ exports.index = (req, res) =>{
 
 //Members
 exports.allMembers = (req,res) => {
+    
     axios.get(process.env.URL+process.env.PORT+'/api/members')
     .then(function(response){
         if(lodash.isEmpty(response.data)){
             res.render('members',{users:response.data});
         }else{
+            
+            
+            
             res.render('members',{users:response.data});
         }
         

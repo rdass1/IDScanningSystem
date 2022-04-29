@@ -61,8 +61,7 @@ const userSchema = new mongoose.Schema({
     gender: String,
     pronoun: String,
     regDate: {
-        type: Date,
-        default: Date
+        type: Date
     },
     address: {
         street: String,

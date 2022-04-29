@@ -10,7 +10,7 @@ const { runInContext } = require('lodash');
 const mongoose = require('mongoose');
 const gfs = require('../database/connection');
 const fs = require('fs');
-const {spawn} = require('child_process');
+
 
 
 /**
@@ -126,19 +126,19 @@ route.get('/members/view',services.viewmember);
 
 //Images Routes & ID Routes
 route.post('/api/uploadMemberImage/:id/:cardID',upload.single('memberIDImage'),(req,res) =>{
-    controller.createID(req,res);
     if(!req.params.id || req.params.id === 'undefined') return res.status(400).send('no image id');
     const filename = new mongoose.Types.ObjectId(req.params.id);
     gfs.gfs.find({filename}).toArray((err,files) =>{
         if(!files || files.length === 0){
-            console.log('no files exist!');
+            console.log('no images exist!');
+        }else{
+            const _id = new mongoose.Types.ObjectId(files[0]._id);
+            console.log("downloading image!")
+            gfs.gfs.openDownloadStream(_id).pipe(fs.createWriteStream('./server/memberImages/'+files[0].filename+".png"));
         }
-        const _id = new mongoose.Types.ObjectId(files[0]._id);
-        console.log("downloading image!")
-        gfs.gfs.openDownloadStream(_id).pipe(fs.createWriteStream('./memberImages/'+files[0].filename+".png"));
+        
     })
-    
-    res.status(200).redirect('/members/view?id='+req.params.cardID);
+    controller.createID(req,res);
 });
 
 route.get('/api/downloadMemberImage/:id/:cardID',controller.downloadImage);
@@ -171,10 +171,32 @@ route.get('/members/api/getMemberImages/:id', ({params: id},res) => {
 
 })
 
+route.post('/api/getMemberIDCard/:id',({params:id},res)=>{
+    let exists = true;
+    setTimeout(()=>{
+        const path = `./server/memberIDImages/${id.id}-front.png`;
+        const path2 = `./server/memberIDImages/${id.id}-back.png`;
+        fs.unlink(path, (err)=>{
+            if(err){
+                exists = false;
+            }
+        });
+        fs.unlink(path2, (err)=>{
+            if(err){
+                exists = false;
+            }
+        });
+        if(!exists){
+            res.status(404).send({message:"You must create an ID before trying to print!"});
+        }
+    },5000);
+        
+})
+
 
 //Member API
 route.post('/api/members',controller.create);
-route.post('/api/members_edit/:id',controller.updateUser);
+route.post('/api/members_edit/:id',upload.single('memberIDImage'),controller.updateUser);
 route.post('/api/members_notes/:id',controller.updateUserNotes);
 route.get('/api/members',controller.find);
 route.get('/api/active_members',controller.activeMember);
