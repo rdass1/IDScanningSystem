@@ -574,14 +574,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-20 {
   height: 5rem;
 }
+.h-96 {
+  height: 24rem;
+}
 .h-5 {
   height: 1.25rem;
 }
 .h-64 {
   height: 16rem;
-}
-.h-96 {
-  height: 24rem;
 }
 .h-60 {
   height: 15rem;

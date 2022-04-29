@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const Grid = require('gridfs-stream');
-const { createReadStream } = require('fs'); //remove
-const { createModel } = require('mongoose-gridfs'); //remove
 const fs = require('fs')
 
 const connectDB = async ()=>{
