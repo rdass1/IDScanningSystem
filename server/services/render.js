@@ -10,62 +10,15 @@ dotenv.config({path:'config.env'});
 
 
 exports.homeRoutes = (req,res)=>{
-    
-    axios.get(process.env.URL+process.env.PORT+'/api/active_members')
-    .then(function(response){
-        if(lodash.isEmpty(response.data)){
-            res.render('dashboard',{users:response.data});
-        }else{
-            res.render('dashboard',{users:response.data});
-        }
-        
-       
-        
-    })
-    .catch(err=>{
-        res.send(err);
-    });
-    // else{
-    //     axios.get(process.env.URL+process.env.PORT+'/api/active_members')
-    //     .then(function(response){
-    //         res.render('dashboard',{users:response.data})
-    //         //console.log(response.data);
-    //     })
-    //     .catch(err=>{
-    //         res.send(err);
-    //     });
-    // }
-
-    
+    res.render('dashboard');
 }
 
 exports.viewmember = (req,res,next) => {
     if(req.query.id){
-        axios.get(process.env.URL+process.env.PORT+'/api/members?id='+req.query.id)
-        .then(function(response){
-            if(!lodash.isEmpty(response.data)){
-                if(response.data[0].DOB != null)
-                    response.data[0].DOB = response.data[0].DOB.substring(0,10);
-                res.render('viewmember',{user:response.data[0]});
-            }else{
-                res.status(404).redirect('/members');
-            }
-            
-            
-        })
-        .catch(err=>{
-            res.send(err);
-        });
-        // console.log(req.query.id);
-        // res.status(200).redirect('/dashboard');
-        
+        res.render('viewmember',{cardID: req.query.id, user:req.user});
     }else{
         res.status(404).redirect('/dashboard');
     }
-}
-
-exports.createBuilding = (req,res) => {
-    res.render('create_building');
 }
 
 exports.building = (req,res) => {
@@ -78,26 +31,7 @@ exports.building = (req,res) => {
     });
 }
 
-exports.createLocation = (req,res) => {
-    axios.get(process.env.URL+process.env.PORT+'/api/building')
-    .then(function(response){
-        console.log(response.data[0]._id);
-        res.render('create_location',{buildings:response.data});
-    })
-    .catch(err=>{
-        res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
-    });
-}
 
-exports.location = (req,res) => {
-    axios.get(process.env.URL+process.env.PORT+'/api/locations')
-    .then(function(response){
-        res.render('locations',{locations:response.data});
-    })
-    .catch(err=>{
-        res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
-    });
-}
 
 exports.classes = (req,res) => {
     axios.get(process.env.URL+process.env.PORT+'/api/classes')
@@ -110,16 +44,7 @@ exports.classes = (req,res) => {
 }
 
 
-exports.createClass = (req,res) => {
-    axios.get(process.env.URL+process.env.PORT+'/api/buildings')
-    .then(function(response){
-        
-    })
-    .catch(err=>{
-        res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
-    });
-    res.render('create_location',{buildings:response.data});
-}
+
 
 
 exports.logs = (req,res) => {
@@ -138,24 +63,17 @@ exports.index = (req, res) =>{
     res.render('index');
 }
 
+
+exports.login = (req, res) =>{
+    res.render('login');
+}
+
 //Members
 exports.allMembers = (req,res) => {
-    
-    axios.get(process.env.URL+process.env.PORT+'/api/members')
-    .then(function(response){
-        if(lodash.isEmpty(response.data)){
-            res.render('members',{users:response.data});
-        }else{
-            
-            
-            
-            res.render('members',{users:response.data});
-        }
-        
-       
-        
-    })
-    .catch(err=>{
-        res.send(err);
-    });
+    //console.log(req.user)
+    res.render('members',{user:req.user});
+}
+
+exports.employeeLoginManagement = (req,res)=>{
+    res.render('employeeLoginManagement',{user:req.user});
 }

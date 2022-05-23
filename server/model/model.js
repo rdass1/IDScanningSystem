@@ -155,6 +155,13 @@ const userClassesSchema = new mongoose.Schema({
 
 },{collection: 'memberClasses'});
 
+const employeeLoginSchema = new mongoose.Schema({
+    userObjID: mongoose.ObjectId,
+    username: String,
+    password: String,
+    role: String,
+},{collection:"employeeLogin"});
+
 
 var schema = new mongoose.Schema({
     cardID: String,
@@ -173,6 +180,7 @@ const locationsDB = mongoose.model('locations',locationsSchema);
 const buildingsDB = mongoose.model('buildings',buildingsSchema);
 const classesDB = mongoose.model('classes',classesSchema);
 const userClassesDB = mongoose.model('memberClasses',userClassesSchema);
+const employeeLoginDB = mongoose.model('employeeLogin',employeeLoginSchema);
 // ,facilityUsageDB,locationsDB,buildingsDB,classesDB
 // exports.userDB2= userDB2;
 exports.userDB = userDB2;
@@ -181,6 +189,7 @@ exports.locationsDB = locationsDB;
 exports.buildingsDB = buildingsDB;
 exports.classesDB = classesDB;
 exports.userClassesDB = userClassesDB;
+exports.employeeLoginDB = employeeLoginDB;
 
 // $replaceRoot: { newRoot: { $mergeObjects: [ "$locations", "$$ROOT" ] } }
 

@@ -1,16 +1,7 @@
+
 $(document).ready(function(){
-    let userObj
-      $.ajax({
-        "url":"/api/members?id="+userID,
-        "method":"GET",
-    }).done(function(data){
-        userObj = data[0];
-        if(userObj.status.flag){
-          $("#flagBtn").html("Unflag");
-        }else{
-          $("#flagBtn").html("Flag");
-        }
-    });
+    
+    
     $("#notesBtn").click(() => {
         var parseText = ``;
         if(userObj.notes != ""){
@@ -38,9 +29,9 @@ $(document).ready(function(){
 
     $("#logsBtn").click(() => {
         var displayText = `<div class="flex flex-col w-full" style="height:100%;">
-        <div class="overflow-x-auto ">
+        <div class="overflow-y-scroll">
                       <div class="py-4 inline-block w-full">
-                        <div class="overflow-x-auto ">
+                        <div class="">
                           <table class="text-center w-full">
                 <thead class="border-b bg-gray-800">
                   <tr>
@@ -62,7 +53,8 @@ $(document).ready(function(){
                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
                         Total Time
                       </th>
-                    
+                    <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                    </th>
                   </tr>
                 </thead class="border-b">
                 <tbody>`;
@@ -85,6 +77,9 @@ $(document).ready(function(){
                                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                 ${userObj.logs[i].timeTotal}
                                 </td>
+                                <td class="">
+                                    <a data-id="${userObj.logs[i]._id}" href="" class="p-3 logsDeleteBtnJQ"><img width="15" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a>
+                                </td>
                               </tr class="bg-white border-b">
                 
                 `
@@ -98,7 +93,25 @@ $(document).ready(function(){
                   </div>`;
 
             $("#displayUserTable").html(displayText);
+            $(".logsDeleteBtnJQ").click(function(){
+              if(confirm("Do you really want to delete this user log?")){
+                  
+                  $.ajax({
+                      "url":"/api/logs/"+$(this).attr("data-id"),
+                      "method":"DELETE",
+                  }).done(function(data){
+                      
+                    location.reload();
+                      
+                  }).fail(function(data){
+                      alert("Error couldn't delete that log!");
+                      location.reload();
+                  });
+              }
+          });
     })
+
+    
 
     $("#classesBtn").click(() => {
         var displayText = `
@@ -246,16 +259,11 @@ $(document).ready(function(){
       })
     let idModal = document.getElementById("id-modal-background");
     let form = document.getElementById("createIDCardForm");
-    let result = document.getElementById("cropperResult");
+    
     $("#id-modal").click(() => {
       idModal.classList.toggle('hidden'); 
     });
     $("#close-id-modal-background").click(() => {
-      if(cropper !=null){
-        cropper.destroy();
-        cropper = null;
-      }
-      result.innerHTML = "";
       form.classList.remove('hidden');
       idModal.classList.toggle('hidden');
     });
@@ -303,44 +311,8 @@ $(document).ready(function(){
         });
         
     });
-
-    let cropper;
-
-    // $("#memberIDImage").on('change',(e)=>{
-      
-      
-    //   if (e.target.files.length) {
-    //     // start file reader
-    //     const reader = new FileReader();
-    //     reader.onload = (e) => {
-    //       if (e.target.result) {
-    //         // create new image
-    //         let img = document.createElement("img");
-    //         img.id = "memberIDImageCropperImg";
-    //         img.src = e.target.result;
-    //         img.style = "width:60%"
-    //         // clean result before
-    //         result.innerHTML = "";
-    //         // append new image
-    //         result.appendChild(img);
-    //         // show save btn and options
-    //         form.classList.add('hidden');
-    //         result.classList.remove('hidden');
-    //         //save.classList.remove("hide");
-    //         //options.classList.remove("hide");
-    //         // init cropper
-    //         cropper = new Cropper(img,{
-    //           aspectRatio: 2/2,
-    //           maxSize: [10, 10, '%']
-    //         });
-            
-    //       }
-    //     };
-    //     reader.readAsDataURL(e.target.files[0]);
-        
-    //   }
-    //   console.log('INput being read!')
-    // })
+    
 
     
 });
+

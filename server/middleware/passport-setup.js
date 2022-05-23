@@ -3,6 +3,8 @@ const GoogleStrategy = require( 'passport-google-oauth20' ).Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
+const models = require('../model/model');
+
 dotenv.config({path:'config.env'});
 
 passport.serializeUser(function(user,done){
@@ -35,13 +37,27 @@ passport.use(new LocalStrategy(
     passReqToCallback: true
   },
   function(req,username, password, done) {
-    
-    console.log(username);
-    console.log(password);
-    console.log(req.body.role);
-    return done(null, {
-      username:username,
-      password:password,
+    models.employeeLoginDB.find({username: username})
+    .then(async user => {
+      if(user == null){
+        return done(null,false,{message:'No employee with that username'})
+      }
+      user = user[0];
+      return done(null,{username: user.username, role: user.role})
+      try{
+        if(await bcrypt.compare(password, user.password)){
+          return done(null,{username: user.username, role: user.role})
+        }else{
+          return done(null,false,{message: 'Incorrect password'})
+        }
+      }catch(e){
+        console.log(e)
+        return done(null,false,{message:'error occurred!'})
+      }
+    })
+    .catch(err=>{
+      return done(null,false,{message:'error occurred!'})
     });
+    
   }
 ));

@@ -124,6 +124,13 @@ exports.createID = (req,res) =>{
     }
 }
 
+exports.searchUser = (req,res) => {
+    if(req.query.id){
+        
+    }else{
+        res.sendStatus(400);
+    }
+}
 
 exports.find = (req,res) =>{
     if(req.query.id){
@@ -193,7 +200,95 @@ exports.find = (req,res) =>{
         .catch(err=>{
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
         });
-    }else{
+    }
+    else if(req.query.cardID){
+        models.userDB.aggregate([
+            {
+              $search: {
+                "autocomplete": {
+                    "query": req.query.cardID,
+                    "path": "cardID",
+                    
+        
+                }
+              }
+            },
+          ]).then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }
+    else if(req.query.mrnum){
+        models.userDB.aggregate([
+            {
+              $search: {
+                "autocomplete": {
+                    "query": req.query.mrnum,
+                    "path": "MRNum",
+                    
+        
+                }
+              }
+            },
+          ]).then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+
+    }
+    else if(req.query.name){
+        const name = req.query.name.split(' ');
+        var params = [
+            {
+                "autocomplete": {
+                    "query":name[0],
+                    "path": 'firstName',
+                },
+            },
+            {
+                "autocomplete": {
+                    "query":name[0],
+                    "path": 'lastName',
+                },
+            },
+        ];
+        if(name[1]){
+            params = [
+                {
+                    "autocomplete": {
+                        "query":name[0],
+                        "path": 'firstName',
+                    },
+                },
+                {
+                    "autocomplete": {
+                        "query":name[1],
+                        "path": 'lastName',
+                    },
+                },
+                
+            ]
+        }
+        models.userDB.aggregate([
+            {
+              $search: {
+                "compound": {
+                    "should": params,
+                },
+              }
+            },
+          ]).then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }
+    else{
         userDB.find()
         .then(user=>{
             res.send(user);
@@ -693,13 +788,78 @@ exports.deleteUserClass = (req,res) => {
 
 
 exports.findLogs = (req,res) => {
-    if(req.query.name){
-        models.facilityUsageDB.find({name:req.query.name},null,{
-            sort: {
-                "timeIn": -1
+    if(req.query.location && req.query.date){
+        models.facilityUsageDB.aggregate([
+            {
+              $search: {
+                "autocomplete": {
+                    "query": req.query.location,
+                    "path": "locationBuilding",
+                    
+        
+                }
+              }
             },
+            {
+                $match : {
+                    date : req.query.date
+                }
+            },
+            {
+                $sort: {
+                    "timeIn": -1
+                }
+            },
+          ]).then(data => {
+            res.send(data);
         })
-        .then(data => {
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }
+    else if(req.query.date){
+        models.facilityUsageDB.aggregate([
+            {
+                $match : {
+                    date : req.query.date
+                }
+            },
+            {
+                $sort: {
+                    "timeIn": -1
+                }
+            },
+            {
+                $limit: 100
+            },
+          ]).then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }
+    else if(req.query.location){
+        models.facilityUsageDB.aggregate([
+            {
+              $search: {
+                "autocomplete": {
+                    "query": req.query.location,
+                    "path": "locationBuilding",
+                    
+        
+                }
+              }
+            },
+            {
+                $sort: {
+                    "timeIn": -1
+                }
+            },
+            {
+                $limit: 100
+            },
+          ]).then(data => {
             res.send(data);
         })
         .catch(err=>{
@@ -713,8 +873,8 @@ exports.findLogs = (req,res) => {
                 }
             },
             {
-                $limit: 40
-            }
+                $limit: 100
+            },
         ]).then(data => {
             res.send(data);
         })
@@ -725,5 +885,38 @@ exports.findLogs = (req,res) => {
 }
 
 exports.deleteLogs = (req,res) => {
+    if(req.params.id){
+        models.facilityUsageDB.deleteOne({_id:req.params.id})
+        .then(data=>{
+            console.log(data)
+            res.sendStatus(200);
+        })
+        .catch(err=>{
+            console.log(err.message)
+            res.status(500).send({message:err.message || "Error occurred while trying to delete data"});
+        })
+    }else{
+        res.sendStatus(400);
+    }
+}
 
+//Employee Login
+exports.employeeLoginInfo = (req,res) => {
+    if(req.query.id){
+        models.employeeLoginDB.findOne({_id: req.query.id})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }else{
+        models.employeeLoginDB.find({})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }
 }

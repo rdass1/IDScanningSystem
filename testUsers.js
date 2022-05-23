@@ -172,3 +172,44 @@ console.log(new Date("2001-12-31").getUTCFullYear);
 // const test4 = db.memberInfo.update();
 
 
+const searchTest = ([
+    {
+        $search: {
+            "autocomplete":{
+                "path" : "cardID",
+                "query": "AB72656"
+            }
+        }
+    }
+])
+
+db.memberInfo.aggregate([
+    {
+      $search: {
+        "autocomplete": {
+            "query": "AB7",
+            "path": "cardID",
+            
+
+        }
+      }
+    },
+    {
+      $limit: 1
+    },
+  ])
+
+
+  ([
+    {
+      '$search': {
+        'index': 'memberSearch',
+        'text': {
+          'query': '2021-400',
+          'path': {
+            'wildcard': '*'
+          }
+        }
+      }
+    }
+  ])

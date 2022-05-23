@@ -22,7 +22,7 @@ route.get('/',services.index);
 
 
 
-route.get('/login',controller.login);
+
 
 //Needs to be moved
 
@@ -51,7 +51,10 @@ route.get("/sse", (req,res) =>{
         on('change', data => {
         res.status(200).write(`data: update\n\n`);
         });
-
+    // facilityUsageDB.watch().
+    //     on('change', data => {
+    //         res.status(200).write(`data: update\n\n`);
+    //     })
     
 });
 
@@ -69,11 +72,15 @@ route.get('/google',
       [ 'email', 'profile' ] }
 ));
 
+
+
+route.get('/login', services.login);
+
 route.post('/login', 
-  passport.authenticate('local', { 
-      failureRedirect: '/',
-      successRedirect: '/dashboard' 
-    }));
+  passport.authenticate('local',{
+      successRedirect: "/dashboard",
+      failureRedirect: "/login"
+  }));
 // route.post('/login', (req,res) => {
 //     res.send(req.body);
 // });
@@ -97,11 +104,7 @@ route.get('/dashboard',services.homeRoutes);
 
 //Building Routes
 route.get('/facilities',services.building);
-route.get('/buildings/add_building',services.createBuilding);
 
-//Location Routes
-route.get('/locations',services.location);
-route.get('/locations/add_location',services.createLocation);
 
 //Classes Routes
 route.get('/classes',services.classes);
@@ -111,14 +114,14 @@ route.get('/classes',services.classes);
 //Logs Routes
 route.get('/logs',services.logs);
 
+
 //Members Routes
 route.get('/members',services.allMembers);
 route.get('/members/view',services.viewmember);
 
 
-//Classes Routes
-// route.get('/classes',services.class);
-// route.get('/classes/add_class',services.createClass)
+//Employee Login
+route.get('/employee_management',services.employeeLoginManagement);
 
 
 
@@ -195,6 +198,7 @@ route.post('/api/getMemberIDCard/:id',({params:id},res)=>{
 
 
 //Member API
+route.get('/api/memberSearch/:id')
 route.post('/api/members',controller.create);
 route.post('/api/members_edit/:id',upload.single('memberIDImage'),controller.updateUser);
 route.post('/api/members_notes/:id',controller.updateUserNotes);
@@ -225,6 +229,9 @@ route.post('/api/user_flag/:id/:flag',controller.userFlag);
 //Logs API
 route.get('/api/logs',controller.findLogs);
 route.delete('/api/logs/:id',controller.deleteLogs);
+
+//Employee Login API
+route.get('/api/employeeLogin',controller.employeeLoginInfo);
 
 
 

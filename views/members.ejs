@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="/css/dist/tailwind.css" rel="stylesheet">
+    <script src="/js/lib/pagination.js"></script>
+    <link href="/css/lib/pagination.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Classes</title>
 </head>
@@ -36,7 +38,7 @@
                    <img src="/img/nav/logo.svg" alt="logo" width="40">
                         <p class="text-2xl leading-6 text-white">Above and Beyond</p>                
                 </div>
-                <div class="mt-6 flex flex-col justify-start items-center  pl-4 w-full border-gray-600 border-b space-y-5 xl:space-y-7 pb-5 h-full">
+                <div class="mt-6 flex flex-col justify-start items-center  pl-4 w-full border-gray-600 border-b space-y-5 xl:space-y-7 pb-5">
                     <button class="flex jusitfy-start items-center space-x-6 w-full  focus:outline-none focus:text-indigo-400  text-white rounded " onclick="window.location='/dashboard';">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="34.545" viewBox="0 0 34.545 34.545">
                             <g id="sidebar2-svg4" transform="translate(-3.25 -3.25)">
@@ -77,14 +79,23 @@
                             <p class="text-base leading-4 ">Facilities</p>                    
                     </button>
                 </div>
-                <!-- <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full py-3 mb-2">
+                <%if(user.role == "Admin"){%>
+                <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full">
+                    <button class="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14 " onclick="window.location='/employee_management';">
+                        <p class="text-sm leading-5 ">Employee Management</p>
+                        <img id="icon2" class="transform rotate-180" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sidebar2-svg7.svg" alt="arrow" />                    
+                    </button>
+                </div>
+                <%}%>
+                <div class="h-full"></div>
+                <div class="px-6 border-y border-gray-600 w-full py-3 mb-2 bg-gray-900 ">
                     <div class=" flex justify-between items-center w-full">
                         <div class="flex justify-center items-center  space-x-2">
                             <div>
                            <img class="rounded-full" src="https://i.ibb.co/L1LQtBm/Ellipse-1.png" alt="avatar"  />
                         </div>
                         <div class="flex justify-start flex-col items-start">
-                            <p class="cursor-pointer text-sm leading-5 text-white">Alexis Enache</p>
+                            <p class="cursor-pointer text-sm leading-5 text-white"><%=user.username%></p>
                             <p class="cursor-pointer text-xs leading-3 text-gray-300">alexis81@gmail.com</p>
                         </div>
                         </div>
@@ -94,7 +105,7 @@
                             <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
-                </div> -->
+                </div>
             </div>
             <!--/Main Nav-->
         </nav>
@@ -126,7 +137,16 @@
                         </div>
                         <div>
                             <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Role</label>
-                            <input type="text" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                            <select name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                                <option value="Patient">Patient</option>
+                                <option value="Alumni">Alumni</option>
+                                <%if(user.role == "Employee" || user.role == "Admin"){%>
+                                    <option value="Employee">Employee</option>
+                                <%}%>
+                                <%if(user.role == "Admin"){%>
+                                    <option value="Admin">Admin</option>
+                                <%}%>
+                            </select>
                         </div>
                         <div>
                             <label for="dob" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date of Birth</label>
@@ -188,13 +208,22 @@
                         <img width="34" src="/img/nav/close-logo.svg" alt="close"/>
                     </button>  
                 </div>
-                <div class="py-0 xl:py-6 px-4">
+                
+                <div class="xl:shrink-0 py-0 xl:py-6 px-6">
                     <button id="add-modal">
-                        <img width="40" alt="add" src="/img/buildings/square-plus-solid.svg" style="filter: invert(62%) sepia(84%) saturate(2926%) hue-rotate(78deg) brightness(107%) contrast(109%);
+                        <img width="25" alt="add" src="/img/buildings/square-plus-solid.svg" style="filter: invert(62%) sepia(84%) saturate(2926%) hue-rotate(78deg) brightness(107%) contrast(109%);
                         ">
                     </button> 
                 </div>
 
+            </div>
+            <div class="flex justify-center w-full ">
+                <div class=" flex w-96  rounded-lg bg-white border-2 border-gray-100 ">
+                    
+                    <img class="m-1" src="/img/searchIcon.svg" width="20" alt="search icon" style="filter: invert(61%) sepia(0%) saturate(1950%) hue-rotate(205deg) brightness(87%) contrast(79%);">
+                    <input id="searchBar" class="px-2 py-1 w-full rounded-r-lg outline-none focus:ring-2 focus:ring-blue-100" type="text" placeholder="">
+                </div>
+                
             </div>
             
             <main id="main-grid" class="m-3 ease-in-out transition">
@@ -209,46 +238,29 @@
                                   ID
                                 </th>
                                 <th scope="col" class="text-sm font-medium text-white px-6 py-4">
-                                    MRNum
-                                </th>
+                                    First Name
+                                  </th>
+                                  <th scope="col" class="text-sm font-medium text-white px-6 py-4">
+                                    Last Name
+                                  </th>
                                 <th scope="col" class="text-sm font-medium text-white px-6 py-4">
                                     Role
                                 </th>
                                 <th scope="col" class="text-sm font-medium text-white px-6 py-4">
-                                  First Name
+                                    MRNum
                                 </th>
-                                <th scope="col" class="text-sm font-medium text-white px-6 py-4">
-                                  Last Name
-                                </th>
+                                
                                 
                               </tr>
                             </thead class="border-b">
-                            <tbody>
-                            <%for(var i = 0; i < users.length;i++){%>
-                                
-                                    <tr onclick="window.location='/members/view?id=<%=users[i].cardID%>';" class="bg-white border-b hover:bg-gray-200" style="cursor: pointer">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%=users[i].cardID%></td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <%=users[i].MRNum%>
-                                        </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <%=users[i].role%>
-                                        </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <%=users[i].firstName%>
-                                        </td>
-                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                            <%=users[i].lastName%>
-                                        </td>
-                                    </tr class="bg-white border-b">
-                                
-                              <%}%>
+                            <tbody class="memberDisplayTable">
                             </tbody>
                           </table>
                         </div>
                       </div>
                     </div>
                   </div>
+                <div id="pagination" class="w-full"></div>
             </main>
         </div>
         

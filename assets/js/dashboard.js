@@ -8,13 +8,13 @@ $(document).ready(function(){
 
     eventSource.addEventListener("message",function(e){
         try{
-            console.log('update');
+            //console.log('update');
             if(!document. getElementById('activesOnlyCheckBox'). checked){
                 $.ajax({
                     "url":"/api/active_members",
                     "method":"GET",
                 }).done(function(data){
-                    console.log('update incoming...');
+                    //console.log('update incoming...');
                     displayMemberHtml("#main-grid",data);
                     
                 });
@@ -81,6 +81,14 @@ $(document).ready(function(){
        
 
     });
+
+
+    $.ajax({
+        "url":"/api/active_members",
+        "method":"GET",
+    }).done(function(data){
+        displayMemberHtml("#main-grid",data);
+    });
 });
 
 
@@ -123,6 +131,9 @@ const displayMemberHtml = (elementID,data) => {
                         </div>
                         <div class="ml-2 mb-2 ">
                         ${data[i].cardID}
+                        </div>
+                        <div class="ml-2 mb-2 text-sm w-full h-full">
+                            ${data[i].status.location}
                         </div>
                     </div>
                     

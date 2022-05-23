@@ -9,7 +9,6 @@ const {connectDB} = require('./server/database/connection.js')
 require('./server/middleware/passport-setup.js');
 const testing = require('./test');
 const app = express();
-const functions = require("firebase-functions");
 
 
 app.set("view engine","ejs");

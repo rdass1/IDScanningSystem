@@ -16,7 +16,8 @@ const showNav = (flag) => {
         main.classList.toggle("-translate-x-80");
         main.classList.toggle("w-full");
         modal.classList.toggle("xl:ml-80")
-        modal2.classList.toggle("xl:ml-80")
+        if(modal2 != null)
+            modal2.classList.toggle("xl:ml-80")
         
     }
 }

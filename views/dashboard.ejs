@@ -117,45 +117,6 @@
         </div>
         
         <main id="main-grid" class="m-3 ease-in-out transition grid gap-10 md:grid-cols-4 xl:grid-cols-5">
-            <% for(var i = 0; i < users.length; i++){ %>
-                <%let backgroundColor = "#FFFFFF"; let flagColor = "#4ADE80"; let textColor = "#000000";%>
-                <%
-                    switch(users[i].role){
-                        case "Patient":
-                            backgroundColor = "#FE6100"
-                            break;
-                        case "Alumni":
-                            backgroundColor = "#DC267F"
-                            break;
-                        case "Employee":
-                            backgroundColor = "#648FFF"
-                            break;
-                        case "Volunteer":
-                            backgroundColor = "#785EF0"
-                            break;
-                    }
-                    if(users[i].status.flag ){
-                        flagColor = '#E11D48'
-                        textColor = '#FFFFFF'
-                    }
-                %>
-                <div class="w-56 h-50 rounded-md flex flex-col" style="cursor: pointer;background-color: <%=backgroundColor%>" onclick="window.location='/members/view?id=<%=users[i].cardID%>';">
-                    <div class="m-4 ">
-                        <img class="object-scale-down w-52 h-64" src="api/getMemberImages/<%=users[i]._id%>">
-                    </div>
-                    
-                    <div class="flex text-white flex-col rounded-b-md" style="background-color: <%=flagColor%>;color:<%=textColor%>">
-                        <div class="ml-2 mt-2 ">
-                            <%=users[i].lastName +', '+users[i].firstName%>
-                        </div>
-                        <div class="ml-2 mb-2 ">
-                            <%=users[i].cardID%>
-                        </div>
-                    </div>
-                    
-                </div>
-            
-                <% } %>
             
         </main>
     </div>
@@ -163,7 +124,7 @@
 </div>
 
 <script src="/js/navbar.js"></script>
-<script src="/js/jquery.js"></script>
+<script src="/js/dashboard.js"></script>
 <!--/Main-->
 
 
