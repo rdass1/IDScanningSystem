@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="/css/dist/tailwind.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="/img/tree-favicon.png">
     <script src="/js/lib/pagination.js"></script>
     <link href="/css/lib/pagination.css" rel="stylesheet">
     
@@ -15,7 +15,7 @@
 <body>
     <div class="xl:hidden h-fit w-screen bg-gray-700  translate-y-0 fixed top-0 right-0 left-0 z-30" >
         <!--Logo & Title-->
-        <div class="w-full bg-gray-900 xl:hidden flex justify-between p-6 items-center ">
+        <div class="w-full bg-gray-900 xl:hidden flex justify-between px-2 py-6 items-center ">
             <div class="flex justify-between items-center space-x-3">
             <img src="/img/nav/logo.svg" alt="logo" width="40" />
                 <p class="text-2xl leading-6 text-white">Above and Beyond</p>    
@@ -35,13 +35,13 @@
         <nav id="main-nav"class="w-full fixed z-20 ease-in-out transition transform  translate-x-0 xl:w-80 -translate-y-full xl:translate-y-0" >
             <!--Main Nav-->
             <div id="main-nav-body"  class=" xl:rounded-r transform  translate-x-0  ease-in-out transition duration-500 flex justify-start items-start h-96 bg-gray-900 flex-col xl:w-full xl:h-screen">
-                <div class="hidden xl:flex justify-start p-6 items-center space-x-3">
+                <div class="hidden xl:flex justify-start px-2 py-6 items-center space-x-3">
                    <img src="/img/nav/logo.svg" alt="logo" width="40">
                         <p class="text-2xl leading-6 text-white">Above and Beyond</p>                
                 </div>
-                <div class="mt-6 flex flex-col justify-start items-center  pl-4 w-full border-gray-600 border-b space-y-5 xl:space-y-7 pb-5 h-full">
+                <div class="mt-6 flex flex-col justify-start items-center  pl-4 w-full space-y-5 xl:space-y-7 pb-5 h-full">
                     <button class="flex jusitfy-start items-center space-x-6 w-full  focus:outline-none focus:text-indigo-400  text-white rounded " onclick="window.location='/dashboard';">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="34.545" viewBox="0 0 34.545 34.545">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="34.545" viewBox="0 0 34.545 34.545">
                             <g id="sidebar2-svg4" transform="translate(-3.25 -3.25)">
                               <path id="Path_3" data-name="Path 3" d="M14.327,4H6.065A2.065,2.065,0,0,0,4,6.065v8.261a2.065,2.065,0,0,0,2.065,2.065h8.261a2.065,2.065,0,0,0,2.065-2.065V6.065A2.065,2.065,0,0,0,14.327,4Z" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
                               <path id="Path_4" data-name="Path 4" d="M24.327,4H16.065A2.065,2.065,0,0,0,14,6.065v8.261a2.065,2.065,0,0,0,2.065,2.065h8.261a2.065,2.065,0,0,0,2.065-2.065V6.065A2.065,2.065,0,0,0,24.327,4Z" transform="translate(10.653)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
@@ -53,51 +53,62 @@
                         <p class="text-base leading-4 ">Dashboard</p>                    
                     </button>
                     <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded " onclick="window.location='/members';">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="36" viewBox="0 0 36 36">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="36" viewBox="0 0 36 36">
                             <path id="Icon_awesome-user-alt" data-name="Icon awesome-user-alt" d="M18,20.25A10.125,10.125,0,1,0,7.875,10.125,10.128,10.128,0,0,0,18,20.25Zm9,2.25H23.126a12.24,12.24,0,0,1-10.252,0H9a9,9,0,0,0-9,9v1.125A3.376,3.376,0,0,0,3.375,36h29.25A3.376,3.376,0,0,0,36,32.625V31.5A9,9,0,0,0,27,22.5Z" fill="#fff"/>
                           </svg>
                               
                             <p class="text-base leading-4 ">Members</p>                    
                     </button>
                     <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-indigo-400  focus:text-indigo-400   rounded " onclick="window.location='/logs';">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="40.454" viewBox="0 0 30.34 40.454">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="40.454" viewBox="0 0 30.34 40.454">
                             <path id="Icon_awesome-clipboard" data-name="Icon awesome-clipboard" d="M30.34,8.849V36.661a3.792,3.792,0,0,1-3.793,3.793H3.793A3.792,3.792,0,0,1,0,36.661V8.849A3.792,3.792,0,0,1,3.793,5.057h6.321a5.057,5.057,0,0,1,10.113,0h6.321A3.792,3.792,0,0,1,30.34,8.849ZM15.17,3.16a1.9,1.9,0,1,0,1.9,1.9,1.9,1.9,0,0,0-1.9-1.9m7.585,9.007v-1.58a.474.474,0,0,0-.474-.474H8.059a.474.474,0,0,0-.474.474v1.58a.474.474,0,0,0,.474.474H22.281A.474.474,0,0,0,22.755,12.168Z" fill="#fff"/>
                           </svg>
                               
                             <p class="text-base leading-4 ">Logs</p>                    
                     </button>
                     <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded " onclick="window.location='/classes';">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="39.167" viewBox="0 0 31.333 39.167">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="39.167" viewBox="0 0 31.333 39.167">
                             <path id="Icon_material-class" data-name="Icon material-class" d="M33.417,3H9.917A3.928,3.928,0,0,0,6,6.917V38.25a3.928,3.928,0,0,0,3.917,3.917h23.5a3.928,3.928,0,0,0,3.917-3.917V6.917A3.928,3.928,0,0,0,33.417,3ZM9.917,6.917h9.792V22.583l-4.9-2.937-4.9,2.937Z" transform="translate(-6 -3)" fill="#fff"/>
                           </svg>
                               
                             <p class="text-base leading-4 ">Classes</p>                    
                     </button>
                     <button class="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-indigo-400   rounded " onclick="window.location='/facilities';">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="41.143" viewBox="0 0 36.001 41.143">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="41.143" viewBox="0 0 36.001 41.143">
                             <path id="Icon_awesome-building" data-name="Icon awesome-building" d="M35.036,38.572H33.429V1.929A1.929,1.929,0,0,0,31.5,0H4.5A1.929,1.929,0,0,0,2.571,1.929V38.572H.964A.964.964,0,0,0,0,39.536v1.607H36V39.536A.964.964,0,0,0,35.036,38.572ZM10.286,6.107a.964.964,0,0,1,.964-.964h3.214a.964.964,0,0,1,.964.964V9.322a.964.964,0,0,1-.964.964H11.25a.964.964,0,0,1-.964-.964Zm0,7.714a.964.964,0,0,1,.964-.964h3.214a.964.964,0,0,1,.964.964v3.214a.964.964,0,0,1-.964.964H11.25a.964.964,0,0,1-.964-.964Zm4.179,11.893H11.25a.964.964,0,0,1-.964-.964V21.536a.964.964,0,0,1,.964-.964h3.214a.964.964,0,0,1,.964.964V24.75A.964.964,0,0,1,14.465,25.715Zm6.107,12.857H15.429v-6.75a.964.964,0,0,1,.964-.964h3.214a.964.964,0,0,1,.964.964ZM25.715,24.75a.964.964,0,0,1-.964.964H21.536a.964.964,0,0,1-.964-.964V21.536a.964.964,0,0,1,.964-.964H24.75a.964.964,0,0,1,.964.964Zm0-7.714A.964.964,0,0,1,24.75,18H21.536a.964.964,0,0,1-.964-.964V13.822a.964.964,0,0,1,.964-.964H24.75a.964.964,0,0,1,.964.964Zm0-7.714a.964.964,0,0,1-.964.964H21.536a.964.964,0,0,1-.964-.964V6.107a.964.964,0,0,1,.964-.964H24.75a.964.964,0,0,1,.964.964Z" fill="#fff"/>
                           </svg>    
                             <p class="text-base leading-4 ">Facilities</p>                    
                     </button>
                 </div>
-                <!-- <div class="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full py-3 mb-2">
+                <div class="h-full"></div>
+                <div class="px-3 border-t border-gray-600 w-full py-3 mb-2 bg-gray-900 ">
                     <div class=" flex justify-between items-center w-full">
                         <div class="flex justify-center items-center  space-x-2">
                             <div>
-                           <img class="rounded-full" src="https://i.ibb.co/L1LQtBm/Ellipse-1.png" alt="avatar"  />
+                                <%if(user.userObjID){%>
+                                    <div class="self-justify-start rounded-full" style="width:32px;height:32px">
+                                        <img class="object-contain rounded-full w-full h-full" src="api/getMemberImages/<%=user.userObjID%>" alt="profile pic"/>
+                                    </div>
+                                        
+                                <%}else{%>
+                                    <img class="self-justify-start" src="/img/nav/userIcon.svg" alt="avatar" width="32" style="filter: invert(100%) sepia(61%) saturate(2%) hue-rotate(76deg) brightness(109%) contrast(101%);"/>
+                                <%}%>
                         </div>
                         <div class="flex justify-start flex-col items-start">
-                            <p class="cursor-pointer text-sm leading-5 text-white">Alexis Enache</p>
-                            <p class="cursor-pointer text-xs leading-3 text-gray-300">alexis81@gmail.com</p>
+                            <p class="text-sm leading-5 text-white"><%=user.username%></p>
                         </div>
                         </div>
                         
-                        <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.325 4.317C10.751 2.561 13.249 2.561 13.675 4.317C13.7389 4.5808 13.8642 4.82578 14.0407 5.032C14.2172 5.23822 14.4399 5.39985 14.6907 5.50375C14.9414 5.60764 15.2132 5.65085 15.4838 5.62987C15.7544 5.60889 16.0162 5.5243 16.248 5.383C17.791 4.443 19.558 6.209 18.618 7.753C18.4769 7.98466 18.3924 8.24634 18.3715 8.51677C18.3506 8.78721 18.3938 9.05877 18.4975 9.30938C18.6013 9.55999 18.7627 9.78258 18.9687 9.95905C19.1747 10.1355 19.4194 10.2609 19.683 10.325C21.439 10.751 21.439 13.249 19.683 13.675C19.4192 13.7389 19.1742 13.8642 18.968 14.0407C18.7618 14.2172 18.6001 14.4399 18.4963 14.6907C18.3924 14.9414 18.3491 15.2132 18.3701 15.4838C18.3911 15.7544 18.4757 16.0162 18.617 16.248C19.557 17.791 17.791 19.558 16.247 18.618C16.0153 18.4769 15.7537 18.3924 15.4832 18.3715C15.2128 18.3506 14.9412 18.3938 14.6906 18.4975C14.44 18.6013 14.2174 18.7627 14.0409 18.9687C13.8645 19.1747 13.7391 19.4194 13.675 19.683C13.249 21.439 10.751 21.439 10.325 19.683C10.2611 19.4192 10.1358 19.1742 9.95929 18.968C9.7828 18.7618 9.56011 18.6001 9.30935 18.4963C9.05859 18.3924 8.78683 18.3491 8.51621 18.3701C8.24559 18.3911 7.98375 18.4757 7.752 18.617C6.209 19.557 4.442 17.791 5.382 16.247C5.5231 16.0153 5.60755 15.7537 5.62848 15.4832C5.64942 15.2128 5.60624 14.9412 5.50247 14.6906C5.3987 14.44 5.23726 14.2174 5.03127 14.0409C4.82529 13.8645 4.58056 13.7391 4.317 13.675C2.561 13.249 2.561 10.751 4.317 10.325C4.5808 10.2611 4.82578 10.1358 5.032 9.95929C5.23822 9.7828 5.39985 9.56011 5.50375 9.30935C5.60764 9.05859 5.65085 8.78683 5.62987 8.51621C5.60889 8.24559 5.5243 7.98375 5.383 7.752C4.443 6.209 6.209 4.442 7.753 5.382C8.753 5.99 10.049 5.452 10.325 4.317Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <div class="flex">
+                            <svg id="editOwnLoginBtn" class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10.325 4.317C10.751 2.561 13.249 2.561 13.675 4.317C13.7389 4.5808 13.8642 4.82578 14.0407 5.032C14.2172 5.23822 14.4399 5.39985 14.6907 5.50375C14.9414 5.60764 15.2132 5.65085 15.4838 5.62987C15.7544 5.60889 16.0162 5.5243 16.248 5.383C17.791 4.443 19.558 6.209 18.618 7.753C18.4769 7.98466 18.3924 8.24634 18.3715 8.51677C18.3506 8.78721 18.3938 9.05877 18.4975 9.30938C18.6013 9.55999 18.7627 9.78258 18.9687 9.95905C19.1747 10.1355 19.4194 10.2609 19.683 10.325C21.439 10.751 21.439 13.249 19.683 13.675C19.4192 13.7389 19.1742 13.8642 18.968 14.0407C18.7618 14.2172 18.6001 14.4399 18.4963 14.6907C18.3924 14.9414 18.3491 15.2132 18.3701 15.4838C18.3911 15.7544 18.4757 16.0162 18.617 16.248C19.557 17.791 17.791 19.558 16.247 18.618C16.0153 18.4769 15.7537 18.3924 15.4832 18.3715C15.2128 18.3506 14.9412 18.3938 14.6906 18.4975C14.44 18.6013 14.2174 18.7627 14.0409 18.9687C13.8645 19.1747 13.7391 19.4194 13.675 19.683C13.249 21.439 10.751 21.439 10.325 19.683C10.2611 19.4192 10.1358 19.1742 9.95929 18.968C9.7828 18.7618 9.56011 18.6001 9.30935 18.4963C9.05859 18.3924 8.78683 18.3491 8.51621 18.3701C8.24559 18.3911 7.98375 18.4757 7.752 18.617C6.209 19.557 4.442 17.791 5.382 16.247C5.5231 16.0153 5.60755 15.7537 5.62848 15.4832C5.64942 15.2128 5.60624 14.9412 5.50247 14.6906C5.3987 14.44 5.23726 14.2174 5.03127 14.0409C4.82529 13.8645 4.58056 13.7391 4.317 13.675C2.561 13.249 2.561 10.751 4.317 10.325C4.5808 10.2611 4.82578 10.1358 5.032 9.95929C5.23822 9.7828 5.39985 9.56011 5.50375 9.30935C5.60764 9.05859 5.65085 8.78683 5.62987 8.51621C5.60889 8.24559 5.5243 7.98375 5.383 7.752C4.443 6.209 6.209 4.442 7.753 5.382C8.753 5.99 10.049 5.452 10.325 4.317Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <img onclick='window.location.href="/logout"' class="ml-2 cursor-pointer" src="/img/nav/logout.svg" alt="logout button" width="20" style="filter: invert(100%) sepia(61%) saturate(2%) hue-rotate(76deg) brightness(109%) contrast(101%);">
+                        </div>
+                        
                     </div>
-                </div> -->
+                </div>
             </div>
             <!--/Main Nav-->
         </nav>
@@ -149,17 +160,45 @@
                 </form>
             </div>
         </div>
-        
+        <div id="edit-own-login-modal-background" class="hidden bg-black bg-opacity-50 fixed inset-0 z-10 flex justify-center items-center xl:ml-80">
+            <div class="relative w-96 bg-white rounded-lg shadow dark:bg-gray-800" style="height:35rem; width:30rem;">
+                <div class="flex justify-end p-2">
+                    <button id="edit-own-login-modal-close" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                    </button>
+                </div>
+                
+                <form id="editOwnLoginForm" class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8">
+                    <h3 class="text-xl font-medium text-white">Change Login</h3>
+                    <h3 id="loginErrorMessage" class="text-md text-red-400 hidden">Incorrect password or username already exists, try again or contact an administrator</h3>
+                    <div>
+                        <label for="employeeUserName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Username:</label>
+                        <input type="text" name="employeeUserName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required value="<%=user.username%>">
+                    </div>
+                    <div>
+                        <label for="employeePrevPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Previous Password:</label>
+                        <input type="password" name="employeePrevPassword"class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="">
+                    </div>
+                    <div>
+                        <label for="employeePassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">New Password:</label>
+                        <input type="password" name="employeePassword"class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="">
+                        <input hidden name="userObjID" value='<%=user.userObjID%>'>
+                    </div>
+            
+                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+                </form>
+            </div>
+        </div>
         
         <div id="main" class="px-3 ease-in-out transition xl:ml-80 pt-28 xl:pt-0 z-0 h-full">
             
             <div class="flex justify-end w-full">
                 <div class="py-6 px-3 w-full hidden xl:block">
                     <button onclick="showNav(true)" aria-label="nav-toggle-open" id="nav-toggle-open" class="hidden focus:outline-none focus:ring-2" >
-                        <img width="34" src="/img/nav/menu-logo.svg" alt="close"/>
+                        <img width="24" src="/img/nav/menu-logo.svg" alt="close"/>
                     </button>  
                     <button onclick="showNav(true)" aria-label="nav-toggle-close" id="nav-toggle-close" class="focus:outline-none focus:ring-2" >
-                        <img width="34" src="/img/nav/close-logo.svg" alt="close"/>
+                        <img width="26" src="/img/nav/close-logo.svg" alt="close"/>
                     </button>  
                 </div>
             </div>

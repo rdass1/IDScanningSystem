@@ -85,11 +85,23 @@ $(document).ready(function(){
                 // template method of yourself
                 var html = displayHtml(data);
                 $('.memberDisplayTable').html(html);
+                $('#memberAddRole').change(()=> {
+                    let usernameField = document.getElementById("employeeLoginUsername");
+                    let passwordField = document.getElementById("employeeLoginPassword");
+                    let selection = $('#memberAddRole').val();
+                    if(selection == "Employee" || selection == "Admin"){
+                        usernameField.classList.remove("hidden");
+                        passwordField.classList.remove("hidden");
+                    }else{
+                        usernameField.classList.add("hidden");
+                        passwordField.classList.add("hidden");
+                    }
+                });
             }
         })
         
     }).fail(function(data){
-        alert("Error couldn't delete that building!");
+        alert("Error get members");
         location.reload();
     });
 

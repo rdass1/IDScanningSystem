@@ -43,10 +43,10 @@ passport.use(new LocalStrategy(
         return done(null,false,{message:'No employee with that username'})
       }
       user = user[0];
-      return done(null,{username: user.username, role: user.role})
+      //return done(null,{username: user.username,password:user.password, role: user.role,userObjID: user.userObjID})
       try{
         if(await bcrypt.compare(password, user.password)){
-          return done(null,{username: user.username, role: user.role})
+          return done(null,{username: user.username,password:user.password, role: user.role,userObjID: user.userObjID})
         }else{
           return done(null,false,{message: 'Incorrect password'})
         }

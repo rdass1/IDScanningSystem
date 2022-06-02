@@ -19,7 +19,6 @@ function start(){
         else if(textValue){
             url = "/api/logs?location="+textValue
         }
-        console.log(url);
         $.ajax({
             "url":url,
             "method":"get",
@@ -37,7 +36,6 @@ function start(){
             }
             
             $("#totaTime").html(`Total Time: ${Math.round((totalTime/3600000 + Number.EPSILON) * 100)/100} Hrs`);
-            console.log(totalTime/36000000);
             $('#pagination').pagination({
                 dataSource: logs,
                 showGoInput: true,
@@ -92,7 +90,6 @@ function start(){
                 
                 if(timeOut){
                     totalTime += timeOut - timeIn; 
-                    console.log((timeOut - timeIn)/60000);
                 } 
                 
             }

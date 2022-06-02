@@ -10,7 +10,7 @@ dotenv.config({path:'config.env'});
 
 
 exports.homeRoutes = (req,res)=>{
-    res.render('dashboard');
+    res.render('dashboard',{user:req.user});
 }
 
 exports.viewmember = (req,res,next) => {
@@ -22,25 +22,13 @@ exports.viewmember = (req,res,next) => {
 }
 
 exports.building = (req,res) => {
-    axios.get(process.env.URL+process.env.PORT+'/api/building')
-    .then(function(response){
-        res.render('facilities',{buildings:response.data});
-    })
-    .catch(err=>{
-        res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
-    });
+    res.render('facilities',{user:req.user});
 }
 
 
 
 exports.classes = (req,res) => {
-    axios.get(process.env.URL+process.env.PORT+'/api/classes')
-    .then(function(response){
-        res.render('classes',{classes:response.data});
-    })
-    .catch(err=>{
-        res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
-    });
+    res.render('classes',{user:req.user});
 }
 
 
@@ -48,13 +36,7 @@ exports.classes = (req,res) => {
 
 
 exports.logs = (req,res) => {
-    axios.get(process.env.URL+process.env.PORT+'/api/logs')
-    .then(function(response){
-        res.render('logs',{logs:response.data});
-    })
-    .catch(err=>{
-        res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
-    });
+    res.render('logs',{user:req.user});
 }
 
 

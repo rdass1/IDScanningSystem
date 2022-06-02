@@ -1,10 +1,11 @@
 
-$(document).ready(function(){
-    
+function startBtns(){
+  $(document).ready(function(){
+  
     
     $("#notesBtn").click(() => {
         var parseText = ``;
-        if(userObj.notes != ""){
+        if(userObj.notes != "" && userObj.notes){
           var lines = userObj.notes.split("\\n");
           for(var i = 0; i < lines.length;i++){
             parseText += lines[i]+"\n";
@@ -29,10 +30,23 @@ $(document).ready(function(){
 
     $("#logsBtn").click(() => {
         var displayText = `<div class="flex flex-col w-full" style="height:100%;">
-        <div class="overflow-y-scroll">
+        <div id="totalTime" class="text-center text-xl"></div>
+        <div class="flex justify-center">
+          <div class=" flex w-96  rounded-lg bg-white border-2 border-gray-100 ">
+                    
+                    <img class="m-1" src="/img/searchIcon.svg" width="20" alt="search icon" style="filter: invert(61%) sepia(0%) saturate(1950%) hue-rotate(205deg) brightness(87%) contrast(79%);">
+                    <input id="searchBar" class="px-2 py-1 w-full rounded-r-lg outline-none focus:ring-2 focus:ring-blue-100" type="text" placeholder="location">
+                </div>
+                <div class="mx-3 w-40 rounded-lg bg-white border-2 border-gray-100">
+                    <input id="searchDate" class="px-2 py-1 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-100" type="date" placeholder="">
+                </div>
+        
+        </div>
+        
+        <div class="overflow-x-auto">
                       <div class="py-4 inline-block w-full">
                         <div class="">
-                          <table class="text-center w-full">
+                          <table class="text-center w-full ">
                 <thead class="border-b bg-gray-800">
                   <tr>
                     <th scope="col" class="text-sm font-medium text-white px-6 py-4">
@@ -57,42 +71,44 @@ $(document).ready(function(){
                     </th>
                   </tr>
                 </thead class="border-b">
-                <tbody>`;
-            for(var i = 0; i < userObj.logs.length;i++){
-                displayText += `
-                <tr class="bg-white border-b">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${i}</td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                ${userObj.logs[i].date}
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                ${userObj.logs[i].locationBuilding}
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                ${userObj.logs[i].timeIn}
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                ${userObj.logs[i].timeOut}
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                ${userObj.logs[i].timeTotal}
-                                </td>
-                                <td class="">
-                                    <a data-id="${userObj.logs[i]._id}" href="" class="p-3 logsDeleteBtnJQ"><img width="15" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a>
-                                </td>
-                              </tr class="bg-white border-b">
-                
-                `
-            }
+                <tbody id="logDisplayTable">  
+                `;
+              
+            
             
             displayText += `</tbody>
                           </table>
                         </div>
                       </div>
                     </div>
-                  </div>`;
+                  </div>
+                  <div id="pagination"></div>
+                  `;
 
             $("#displayUserTable").html(displayText);
+            $('#pagination').pagination({
+              dataSource: userObj.logs,
+              showGoInput: true,
+              showGoButton: true,
+              pageSize: 3,
+              pageRange: 1,
+              autoHidePrevious: true,
+              autoHideNext: true,
+              callback: function(data, pagination) {
+                  var html = printLogs(data,pagination);
+                  $('#logDisplayTable').html(html);
+              }
+            });
+            let totalTime = 0;
+            for(var i = 0; i < userObj.logs.length; i++){
+                let timeIn = Date.parse(userObj.logs[i].timeIn);
+                let timeOut = Date.parse(userObj.logs[i].timeOut);
+                
+                if(timeOut){
+                    totalTime += timeOut - timeIn; 
+                }
+            }
+            $("#totalTime").html(`Total Time: ${Math.round((totalTime/3600000 + Number.EPSILON) * 100)/100} Hrs`);
             $(".logsDeleteBtnJQ").click(function(){
               if(confirm("Do you really want to delete this user log?")){
                   
@@ -109,7 +125,115 @@ $(document).ready(function(){
                   });
               }
           });
-    })
+          
+          $("#searchBar").on('input',(e)=>{
+            var textValue  = e.target.value;
+            var dateValue = $("#searchDate").val()
+            var url = "/api/logs?id="+userObj._id;
+            if(textValue && dateValue){
+                url = "/api/logs?id="+userObj._id+"&location="+textValue+"&date="+dateValue
+            }
+            else if(dateValue){
+                url = "/api/logs?id="+userObj._id+"&date="+dateValue
+            }
+            else if(textValue){
+                url = "/api/logs?id="+userObj._id+"&location="+textValue
+            }
+            $.ajax({
+                "url":url,
+                "method":"get",
+            }).done(function(logs){
+                
+                var totalTime = 0;
+                for(var i = 0; i < logs.length; i++){
+                    var timeIn = Date.parse(logs[i].timeIn);
+                    var timeOut = Date.parse(logs[i].timeOut);
+                    
+                    if(timeOut){
+                        totalTime += timeOut - timeIn; 
+                    }
+                        
+                    
+                }
+                
+                $("#totalTime").html(`Total Time: ${Math.round((totalTime/3600000 + Number.EPSILON) * 100)/100} Hrs`);
+                $('#pagination').pagination({
+                    dataSource: logs,
+                    showGoInput: true,
+                    showGoButton: true,
+                    pageSize: 3,
+                    pageRange: 1,
+                    autoHidePrevious: true,
+                    autoHideNext: true,
+                    callback: function(data, pagination) {
+                        // template method of yourself
+                        var html = printLogs(data,pagination);
+                        $('#logDisplayTable').html(html);
+                    }
+                })
+                $(".logsDeleteBtnJQ").click(function(){
+                    if(confirm("Do you really want to delete this user log?")){
+                        
+                        $.ajax({
+                            "url":"/api/logs/"+$(this).attr("data-id"),
+                            "method":"DELETE",
+                        }).done(function(data){
+                            
+                            start();
+                            
+                        }).fail(function(data){
+                            alert("Error couldn't delete that log!");
+                            location.reload();
+                        });
+                    }
+                });
+            }).fail(function(data){
+                alert("Error couldn't delete that building!");
+                location.reload();
+            });
+            
+          });
+        
+        $("#searchDate").on('input',(e)=>{
+            var url = "/api/logs?id="+userObj._id;
+            if(e.target.value){
+                url = "/api/logs?id="+userObj._id+"&date="+e.target.value
+            }
+    
+            $.ajax({
+                "url": url,
+                "method":"get",
+            }).done(function(logs){
+                var totalTime = 0;
+                for(var i = 0; i < logs.length; i++){
+                    var timeIn = Date.parse(logs[i].timeIn);
+                    var timeOut = Date.parse(logs[i].timeOut);
+                    
+                    if(timeOut){
+                        totalTime += timeOut - timeIn; 
+                    } 
+                    
+                }
+                
+                $("#totalTime").html(`Total Time: ${Math.round((totalTime/3600000 + Number.EPSILON) * 100)/100} Hrs`);
+                $('#pagination').pagination({
+                    dataSource: logs,
+                    showGoInput: true,
+                    showGoButton: true,
+                    pageSize: 3,
+                    pageRange: 1,
+                    autoHidePrevious: true,
+                    autoHideNext: true,
+                    callback: function(data, pagination) {
+                        // template method of yourself
+                        var html = printLogs(data,pagination);
+                        $('#logDisplayTable').html(html);
+                    }
+                })
+        });
+        });
+
+    });
 
     
 
@@ -121,7 +245,7 @@ $(document).ready(function(){
                         ">
                     </button> 
                 </div>
-            <div class="overflow-x-auto overflow-y-scroll h-full">
+            <div class="overflow-x-auto overflow-y-auto h-full">
                 <div class="py-4 inline-block w-full">
                   <div class="overflow-x-auto">
                     <table class="text-center w-full">
@@ -235,7 +359,8 @@ $(document).ready(function(){
             });
     });
     let modalBackground = document.getElementById('edit-modal-background');
-      $("#edit-modal").click(() => {
+      $("#edit-modal").on("click",function(){
+          
           modalBackground.classList.toggle('hidden'); 
       });
       $("#edit-modal-close").click(() => {
@@ -260,12 +385,19 @@ $(document).ready(function(){
     let idModal = document.getElementById("id-modal-background");
     let form = document.getElementById("createIDCardForm");
     
-    $("#id-modal").click(() => {
+     $("#id-modal").click(() => {
       idModal.classList.toggle('hidden'); 
     });
     $("#close-id-modal-background").click(() => {
       form.classList.remove('hidden');
       idModal.classList.toggle('hidden');
+    });
+    let editLoginModal = document.getElementById("edit-login-modal-background");
+    $("#editLoginModalBtn").click(()=>{
+      editLoginModal.classList.remove('hidden');
+    })
+    $("#edit-login-modal-close").click(()=>{
+      editLoginModal.classList.add('hidden');
     });
 
     $("#flagBtn").click(()=>{
@@ -312,7 +444,61 @@ $(document).ready(function(){
         
     });
     
+    let errorMessage = document.getElementById("loginErrorEmployeeMessage");
+        $("#editLoginForm").submit(function(e){
+            e.preventDefault();
+            var data = $(this).serialize();
+              $.ajax({
+                method: 'POST',
+                url: '/api/employeeLoginEdit',
+                data: data,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+              })
+            .done(function(data) {
+                
+                window.location.href = "/members/view?id="+userObj.cardID;
+            })
+              .fail(function(data) {
+                errorMessage.classList.remove("hidden");
+                document.getElementById("editLoginForm").reset();
+              });
+        });
 
     
 });
+}
 
+
+function printLogs(logs,pag){
+  let displayText = "";
+  let index = pag.totalNumber - (pag.pageNumber * pag.pageSize) + 3
+  for(var i = 0; i < logs.length;i++){
+      
+      
+      displayText += `
+      <tr class="bg-white border-b">
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${index--}</td>
+                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      ${logs[i].date}
+                      </td>
+                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      ${logs[i].locationBuilding}
+                      </td>
+                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      ${logs[i].timeIn}
+                      </td>
+                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      ${logs[i].timeOut}
+                      </td>
+                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      ${logs[i].timeTotal}
+                      </td>
+                      <td class="">
+                          <a data-id="${logs[i]._id}" href="" class="p-3 logsDeleteBtnJQ"><img width="15" src="/img/buildings/trash.svg" alt="delete" style="filter: invert(24%) sepia(85%) saturate(2537%) hue-rotate(341deg) brightness(90%) contrast(91%);"></a>
+                      </td>
+                    </tr class="bg-white border-b">
+      
+      `
+  }
+  return displayText;
+}

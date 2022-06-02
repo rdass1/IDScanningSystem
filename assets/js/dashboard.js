@@ -1,7 +1,3 @@
-function test(id){
-    console.log(id);
-}
-
 
 $(document).ready(function(){
     var eventSource = new EventSource("/sse");
@@ -15,7 +11,7 @@ $(document).ready(function(){
                     "method":"GET",
                 }).done(function(data){
                     //console.log('update incoming...');
-                    displayMemberHtml("#main-grid",data);
+                    displayMemberHtml("#main-grid-dashboard",data);
                     
                 });
             }
@@ -53,7 +49,7 @@ $(document).ready(function(){
                 //     `
                 // }
                 // $("#tableBody").html(displayData);
-                displayMemberHtml("#main-grid",data);
+                displayMemberHtml("#main-grid-dashboard",data);
             
             });
         }else{
@@ -74,7 +70,7 @@ $(document).ready(function(){
                 //     `
                 // }
                 // $("#tableBody").html(displayData);
-                displayMemberHtml("#main-grid",data);
+                displayMemberHtml("#main-grid-dashboard",data);
                 
             });
         }
@@ -87,7 +83,7 @@ $(document).ready(function(){
         "url":"/api/active_members",
         "method":"GET",
     }).done(function(data){
-        displayMemberHtml("#main-grid",data);
+        displayMemberHtml("#main-grid-dashboard",data);
     });
 });
 
@@ -111,6 +107,9 @@ const displayMemberHtml = (elementID,data) => {
                 case "Employee":
                     backgroundColor = "#648FFF"
                     break;
+                case "Admin":
+                    backgroundColor = "#648FFF"
+                    break;
                 case "Volunteer":
                     backgroundColor = "#785EF0"
                     break;
@@ -120,12 +119,12 @@ const displayMemberHtml = (elementID,data) => {
                 textColor = '#FFFFFF'
             }
             displayData += `
-                <div class="w-56 h-50 rounded-md flex flex-col" style="cursor: pointer;background-color: ${backgroundColor}" onclick="window.location='/members/view?id=${data[i].cardID}';">
-                    <div class="m-4 ">
-                        <img class="object-scale-down w-52 h-64" src="api/getMemberImages/${data[i]._id}">
+                <div class="w-full h-full rounded-md flex flex-col" style="cursor: pointer;background-color: ${backgroundColor}" onclick="window.location='/members/view?id=${data[i].cardID}';">
+                    <div class="m-4 self-center">
+                        <img class="object-scale-down w-52 h-64 text-center" src="api/getMemberImages/${data[i]._id}" alt="profile picture">
                     </div>
                     
-                    <div class="flex text-white flex-col rounded-b-md" style="background-color: ${flagColor};color:${textColor}">
+                    <div class="flex text-white flex-col rounded-b-md h-full" style="background-color: ${flagColor};color:${textColor}">
                         <div class="ml-2 mt-2 ">
                         ${data[i].lastName}, ${data[i].firstName}
                         </div>
@@ -133,7 +132,10 @@ const displayMemberHtml = (elementID,data) => {
                         ${data[i].cardID}
                         </div>
                         <div class="ml-2 mb-2 text-sm w-full h-full">
-                            ${data[i].status.location}
+                            `;
+                        if(data[i].status.location)
+                            displayData += `${data[i].status.location}`;
+                        displayData += `
                         </div>
                     </div>
                     

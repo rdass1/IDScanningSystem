@@ -102,6 +102,8 @@ def create_cardfront(holder_name, holder_id, holder_role, holder_ISS, holder_DOB
         myFill = "#DC267F"          # Pink
     elif holder_role == "Employee":
         myFill = "#648FFF"          # Blue
+    elif holder_role == "Admin":
+        myFill = "#648FFF"          
     elif holder_role == "Volunteer":
         myFill = "#785EF0"          # Purple
     else:

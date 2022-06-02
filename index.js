@@ -53,7 +53,7 @@ app.use("/css",express.static(path.resolve(__dirname,"assets/css")));
 app.use("/img",express.static(path.resolve(__dirname,"assets/img")));
 app.use("/js",express.static(path.resolve(__dirname,"assets/js")));
 app.use("/memberIDImages",express.static(path.resolve(__dirname,"server/memberIDImages")));
-app.use("/cropperJS",express.static(path.resolve(__dirname,"node_modules/cropperjs/src")));
+
 
 //load router
 app.use('/',require('./server/routes/router'));

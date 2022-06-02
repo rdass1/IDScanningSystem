@@ -109,6 +109,7 @@ class ANB_ScannerApp(App):
             hide_widget(self.stopButton)
             hide_widget(self.statusInfo)
         
+        
     def configureApp(self,instance):
         try:
             hide_widget(self.startButton)
@@ -302,7 +303,7 @@ class ANB_ScannerApp(App):
                 
                 
         except Exception as e:
-            print(e)
+            
             self.errorConnect.text="Error Couldn't Connect!"
             self.errorConnect.color = "#F8240E"
             hide_widget(self.errorConnect, False)
@@ -355,7 +356,7 @@ class ANB_ScannerApp(App):
                     self.dropdownLocation.add_widget(btn)
                     self.dropdownLocation2.add_widget(btn2)
                     locationDict[location["name"]] = location 
-        except:
+        except Exception as e:
             
             self.locationSelect.text = "Choose Location"
             self.locationSelect2.text = "Choose Location"
@@ -403,17 +404,13 @@ class ANB_ScannerApp(App):
         else:
             hide_widget(self.connectScanner)
     def connectScannerFunc(self,event):
-        try:
-            buildingDict = None
-            locationDict = None
-        except Exception as e:
-            print(e)
-            pass
-        print(self.locationSelect2.text)
         hide_widget(self.errorConnect)
-        locationInfo["name"] = locationDict[self.locationSelect.text]["name"]
-        locationInfo["objID"] = locationDict[self.locationSelect.text]["_id"]
-        locationInfo["entrance"] = locationDict[self.locationSelect2.text]["name"]
+        try:
+            locationInfo["name"] = locationDict[self.locationSelect.text]["name"]
+            locationInfo["objID"] = locationDict[self.locationSelect.text]["_id"]
+            locationInfo["entrance"] = locationDict[self.locationSelect2.text]["name"]
+        except:
+            pass
         hide_widget(self.connectScanner)
         hide_widget(self.locationSelect)
         hide_widget(self.buildingSelect)
@@ -519,7 +516,64 @@ class ANB_ScannerApp(App):
         
         
     def mainProgram(self,dt):
-        
+        self.window.clear_widgets()
+        try:
+            self.statusTitle = Label(
+            text="Status:",
+            size_hint =(.5, .4),
+            pos_hint = {"center_x" : 0.5, "center_y" : 0.7}
+            )
+            self.status = Label(
+                text="Offline",
+                color="#F8240E",
+                size_hint =(.5, .3),
+                pos_hint = {"center_x" : 0.5, "center_y" : 0.6}
+            )
+            self.statusInfo = Label(
+                text="",
+                color="#F8240E",
+                size_hint =(.5, .3),
+                pos_hint = {"center_x" : 0.5, "center_y" : 0.5}
+            )
+            self.configureButton = Button(
+                text="Configure",
+                size_hint =(None, None),
+                width = 100,
+                height = 30,
+                pos_hint = {"center_x" : 0.8, "center_y" : 1}
+                )
+            
+            self.configureButton.bind(on_press=self.configureApp)
+            
+            self.startButton = Button(
+                text="Start",
+                size_hint =(None, None),
+                width = 100,
+                height = 30,
+                pos_hint = {"center_x" : 0.2, "center_y" : 1}
+                )
+            
+            self.startButton.bind(on_press=self.mainProgram)
+            
+            self.stopButton = Button(
+                text="Stop",
+                size_hint =(None, None),
+                width = 100,
+                height = 30,
+                pos_hint = {"center_x" : 0.2, "center_y" : 1}
+                )
+            
+            
+            self.window.add_widget(self.statusTitle)
+            self.window.add_widget(self.status)
+            self.window.add_widget(self.statusInfo)
+            self.window.add_widget(self.configureButton)
+            self.window.add_widget(self.startButton)
+            self.window.add_widget(self.stopButton)
+            hide_widget(self.stopButton)
+            hide_widget(self.statusInfo)
+        except:
+            pass
         hide_widget(self.startButton)
         try:
             hide_widget(self.menuButton)
