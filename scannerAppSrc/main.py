@@ -8,6 +8,7 @@ from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget,QStackedWidget
 from PyQt5.QtCore import  QThread, pyqtSignal
+from threading import Timer
 
 from pprint import pprint
 from pymongo import MongoClient
@@ -67,19 +68,30 @@ class startScreen(QMainWindow):
         widget.setCurrentIndex(widget.currentIndex()+1)
         
     def startScanning(self):
-        if not os.path.isfile(resource_path(configfile_name)):
-            self.startUpFailTitle.setText('No Config File Found!')
-        else:
-            self.startUpFailTitle.setText('')
-            programRunning = programRunningScreen()
-            widget.addWidget(programRunning)
-            widget.setCurrentIndex(widget.currentIndex()+1)
-    
+        if os.path.isfile(resource_path(configfile_name)):
+            config = configparser.RawConfigParser(allow_no_value=True)
+            config.read(resource_path(configfile_name))
+            if(config.get("MongoDB", "url")==""):
+                self.startUpFailTitle.setText('Config File Not Set!')
+                timer = Timer(1.0, self.removeText)
+                timer.start()
+            else:
+                self.startUpFailTitle.setText('')
+                programRunning = programRunningScreen()
+                widget.addWidget(programRunning)
+                widget.setCurrentIndex(widget.currentIndex()+1)
+    def removeText(self):
+        self.startUpFailTitle.setText('')
 class configDatabaseScreen(QMainWindow):
     def __init__(self):
         super(configDatabaseScreen, self).__init__()
         loadUi(resource_path("configDatabase.ui"),self)
-       
+        if os.path.isfile(resource_path(configfile_name)):
+            config = configparser.RawConfigParser(allow_no_value=True)
+            config.read(resource_path(configfile_name))
+            self.mongoUrlInput.setText(config.get("MongoDB","url"))   
+            self.databaseNameInput.setText(config.get("MongoDB","db"))
+        
         
         self.backBtn.clicked.connect(self.backToMain)
         self.configDatabaseConnectBtn.clicked.connect(self.connectToDB)
@@ -255,10 +267,14 @@ class mainProgram(QThread):
         self.exiting = False
     
     def run(self):
-        
+        config = configparser.RawConfigParser(allow_no_value=True)
+        config.read(resource_path(configfile_name))
+        if(config.get("MongoDB", "url")==""):
+            return
         try:
-            config = configparser.RawConfigParser(allow_no_value=True)
-            config.read(resource_path(configfile_name))
+            # config = configparser.RawConfigParser(allow_no_value=True)
+            # config.read(resource_path(configfile_name))
+            
             
             client = MongoClient(config.get("MongoDB", "url"))
             self.db=client[config.get("MongoDB", "db")]
