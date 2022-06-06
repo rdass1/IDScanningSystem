@@ -1,0 +1,13 @@
+<%- include('include/_show')%>
+<% for(var i = 0; i < users.length; i++){ %>
+<!-- <a href="/members/member?id=<%=users[i].cardID%>"> -->
+    <tr>
+        <td><%=i%></td>
+        <td><%=users[i].cardID%></td>
+        <td><%=users[i].firstName%></td>
+        <td><%=users[i].lastname%></td>
+        <td><%=users[i].lastname%></td>
+    </tr>
+<!-- </a> -->
+
+<% } %>
