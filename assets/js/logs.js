@@ -19,11 +19,13 @@ function start(){
         else if(textValue){
             url = "/api/logs?location="+textValue
         }
-        console.log(url);
         $.ajax({
             "url":url,
             "method":"get",
         }).done(function(logs){
+            if(logs.length == 0){
+                return;
+            }
             var totalTime = 0;
             for(var i = 0; i < logs.length; i++){
                 var timeIn = Date.parse(logs[i].timeIn);
@@ -37,7 +39,6 @@ function start(){
             }
             
             $("#totaTime").html(`Total Time: ${Math.round((totalTime/3600000 + Number.EPSILON) * 100)/100} Hrs`);
-            console.log(totalTime/36000000);
             $('#pagination').pagination({
                 dataSource: logs,
                 showGoInput: true,
@@ -69,7 +70,7 @@ function start(){
                 }
             });
         }).fail(function(data){
-            alert("Error couldn't delete that building!");
+            alert("Error couldn't get data!");
             location.reload();
         });
         
@@ -85,6 +86,9 @@ function start(){
             "url": url,
             "method":"get",
         }).done(function(logs){
+            if(logs.length == 0){
+                return;
+            }
             var totalTime = 0;
             for(var i = 0; i < logs.length; i++){
                 var timeIn = Date.parse(logs[i].timeIn);
@@ -92,7 +96,6 @@ function start(){
                 
                 if(timeOut){
                     totalTime += timeOut - timeIn; 
-                    console.log((timeOut - timeIn)/60000);
                 } 
                 
             }
@@ -129,7 +132,7 @@ function start(){
                 }
             });
         }).fail(function(data){
-            alert("Error couldn't delete that building!");
+            alert("Error couldn't get data!");
             location.reload();
         });
     });
@@ -183,7 +186,7 @@ function start(){
             });
             
         }).fail(function(data){
-            alert("Error couldn't delete that log!");
+            alert("Error couldn't get data!");
             location.reload();
         });
 }

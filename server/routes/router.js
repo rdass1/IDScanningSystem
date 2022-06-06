@@ -18,7 +18,9 @@ const fs = require('fs');
  * @method GET /
  */
  
-route.get('/',services.index);
+route.get('/',(req,res)=>{
+    res.redirect("/login");
+});
 
 
 
@@ -30,7 +32,7 @@ const isLoggedIn = (req,res,next) =>{
     if(req.user){
         next();
     }else{
-        res.status(401).send("Please log in first");
+        res.redirect("/login");
     }
 }
 
@@ -40,41 +42,59 @@ const isLoggedIn = (req,res,next) =>{
 
 //
 
-route.get("/sse", (req,res) =>{
+route.get("/sse",isLoggedIn, (req,res) =>{
     res.set("Content-Type", "text/event-stream");
     res.set("Connection", "keep-alive");
     res.set("Cache-Control","no-cache");
     res.set("Access-Control-Allow-Origin", "*");
     console.log('client connected.');
     
-    userDB.watch().
+
+    var timer = setInterval(function(){
+        userDB.watch().
         on('change', data => {
         res.status(200).write(`data: update\n\n`);
         });
+        res.flush();
+    },1000);
+    
     // facilityUsageDB.watch().
     //     on('change', data => {
     //         res.status(200).write(`data: update\n\n`);
     //     })
-    
+    res.on('close', function () {
+        clearInterval(timer)
+      })
 });
 
 
-route.get('/good', isLoggedIn, (req,res) =>{
-    res.send(`Welcome ${req.user.displayName}!`);
-});
+// route.get('/good', isLoggedIn, (req,res) =>{
+//     res.send(`Welcome ${req.user.displayName}!`);
+// });
 
-route.get('/failed', (req,res) =>{
-    res.send("failed login");
-});
+// route.get('/failed', (req,res) =>{
+//     res.send("failed login");
+// });
 
-route.get('/google',
-  passport.authenticate('google', { scope:
-      [ 'email', 'profile' ] }
-));
+// route.get('/google',
+//   passport.authenticate('google', { scope:
+//       [ 'email', 'profile' ] }
+// ));
+
+// route.get( '/google/callback',
+//     passport.authenticate( 'google', {
+//         successRedirect: '/dashboard',
+//         failureRedirect: '/failed'
+// }));
 
 
-
-route.get('/login', services.login);
+route.get('/login',(req,res,next)=>{
+    if(req.user){
+        res.redirect('/dashboard');
+    }else{
+        next();
+    }
+}, services.login);
 
 route.post('/login', 
   passport.authenticate('local',{
@@ -85,50 +105,40 @@ route.post('/login',
 //     res.send(req.body);
 // });
 
-route.get( '/google/callback',
-    passport.authenticate( 'google', {
-        successRedirect: '/dashboard',
-        failureRedirect: '/failed'
-}));
 
-route.get('/logout', (req,res)=>{
+
+route.get('/logout',isLoggedIn, (req,res)=>{
     req.logout();
-    res.send('Logged OUt');
+    res.redirect('/login');
 });
 
 //Dashboard Routes
 
-route.get('/dashboard',services.homeRoutes);
+route.get('/dashboard',isLoggedIn,services.homeRoutes);
 
 
 
 //Building Routes
-route.get('/facilities',services.building);
+route.get('/facilities',isLoggedIn,services.building);
 
 
 //Classes Routes
-route.get('/classes',services.classes);
+route.get('/classes',isLoggedIn,services.classes);
 
 
 
 //Logs Routes
-route.get('/logs',services.logs);
+route.get('/logs',isLoggedIn,services.logs);
 
 
 //Members Routes
-route.get('/members',services.allMembers);
-route.get('/members/view',services.viewmember);
-
-
-//Employee Login
-route.get('/employee_management',services.employeeLoginManagement);
-
-
+route.get('/members',isLoggedIn,services.allMembers);
+route.get('/members/view',isLoggedIn,services.viewmember);
 
 
 
 //Images Routes & ID Routes
-route.post('/api/uploadMemberImage/:id/:cardID',upload.single('memberIDImage'),(req,res) =>{
+route.post('/api/uploadMemberImage/:id/:cardID',isLoggedIn,upload.single('memberIDImage'),(req,res) =>{
     if(!req.params.id || req.params.id === 'undefined') return res.status(400).send('no image id');
     const filename = new mongoose.Types.ObjectId(req.params.id);
     gfs.gfs.find({filename}).toArray((err,files) =>{
@@ -144,14 +154,14 @@ route.post('/api/uploadMemberImage/:id/:cardID',upload.single('memberIDImage'),(
     controller.createID(req,res);
 });
 
-route.get('/api/downloadMemberImage/:id/:cardID',controller.downloadImage);
+route.get('/api/downloadMemberImage/:id/:cardID',isLoggedIn,controller.downloadImage);
 
-route.get('/api/getMemberImages/:id', ({params: id},res) => {
+route.get('/api/getMemberImages/:id',isLoggedIn, ({params: id},res) => {
     if(!id || id === 'undefined') return res.status(400).send('no image id');
     const filename = new mongoose.Types.ObjectId(id);
     gfs.gfs.find({filename}).toArray((err,files) =>{
         if(!files || files.length === 0){
-            return res.status(400).send('no files exist');
+            return res.sendStatus(200);
         }
         const _id = new mongoose.Types.ObjectId(files[0]._id);
         gfs.gfs.openDownloadStream(_id).pipe(res);
@@ -159,12 +169,12 @@ route.get('/api/getMemberImages/:id', ({params: id},res) => {
 
 })
 
-route.get('/members/api/getMemberImages/:id', ({params: id},res) => {
+route.get('/members/api/getMemberImages/:id',isLoggedIn, ({params: id},res) => {
     if(!id || id === 'undefined') return res.status(400).send('no image id');
     const filename = new mongoose.Types.ObjectId(id);
     gfs.gfs.find({filename}).toArray((err,files) =>{
         if(!files || files.length === 0){
-            return res.status(400).send('no files exist');
+            return res.sendStatus(200);
         }
         const _id = new mongoose.Types.ObjectId(files[0]._id);
         //gfs.gfs.openDownloadStream(_id).pipe(fs.createWriteStream('./memberImages/'+files[0].filename+".png"));
@@ -174,7 +184,7 @@ route.get('/members/api/getMemberImages/:id', ({params: id},res) => {
 
 })
 
-route.post('/api/getMemberIDCard/:id',({params:id},res)=>{
+route.post('/api/getMemberIDCard/:id',isLoggedIn,({params:id},res)=>{
     let exists = true;
     setTimeout(()=>{
         const path = `./server/memberIDImages/${id.id}-front.png`;
@@ -198,40 +208,41 @@ route.post('/api/getMemberIDCard/:id',({params:id},res)=>{
 
 
 //Member API
-route.get('/api/memberSearch/:id')
-route.post('/api/members',controller.create);
-route.post('/api/members_edit/:id',upload.single('memberIDImage'),controller.updateUser);
-route.post('/api/members_notes/:id',controller.updateUserNotes);
-route.get('/api/members',controller.find);
-route.get('/api/active_members',controller.activeMember);
-route.post('/api/members_delete/:id',controller.deleteUser);
+route.post('/api/members',isLoggedIn,controller.create);
+route.post('/api/members_edit/:id',isLoggedIn,upload.single('memberIDImage'),controller.updateUser);
+route.post('/api/members_notes/:id',isLoggedIn,controller.updateUserNotes);
+route.get('/api/members',isLoggedIn,controller.find);
+route.get('/api/active_members',isLoggedIn,controller.activeMember);
+route.post('/api/members_delete/:id',isLoggedIn,controller.deleteUser);
 
 //Building API
-route.get('/api/building',controller.findBuilding);
-route.post('/api/create_building',controller.createBuilding);
-route.delete('/api/building/:id',controller.deleteBuilding);
+route.get('/api/building',isLoggedIn,controller.findBuilding);
+route.post('/api/create_building',isLoggedIn,controller.createBuilding);
+route.delete('/api/building/:id',isLoggedIn,controller.deleteBuilding);
 
 //Location API
-route.get('/api/locations',controller.findLocation);
-route.post('/api/create_location',controller.createLocation);
-route.delete('/api/locations/:id',controller.deleteLocation);
+route.get('/api/locations',isLoggedIn,controller.findLocation);
+route.post('/api/create_location',isLoggedIn,controller.createLocation);
+route.delete('/api/locations/:id',isLoggedIn,controller.deleteLocation);
 
 //Classes API
-route.get('/api/classes',controller.findClasses);
-route.post('/api/create_class',controller.createClass);
-route.delete('/api/classes/:id',controller.deleteClass);
+route.get('/api/classes',isLoggedIn,controller.findClasses);
+route.post('/api/create_class',isLoggedIn,controller.createClass);
+route.delete('/api/classes/:id',isLoggedIn,controller.deleteClass);
 
 //UserClasses API
-route.get('/api/userClasses/:id',controller.userClasses);
-route.post('/api/add_user_class',controller.createUserClass);
-route.delete('/api/userClass/:id',controller.deleteUserClass);
-route.post('/api/user_flag/:id/:flag',controller.userFlag);
+route.get('/api/userClasses/:id',isLoggedIn,controller.userClasses);
+route.post('/api/add_user_class',isLoggedIn,controller.createUserClass);
+route.delete('/api/userClass/:id',isLoggedIn,controller.deleteUserClass);
+route.post('/api/user_flag/:id/:flag',isLoggedIn,controller.userFlag);
 //Logs API
-route.get('/api/logs',controller.findLogs);
-route.delete('/api/logs/:id',controller.deleteLogs);
+route.get('/api/logs',isLoggedIn,controller.findLogs);
+route.delete('/api/logs/:id',isLoggedIn,controller.deleteLogs);
 
 //Employee Login API
-route.get('/api/employeeLogin',controller.employeeLoginInfo);
+route.get('/api/employeeLogin',isLoggedIn,controller.employeeLoginInfo);
+route.post('/api/employeeLoginEdit',isLoggedIn,controller.employeeLoginEdit);
+route.post('/api/editLoginCredentials',isLoggedIn,controller.ownLoginEdit);
 
 
 
@@ -241,11 +252,10 @@ route.get('/api/employeeLogin',controller.employeeLoginInfo);
 // route.post('/api/create_class',controller.createClass);
 // route.delete('/api/classes/:id',controller.deleteClass);
 
-
+route.get('*',(req,res) => {
+   
+    res.redirect("/login");
+})
 
 module.exports = route;
 
-route.get('*',(req,res) => {
-   
-    res.redirect("..");
-})

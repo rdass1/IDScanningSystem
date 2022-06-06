@@ -15,20 +15,20 @@ passport.deserializeUser(function(user,done){{
   done(null,user)
 }});
 
-passport.use(new GoogleStrategy({
-    clientID:     process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.URL+process.env.PORT+`/google/callback`,
-    passReqToCallback   : true
-  },
-  function(request, accessToken, refreshToken, profile, done) {
-    // console.log(profile);
+// passport.use(new GoogleStrategy({
+//     clientID:     process.env.GOOGLE_CLIENT_ID,
+//     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//     callbackURL: process.env.URL+process.env.PORT+`/google/callback`,
+//     passReqToCallback   : true
+//   },
+//   function(request, accessToken, refreshToken, profile, done) {
+//     // console.log(profile);
 
-    //checks database
-    //to be added
-      return done(null, profile);
-  }
-));
+//     //checks database
+//     //to be added
+//       return done(null, profile);
+//   }
+// ));
 
 passport.use(new LocalStrategy(
   {
@@ -43,10 +43,10 @@ passport.use(new LocalStrategy(
         return done(null,false,{message:'No employee with that username'})
       }
       user = user[0];
-      return done(null,{username: user.username, role: user.role})
+      //return done(null,{username: user.username,password:user.password, role: user.role,userObjID: user.userObjID})
       try{
         if(await bcrypt.compare(password, user.password)){
-          return done(null,{username: user.username, role: user.role})
+          return done(null,{username: user.username,password:user.password, role: user.role,userObjID: user.userObjID})
         }else{
           return done(null,false,{message: 'Incorrect password'})
         }

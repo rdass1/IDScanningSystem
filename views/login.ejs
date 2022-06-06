@@ -4,18 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/dist/tailwind.css" rel="stylesheet">
+    <link rel="icon" href="/img/tree-favicon.png">
     <title>Login</title>
 </head>
 <body>
-    <h1>Login Page Not Created</h1>
-    <div>
-        <form action="/login" method="POST">
-            <input type="text" name="username" id="username" placeholder="username">
-            <input type="password" name="password" id="password">
-            <input type="submit" value="Submit">
+    <div class="w-screen h-screen bg-gray-900 flex justify-center items-center overflow-y-scroll">
+        <div class="shrink-0 flex justify-center items-center flex-col rounded text-white bg-gray-50 m-10">
+            <img src="/img/nav/logo_dark.svg" alt="logo" width="200"/>
+            <p class="text-2xl leading-6 text-black">Above and Beyond</p>
+            <form class="flex justify-center items-center flex-col" action="/login" method="POST">
+                <input class="focus:outline-none m-4 p-2 border-2 border-gray-200 w-80 h-10 rounded text-black" type="text" name="username" id="username" placeholder="username">
+                <input class="text-black focus:outline-none border-2 border-gray-200 p-2 w-80 h-10 rounded" type="password" name="password" id="password" placeholder="password">
+                <input class="m-4 bg-gray-900 w-24 h-10 rounded" type="submit" value="Login">
 
 
-        </form>
+            </form>
+        </div>
     </div>
+    
+    
 </body>
 </html>

@@ -1,12 +1,19 @@
-$.ajax({
-    "url":"/api/building",
-    "method":"GET",
-}).done(function(data){
-    buildings(data);
-})
-.fail(()=>{
-    alert("An error occurred! Check the database")
-});
+getData();
+
+function getData() {
+    $.ajax({
+        "url":"/api/building",
+        "method":"GET",
+    }).done(function(data){
+        buildings(data);
+    })
+    .fail(()=>{
+        alert("An error occurred! Check the database")
+    });
+}
+
+
+
 
 function buildings(buildings){
     let displayHtml = "";
@@ -76,5 +83,8 @@ function buildings(buildings){
         
 
     }
-    $("#main-grid").html(displayHtml);
+    // let grid = document.getElementById("divForData");
+    // grid.innerHTML = displayHtml;
+    $("#divForData").html(displayHtml);
+    startListeners();
 }

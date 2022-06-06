@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const {spawn} = require('child_process');
 const moment = require('moment')
+const bcrypt = require('bcrypt');
 //create and save new user
 
 exports.create = (req,res,next)=>{
@@ -37,13 +38,42 @@ exports.create = (req,res,next)=>{
     });
 
     user.save(user)
-    .then(data=>{
-        res.status(201).redirect('/members');
+    .then(async data=>{
+        if(data.role == "Employee" || data.role == "Admin"){
+            let username = data.firstName.substring(0,1).toLowerCase()+data.lastName.toLowerCase();
+        let password = data.firstName.substring(0,1).toLowerCase()+data.lastName.toLowerCase();
+        if(req.body.employeeLoginUsername){
+            username = req.body.employeeLoginUsername;
+        }
+        if(req.body.employeeLoginPassword){
+            password = req.body.employeeLoginPassword;
+        }
+
+        const employeeLogin = models.employeeLoginDB({
+            userObjID: data._id,
+            username: username,
+            password: await bcrypt.hash(password,10),
+            role: data.role,
+        });
+
+        employeeLogin.save(employeeLogin)
+        .then(data=>{
+            res.status(201).redirect('/members');
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying save data"});
+        })
+        }else{
+            res.status(201).redirect('/members');
+        }
+        
+        
+
+        
     })
     .catch(err=>{
         res.status(500).send({message:err.message || "Error occurred while trying save data"});
     })
-    console.log(req.file);
 }
 
 exports.downloadImage = (req,res) => {
@@ -124,14 +154,6 @@ exports.createID = (req,res) =>{
     }
 }
 
-exports.searchUser = (req,res) => {
-    if(req.query.id){
-        
-    }else{
-        res.sendStatus(400);
-    }
-}
-
 exports.find = (req,res) =>{
     if(req.query.id){
         models.userDB.aggregate([
@@ -153,6 +175,14 @@ exports.find = (req,res) =>{
                         }
                     ],
                     as: "logs"
+                }
+            },
+            {
+                $lookup:{
+                    from: "employeeLogin",
+                    localField: "_id",
+                    foreignField: "userObjID",
+                    as: "loginInfo"
                 }
             },
             {
@@ -204,14 +234,7 @@ exports.find = (req,res) =>{
     else if(req.query.cardID){
         models.userDB.aggregate([
             {
-              $search: {
-                "autocomplete": {
-                    "query": req.query.cardID,
-                    "path": "cardID",
-                    
-        
-                }
-              }
+                $match: {$text:{$search : req.query.cardID}}
             },
           ]).then(data => {
             res.send(data);
@@ -223,15 +246,13 @@ exports.find = (req,res) =>{
     else if(req.query.mrnum){
         models.userDB.aggregate([
             {
-              $search: {
-                "autocomplete": {
-                    "query": req.query.mrnum,
-                    "path": "MRNum",
-                    
-        
-                }
-              }
+                $match:{$text:{$search:req.query.mrnum}}
             },
+            {
+                $sort:{
+                    score: {$meta: "textScore"}
+                }
+            }
           ]).then(data => {
             res.send(data);
         })
@@ -244,44 +265,31 @@ exports.find = (req,res) =>{
         const name = req.query.name.split(' ');
         var params = [
             {
-                "autocomplete": {
-                    "query":name[0],
-                    "path": 'firstName',
-                },
+                $match: {
+                    $text: {$search: name[0]}
+                }
             },
             {
-                "autocomplete": {
-                    "query":name[0],
-                    "path": 'lastName',
-                },
-            },
+                $sort:{
+                    score: {$meta: "textScore"}
+                }
+            }
         ];
         if(name[1]){
             params = [
                 {
-                    "autocomplete": {
-                        "query":name[0],
-                        "path": 'firstName',
-                    },
+                    $match: {
+                        $text: {$search: req.query.name},
+                    }
                 },
                 {
-                    "autocomplete": {
-                        "query":name[1],
-                        "path": 'lastName',
-                    },
-                },
-                
+                    $sort:{
+                        score: {$meta: "textScore"}
+                    }
+                }
             ]
         }
-        models.userDB.aggregate([
-            {
-              $search: {
-                "compound": {
-                    "should": params,
-                },
-              }
-            },
-          ]).then(data => {
+        models.userDB.aggregate(params).then(data => {
             res.send(data);
         })
         .catch(err=>{
@@ -387,10 +395,13 @@ exports.deleteUser = (req, res) => {
             .then(data=>{
                 models.userClassesDB.deleteMany({userObjID:req.params.id})
                 .then(data=>{
+                    models.employeeLoginDB.deleteOne({userObjID:req.params.id})
+                    .then(data=>{
+                    })
                     const filename = new mongoose.Types.ObjectId(req.params.id);
                     gfs.gfs.find({filename}).toArray((err,files)=>{
                         if(files.length != 0){
-                            console.log('FILES FOUND AND ARE GETTING DELETED!');
+                            // console.log('FILES FOUND AND ARE GETTING DELETED!');
                             files.forEach((file)=>{
                                 //console.log(file._id);
                                 let _id =  new mongoose.Types.ObjectId(file._id);
@@ -453,9 +464,7 @@ exports.userFlag = (req,res) => {
     }
 }
 
-exports.login = (req, res) => {
-    res.render('login.ejs');
-}
+
 
 exports.activeMember = (req,res) => {
     userDB.find({'status.active':'true'},null,{
@@ -637,7 +646,7 @@ exports.findClasses = (req,res)=>{
     }else{
         models.classesDB.find()
         .then(data => {
-            console.log('RETRIEVE CLASSES')
+            //console.log('RETRIEVE CLASSES')
             res.send(data);
         })
         .catch(err=>{
@@ -788,20 +797,102 @@ exports.deleteUserClass = (req,res) => {
 
 
 exports.findLogs = (req,res) => {
-    if(req.query.location && req.query.date){
+    if(req.query.id && req.query.location && req.query.date){
         models.facilityUsageDB.aggregate([
             {
-              $search: {
-                "autocomplete": {
-                    "query": req.query.location,
-                    "path": "locationBuilding",
-                    
-        
+                $match : {
+                    $text: {$search: req.query.location},
+                    date : req.query.date,
+                    userObjID : new mongoose.Types.ObjectId(req.query.id),
                 }
-              }
             },
             {
+                $sort: {
+                    "timeIn": -1
+                }
+            },
+          ]).then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }
+    else if(req.query.id && req.query.date){
+        models.facilityUsageDB.aggregate([
+            {
                 $match : {
+                    date : req.query.date,
+                    userObjID : new mongoose.Types.ObjectId(req.query.id),
+                }
+            },
+            {
+                $sort: {
+                    "timeIn": -1
+                }
+            },
+            {
+                $limit: 100
+            },
+          ]).then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }
+    else if(req.query.id && req.query.location){
+        models.facilityUsageDB.aggregate([
+            {
+                $match : {
+                    $text: {$search : req.query.location},
+                    userObjID : new mongoose.Types.ObjectId(req.query.id),
+                }
+            },
+            {
+                $sort: {
+                    "timeIn": -1
+                }
+            },
+            {
+                $limit: 100
+            },
+          ]).then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        });
+    }
+    else if(req.query.id){
+        models.facilityUsageDB.aggregate([
+            {
+                $match : {
+                    userObjID : new mongoose.Types.ObjectId(req.query.id),
+                }
+            },
+            {
+                $sort: {
+                    "timeIn": -1
+                }
+            },
+            {
+                $limit: 100
+            },
+        ]).then(data => {
+            res.send(data);
+        })
+        .catch(err=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
+        })
+    }
+    else if(req.query.location && req.query.date){
+        models.facilityUsageDB.aggregate([
+            {
+                $match : {
+                    $text : {
+                        $search : req.query.location
+                    },
                     date : req.query.date
                 }
             },
@@ -842,14 +933,13 @@ exports.findLogs = (req,res) => {
     else if(req.query.location){
         models.facilityUsageDB.aggregate([
             {
-              $search: {
-                "autocomplete": {
-                    "query": req.query.location,
-                    "path": "locationBuilding",
-                    
-        
+                $match : {
+                    $text: {
+                        $search: req.query.location
+                    }
                 }
-              }
+                
+              
             },
             {
                 $sort: {
@@ -863,9 +953,11 @@ exports.findLogs = (req,res) => {
             res.send(data);
         })
         .catch(err=>{
+            console.log(err)
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
         });
-    }else{
+    }
+    else{
         models.facilityUsageDB.aggregate([
             {
                 $sort: {
@@ -920,3 +1012,80 @@ exports.employeeLoginInfo = (req,res) => {
         });
     }
 }
+
+exports.employeeLoginEdit = async (req,res) => {
+    console.log(req.body.employeeUserName + ", " + req.body.employeePassword);
+    console.log(req.user);
+    let formUsername = req.body.employeeUserName;
+    let formPassword = req.body.employeePassword;
+    let formPrevPassword, memberUsername, memberPassword = "";
+    if(req.body.employeePrevPassword){
+        formPrevPassword = req.body.employeePrevPassword;
+    }
+    if(req.body.memberUsername){
+        memberUsername = req.body.memberUsername;
+    }
+
+    if(req.body.memberPassword){
+        memberPassword = req.body.memberPassword;
+    }
+
+    if(formUsername == memberUsername && await bcrypt.compare(formPassword,memberPassword)){
+        res.redirect('/members/view?id='+req.body.userCardID);
+    }else{
+        if(req.user.role == "Admin" && formUsername != "" && formPassword != ""){
+            models.employeeLoginDB.updateOne({userObjID: req.body.userObjID},{
+                        $set: {
+                            "username" : formUsername,
+                            "password" : await bcrypt.hash(formPassword,10),
+                            "role" : req.body.userRole,
+                        }
+                    },
+                    {upsert: true}
+                    )
+                    .then((data)=>{
+                        console.log(data);
+                        res.redirect('/members/view?id='+req.body.userCardID);
+                    })
+                    .catch((err)=>{
+                        res.status(400).send({message:err.message || "Error occurred while trying to save data"});
+                    })
+        }else{
+            res.sendStatus(403);
+        }
+    }
+}
+
+exports.ownLoginEdit = async (req,res) => {
+    let formUsername = req.body.employeeUserName;
+    let formPassword = req.body.employeePassword;
+    let formPrevPassword = req.body.employeePrevPassword;
+    
+    if(formUsername != "" && formPassword != "" && await bcrypt.compare(formPrevPassword, req.user.password)){
+        models.employeeLoginDB.updateOne({userObjID: req.body.userObjID},{
+            $set: {
+                "username" : formUsername,
+                "password" : await bcrypt.hash(formPassword,10),
+                "role" : req.body.userRole
+            }
+        }
+        )
+        .then((data)=>{
+            res.sendStatus(200);
+        })
+        .catch((err)=>{
+            res.status(500).send({message:err.message || "Error occurred while trying to save data"});
+        })
+    }else{
+        res.sendStatus(403);
+        //res.redirect('/members/view?id='+req.body.userCardID,{message:"Incorrect password, please try again or contact an administrator"});
+    }
+}
+
+
+
+// models.userDB.watch().
+// on('change', data => {
+//     console.log(data);
+// });
+
