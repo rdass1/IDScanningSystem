@@ -47,7 +47,12 @@ exports.index = (req, res) =>{
 
 
 exports.login = (req, res) =>{
-    res.render('login');
+    if(req.query.error){
+        res.render('login',{errorMsg:"Invalid login credentials"})
+    }else{
+        res.render('login',{errorMsg:""});
+    }
+    
 }
 
 //Members

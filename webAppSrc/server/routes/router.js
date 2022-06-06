@@ -47,7 +47,7 @@ route.get("/sse",isLoggedIn, (req,res) =>{
     res.set("Connection", "keep-alive");
     res.set("Cache-Control","no-cache");
     res.set("Access-Control-Allow-Origin", "*");
-    console.log('client connected.');
+    //console.log('client connected.');
     
 
     var timer = setInterval(function(){
@@ -99,7 +99,7 @@ route.get('/login',(req,res,next)=>{
 route.post('/login', 
   passport.authenticate('local',{
       successRedirect: "/dashboard",
-      failureRedirect: "/login"
+      failureRedirect: "/login?error=1"
   }));
 // route.post('/login', (req,res) => {
 //     res.send(req.body);

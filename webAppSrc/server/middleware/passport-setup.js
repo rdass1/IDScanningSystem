@@ -51,7 +51,6 @@ passport.use(new LocalStrategy(
           return done(null,false,{message: 'Incorrect password'})
         }
       }catch(e){
-        console.log(e)
         return done(null,false,{message:'error occurred!'})
       }
     })
