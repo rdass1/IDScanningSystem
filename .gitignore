@@ -1,5 +1,4 @@
 node_modules
 .history
-config.env
 server/memberIDImages
 server/memberImages

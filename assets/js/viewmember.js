@@ -374,11 +374,10 @@ function startBtns(){
             "method":"POST",
             }).done(function(data){
               
-              window.location.href = "/members"
+              window.location.href = "/members";
                     
             }).fail(function(data){
-                alert("Error couldn't delete that user!");
-                location.reload();
+              window.location.href = "/members";
             });
         }
       })
@@ -442,6 +441,41 @@ function startBtns(){
             location.reload();
         });
         
+    });
+
+    $("#downloadID").click(function(e){
+      e.preventDefault();
+      setTimeout(()=>{
+        var filesForDownload = [];
+      filesForDownload.push( { path: `/memberIDImages/${userObj._id}-front.png`, name: `${userObj.lastName},${userObj.firstName}-front.png`} );
+      filesForDownload.push( { path: `/memberIDImages/${userObj._id}-back.png`, name: `${userObj.lastName},${userObj.firstName}-back.png`} );
+
+      var temporaryDownloadLink = document.createElement("a");
+      temporaryDownloadLink.style.display = 'none';
+  
+      document.body.appendChild( temporaryDownloadLink );
+  
+      for( var n = 0; n < filesForDownload.length; n++ )
+      {
+          var download = filesForDownload[n];
+          temporaryDownloadLink.setAttribute( 'href', download.path );
+          temporaryDownloadLink.setAttribute( 'download', download.name );
+  
+          temporaryDownloadLink.click();
+      }
+  
+      document.body.removeChild( temporaryDownloadLink );
+      $.ajax({
+        "url":"/api/getMemberIDCard/"+userObj._id,
+        "method":"POST",
+        }).done(function(data){
+
+        }).fail(function(data){
+            alert("Error couldn't print that ID!");
+            location.reload();
+        });
+      },"2000");
+      
     });
     
     let errorMessage = document.getElementById("loginErrorEmployeeMessage");

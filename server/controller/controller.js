@@ -234,14 +234,7 @@ exports.find = (req,res) =>{
     else if(req.query.cardID){
         models.userDB.aggregate([
             {
-              $search: {
-                "autocomplete": {
-                    "query": req.query.cardID,
-                    "path": "cardID",
-                    
-        
-                }
-              }
+                $match: {$text:{$search : req.query.cardID}}
             },
           ]).then(data => {
             res.send(data);
@@ -253,15 +246,13 @@ exports.find = (req,res) =>{
     else if(req.query.mrnum){
         models.userDB.aggregate([
             {
-              $search: {
-                "autocomplete": {
-                    "query": req.query.mrnum,
-                    "path": "MRNum",
-                    
-        
-                }
-              }
+                $match:{$text:{$search:req.query.mrnum}}
             },
+            {
+                $sort:{
+                    score: {$meta: "textScore"}
+                }
+            }
           ]).then(data => {
             res.send(data);
         })
@@ -274,44 +265,31 @@ exports.find = (req,res) =>{
         const name = req.query.name.split(' ');
         var params = [
             {
-                "autocomplete": {
-                    "query":name[0],
-                    "path": 'firstName',
-                },
+                $match: {
+                    $text: {$search: name[0]}
+                }
             },
             {
-                "autocomplete": {
-                    "query":name[0],
-                    "path": 'lastName',
-                },
-            },
+                $sort:{
+                    score: {$meta: "textScore"}
+                }
+            }
         ];
         if(name[1]){
             params = [
                 {
-                    "autocomplete": {
-                        "query":name[0],
-                        "path": 'firstName',
-                    },
+                    $match: {
+                        $text: {$search: req.query.name},
+                    }
                 },
                 {
-                    "autocomplete": {
-                        "query":name[1],
-                        "path": 'lastName',
-                    },
-                },
-                
+                    $sort:{
+                        score: {$meta: "textScore"}
+                    }
+                }
             ]
         }
-        models.userDB.aggregate([
-            {
-              $search: {
-                "compound": {
-                    "should": params,
-                },
-              }
-            },
-          ]).then(data => {
+        models.userDB.aggregate(params).then(data => {
             res.send(data);
         })
         .catch(err=>{
@@ -423,7 +401,7 @@ exports.deleteUser = (req, res) => {
                     const filename = new mongoose.Types.ObjectId(req.params.id);
                     gfs.gfs.find({filename}).toArray((err,files)=>{
                         if(files.length != 0){
-                            console.log('FILES FOUND AND ARE GETTING DELETED!');
+                            // console.log('FILES FOUND AND ARE GETTING DELETED!');
                             files.forEach((file)=>{
                                 //console.log(file._id);
                                 let _id =  new mongoose.Types.ObjectId(file._id);
@@ -668,7 +646,7 @@ exports.findClasses = (req,res)=>{
     }else{
         models.classesDB.find()
         .then(data => {
-            console.log('RETRIEVE CLASSES')
+            //console.log('RETRIEVE CLASSES')
             res.send(data);
         })
         .catch(err=>{
@@ -822,17 +800,8 @@ exports.findLogs = (req,res) => {
     if(req.query.id && req.query.location && req.query.date){
         models.facilityUsageDB.aggregate([
             {
-              $search: {
-                "autocomplete": {
-                    "query": req.query.location,
-                    "path": "locationBuilding",
-                    
-        
-                }
-              }
-            },
-            {
                 $match : {
+                    $text: {$search: req.query.location},
                     date : req.query.date,
                     userObjID : new mongoose.Types.ObjectId(req.query.id),
                 }
@@ -875,17 +844,8 @@ exports.findLogs = (req,res) => {
     else if(req.query.id && req.query.location){
         models.facilityUsageDB.aggregate([
             {
-              $search: {
-                "autocomplete": {
-                    "query": req.query.location,
-                    "path": "locationBuilding",
-                    
-        
-                }
-              }
-            },
-            {
                 $match : {
+                    $text: {$search : req.query.location},
                     userObjID : new mongoose.Types.ObjectId(req.query.id),
                 }
             },
@@ -929,17 +889,10 @@ exports.findLogs = (req,res) => {
     else if(req.query.location && req.query.date){
         models.facilityUsageDB.aggregate([
             {
-              $search: {
-                "autocomplete": {
-                    "query": req.query.location,
-                    "path": "locationBuilding",
-                    
-        
-                }
-              }
-            },
-            {
                 $match : {
+                    $text : {
+                        $search : req.query.location
+                    },
                     date : req.query.date
                 }
             },
@@ -980,14 +933,13 @@ exports.findLogs = (req,res) => {
     else if(req.query.location){
         models.facilityUsageDB.aggregate([
             {
-              $search: {
-                "autocomplete": {
-                    "query": req.query.location,
-                    "path": "locationBuilding",
-                    
-        
+                $match : {
+                    $text: {
+                        $search: req.query.location
+                    }
                 }
-              }
+                
+              
             },
             {
                 $sort: {
@@ -1001,6 +953,7 @@ exports.findLogs = (req,res) => {
             res.send(data);
         })
         .catch(err=>{
+            console.log(err)
             res.status(500).send({message:err.message || "Error occurred while trying to retrieve data"});
         });
     }
@@ -1128,3 +1081,11 @@ exports.ownLoginEdit = async (req,res) => {
         //res.redirect('/members/view?id='+req.body.userCardID,{message:"Incorrect password, please try again or contact an administrator"});
     }
 }
+
+
+
+// models.userDB.watch().
+// on('change', data => {
+//     console.log(data);
+// });
+

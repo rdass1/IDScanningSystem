@@ -36,12 +36,19 @@ console.log(err);
 
 
 function displayUserData(user){
+    if(user.phone==null){
+        user.phone = "";
+    }
+    if(user.address.zipCode == null){
+        user.address.zipCode = "";
+    }
     let btnHtml = `
         <div class="mr-1 md:mr-4">
             <button id="id-modal" class="bg-sky-500 rounded text-white px-8 py-2" >Create ID</button>
         </div>
         <div class="mr-1 md:mr-4 ">
-            <button id="id-print-btn" class="bg-indigo-500 rounded text-white px-8 py-2" >Print ID</button>
+            <button id="downloadID"class="bg-indigo-500 rounded text-white px-8 py-2">Download ID</button>
+            <!--<button id="id-print-btn" class="bg-indigo-500 rounded text-white px-8 py-2" >Print ID</button> -->
         </div>
         <div class="mr-1 md:mr-4">
             <button  class="bg-red-600 rounded text-white px-6 py-2" onclick="window.location.href='/members';">Back</button>
@@ -195,7 +202,7 @@ function displayUserData(user){
   }
   
   function editForm(user){
-      let dob = "2000-01-01"
+      let dob = ""
     if(user.DOB){
         dob = new Date(Date.parse(user.DOB.substring(0,user.DOB.length-1))).toISOString().substring(0, 10);
         
@@ -320,6 +327,12 @@ function displayUserData(user){
   }
   
   function idForm(user){
+      if(user.cardIDData.heightFT == null){
+        user.cardIDData.heightFT = "";
+      }
+      if(user.cardIDData.heightIN == null){
+        user.cardIDData.heightIN = "";
+      }
     let displayHtml = `
     <h3 class="text-xl font-medium text-gray-900 dark:text-white">ID Card</h3>
     <div class="">
@@ -416,15 +429,16 @@ function editLoginForm(user){
     
         if(sessionUser.role == 'Admin'){
             displayHtml = `
-        <h3 class="text-xl font-medium text-gray-900 dark:text-white">Edit Employee Login</h3>
+        <div class="h-full flex flex-col">
+        <h3 class="text-xl font-medium text-gray-900 dark:text-white mb-5">Edit Employee Login</h3>
         <h3 id="loginErrorEmployeeMessage" class="text-md text-red-400 hidden">Invalid password or username already exists, try again or contact an administrator</h3>
         <div>
-            <label for="employeeUserName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Username:</label>
-            <input id="employeeUserName" type="text" name="employeeUserName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required value="${userName}">
+            <label for="employeeUserName" class="block mb-3 text-sm font-medium text-gray-900 dark:text-gray-300">Username:</label>
+            <input id="employeeUserName" type="text" name="employeeUserName" class="mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required value="${userName}">
         </div>
         <div>
-            <label for="employeePassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Password</label>
-            <input id="employeePassword" type="password" name="employeePassword"class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="">
+            <label for="employeePassword" class="block mb-3 text-sm font-medium text-gray-900 dark:text-gray-300">Password</label>
+            <input id="employeePassword" type="password" name="employeePassword"class="mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" value="">
             <input id="userObjIDForm"  hidden name="userObjID" value='${user._id}'>
             <input id="userCardIDForm" hidden name="userCardID" value='${user.cardID}'>
             <input id="userRoleForm" hidden name="userRole" value='${user.role}'>
@@ -438,9 +452,12 @@ function editLoginForm(user){
         }
         displayHtml += `
         </div>
+        
 
     <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
-        `;
+    </div>    
+    
+    `;
         }
     
     

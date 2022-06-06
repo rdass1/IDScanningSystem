@@ -43,8 +43,7 @@ const connectDB = async ()=>{
         
         
     }catch(err){
-        console.log(err);
-        process.exit(1);
+        console.log("Database connection failed. Please make sure config.env is properly set");
     }
     
 }

@@ -470,7 +470,7 @@ class ANB_ScannerApp(App):
         cfgfile = open(configfile_name, "w")
         config = configparser.ConfigParser()
         config.add_section("MongoDB")
-        config.set("MongoDB", "URL", self.databaseURL.text)
+        config.set("MongoDB", "URL", str(self.databaseURL.text))
         config.set("MongoDB", "db", self.databaseName.text)
         config.add_section("Building Info")
         config.set("Building Info","name", buildingInfo["name"])

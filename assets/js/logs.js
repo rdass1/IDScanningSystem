@@ -23,6 +23,9 @@ function start(){
             "url":url,
             "method":"get",
         }).done(function(logs){
+            if(logs.length == 0){
+                return;
+            }
             var totalTime = 0;
             for(var i = 0; i < logs.length; i++){
                 var timeIn = Date.parse(logs[i].timeIn);
@@ -67,7 +70,7 @@ function start(){
                 }
             });
         }).fail(function(data){
-            alert("Error couldn't delete that building!");
+            alert("Error couldn't get data!");
             location.reload();
         });
         
@@ -83,6 +86,9 @@ function start(){
             "url": url,
             "method":"get",
         }).done(function(logs){
+            if(logs.length == 0){
+                return;
+            }
             var totalTime = 0;
             for(var i = 0; i < logs.length; i++){
                 var timeIn = Date.parse(logs[i].timeIn);
@@ -126,7 +132,7 @@ function start(){
                 }
             });
         }).fail(function(data){
-            alert("Error couldn't delete that building!");
+            alert("Error couldn't get data!");
             location.reload();
         });
     });
@@ -180,7 +186,7 @@ function start(){
             });
             
         }).fail(function(data){
-            alert("Error couldn't delete that log!");
+            alert("Error couldn't get data!");
             location.reload();
         });
 }

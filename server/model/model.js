@@ -115,6 +115,7 @@ const facilityUsageSchema = new mongoose.Schema({
     buildingObjID: {
         type:mongoose.ObjectId,
     },
+    locationBuilding: String,
     timeIn: Date,
     timeOut: Date,
     hours: Number,
@@ -157,7 +158,11 @@ const userClassesSchema = new mongoose.Schema({
 
 const employeeLoginSchema = new mongoose.Schema({
     userObjID: mongoose.ObjectId,
-    username: String,
+    username: {
+        type: String,
+        index: true,
+        unique: true
+    },
     password: String,
     role: String,
 },{collection:"employeeLogin"});
@@ -173,6 +178,14 @@ var schema = new mongoose.Schema({
 }, 
     { collection : 'memberInfo' });   // collection name
 //const userDB = mongoose.model('memberInfo', new mongoose.Schema({}));
+
+//Creating Indexes
+facilityUsageSchema.index({locationBuilding:"text",date:'text'});
+userSchema.index({firstName:"text",lastName:"text",MRNum:"text",cardID:"text"})
+
+
+
+
 const userDB = mongoose.model('', schema);
 const userDB2 = mongoose.model('member',userSchema);
 const facilityUsageDB = mongoose.model('facilityUsage',facilityUsageSchema);
@@ -183,6 +196,20 @@ const userClassesDB = mongoose.model('memberClasses',userClassesSchema);
 const employeeLoginDB = mongoose.model('employeeLogin',employeeLoginSchema);
 // ,facilityUsageDB,locationsDB,buildingsDB,classesDB
 // exports.userDB2= userDB2;
+
+const defaultAdmin = new employeeLoginDB({username:"admin",password:"$2b$10$PyZ/8e0wZgSjwQ7hLNNAe.mwlsPqAz2Rr7Ef2EHFBh6PkUG3qosG6",role:"Admin"});
+defaultAdmin.save(defaultAdmin)
+.then(data =>{
+    console.log('Creating default admin login');
+})
+.catch(err=>{
+    
+});
+
+
+
+
+
 exports.userDB = userDB2;
 exports.facilityUsageDB = facilityUsageDB;
 exports.locationsDB = locationsDB;

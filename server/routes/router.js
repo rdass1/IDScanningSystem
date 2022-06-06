@@ -49,15 +49,22 @@ route.get("/sse",isLoggedIn, (req,res) =>{
     res.set("Access-Control-Allow-Origin", "*");
     console.log('client connected.');
     
-    userDB.watch().
+
+    var timer = setInterval(function(){
+        userDB.watch().
         on('change', data => {
         res.status(200).write(`data: update\n\n`);
         });
+        res.flush();
+    },1000);
+    
     // facilityUsageDB.watch().
     //     on('change', data => {
     //         res.status(200).write(`data: update\n\n`);
     //     })
-    
+    res.on('close', function () {
+        clearInterval(timer)
+      })
 });
 
 

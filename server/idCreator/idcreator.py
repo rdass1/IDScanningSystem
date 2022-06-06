@@ -10,8 +10,8 @@ import time
 
 blankIDCardFront = "./server/idCreator/Slide1.PNG"  # Link to the template of the front side of the ID
 blankIDCardBack = "./server/idCreator/Slide2.PNG"    # Link to the template of the back side of the ID
-IDCARD_WIDTH = 305 # Constant pixel width of an ID Card
-IDCARD_HEIGHT = 205 # Constant pixel height of an ID Card 
+IDCARD_WIDTH = 1020 # Constant pixel width of an ID Card
+IDCARD_HEIGHT = 685 # Constant pixel height of an ID Card 
 fontFile = "./server/idCreator/Calibri Regular.ttf"                # Link to text file that will be used on the ID card
 # Note that the template should have a height of a multiple of: 205 for best effects
 # Note that the template should have a width of a multiple of: 325 for best effects
@@ -22,14 +22,14 @@ def create_cardfront(holder_name, holder_id, holder_role, holder_ISS, holder_DOB
     picBotRight = [int(template.width*(130/325)), int(template.height*(176/205))]    # sets the bottom right of the picture to (x,y) coordinates
     dx = picBotRight[0] - picTopLeft[0] # Find the difference between the bottom and top coordinate
     dy = picBotRight[1] - picTopLeft[1] # Find the difference between the right and left coordinate
-    temp_pic = None
+    temp_pic = Image.open("./server/idCreator/johndoepic.jpg")
     try:
         if(exists(holder_pic)):
             time.sleep(1)
             temp_pic = Image.open(holder_pic).convert("RGB")
             temp_pic = ImageOps.exif_transpose(temp_pic)
         else:
-            print("picture doesn't exist")
+            print("Picture doesn't exist\nCreating ID with default image...")
     except:
         print("Invalid Picture Input")
         temp_pic = Image.open("./server/idCreator/johndoepic.jpg")

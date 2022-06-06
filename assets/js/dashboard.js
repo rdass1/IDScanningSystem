@@ -10,13 +10,12 @@ $(document).ready(function(){
                     "url":"/api/active_members",
                     "method":"GET",
                 }).done(function(data){
-                    //console.log('update incoming...');
                     displayMemberHtml("#main-grid-dashboard",data);
                     
                 });
             }
         }catch{
-
+           
         }
     });
 
