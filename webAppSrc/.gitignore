@@ -5,3 +5,4 @@ node_modules
 server/memberIDImages
 server/memberImages
 .vscode
+package-lock.json
