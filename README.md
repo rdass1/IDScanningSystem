@@ -131,8 +131,8 @@ Downloads:
 ## Usage
 ---
 Once you have everything running you can go to the website by going to your browser and typing:
-```bash
-htts://<ip>:<port>
+```HTTP
+https://<ip>:<port>
 ```
 
 `<ip>` = ip of your web app container
