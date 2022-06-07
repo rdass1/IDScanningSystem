@@ -131,7 +131,7 @@ Downloads:
 ## Usage
 ---
 Once you have everything running you can go to the website by going to your browser and typing:
-```HTTP
+```bash
 https://<ip>:<port>
 ```
 
