@@ -206,7 +206,9 @@ To be implemented...
 ___
 
 [**Rishon Dass** ](https://github.com/rdass1): Main web application, database setup, and scanner application
+
 [**Mitchell Traylor**](https://github.com/MitchellTraylor): ID card creator app
+
 [**Sean Graney**](https://github.com/SeanGraney): CSS
 
 ## License
