@@ -9,7 +9,7 @@ OPTIONS = {
     'packages' : ['certifi']
 }
 setup(
-    app=["main.py"],
+    app=["./scannerAppSrc/main.py"],
     name="AnB Scanner",
     data_files = DATA_FILES,
     options={'p2app': OPTIONS},
