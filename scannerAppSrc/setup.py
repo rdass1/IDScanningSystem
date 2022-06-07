@@ -1,7 +1,7 @@
 from ssl import Options
 from setuptools import setup
 
-DATA_FILES = ['startScreen.ui','programRunningScreen.ui',"configScanner.ui","configDatabase.ui","configBuilding.ui"]
+DATA_FILES = ['startScreen.ui','programRunningScreen.ui',"configScanner.ui","configDatabase.ui","configBuilding.ui","icon.icns"]
 
 OPTIONS = {
     'iconfile':'icon.icns',

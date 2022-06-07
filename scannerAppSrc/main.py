@@ -1,7 +1,7 @@
 from cProfile import run
 from http import client
 from pydoc import cli
-import sys
+import sys 
 from turtle import goto, update
 from unicodedata import east_asian_width
 from PyQt5.uic import loadUi
@@ -468,7 +468,7 @@ widget = QStackedWidget()
 widget.addWidget(start)
 widget.setFixedHeight(600)
 widget.setFixedWidth(400)
-widget.setWindowIcon(QtGui.QIcon(resource_path('tree-favicon.ico')))
+app.setWindowIcon(QtGui.QIcon(resource_path('icon.icns')))
 widget.show()
 try:
     sys.exit(app.exec_())
