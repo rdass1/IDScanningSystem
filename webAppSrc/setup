@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+helpFunction()
+{
+   echo ""
+   echo "Usage: $0 --u <username> --pwd <password> --ip <ip> --p <port> --name <database_name> --s <secret>"
+   echo -e "\t--u mongoDB server login username"
+   echo -e "\t--pwd mongoDB server login password"
+   echo -e "\t--ip mongoDB server ip"
+   echo -e "\t--p mongoDB server port"
+   echo -e "\t--name mongoDB server database name"
+   echo -e "\t--s a secret key used for cookies for the webapp"
+   exit 1 # Exit script after printing help
+}
+
+ARGUMENT_LIST=(
+  "u"
+  "pwd"
+  "ip"
+  "p"
+  "name"
+  "s"
+)
+
+
+# read arguments
+opts=$(getopt \
+  --longoptions "$(printf "%s:," "${ARGUMENT_LIST[@]}")" \
+  --name "$(basename "$0")" \
+  --options "" \
+  -- "$@"
+)
+
+eval set --$opts
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+   --u ) username="$2" 
+   shift 2 ;;
+   --pwd ) password="$2" 
+   shift 2 ;;
+   --ip ) databaseIP="$2" 
+   shift 2 ;;
+   --p ) databasePort="$2" 
+   shift 2 ;;
+   --name ) databaseName="$2" 
+   shift 2 ;;
+   --s ) secret="$2" 
+   shift 2;;
+   --help) helpFunction ;; # Print helpFunction in case parameter is non-existent
+   * ) break;
+  esac
+done
+
+
+# Print helpFunction in case parameters are empty
+if [ -z "$username" ] || [ -z "$password" ] || [ -z "$databaseIP" ] || [ -z "$databasePort" ] || [ -z "$databaseName" ] || [ -z "$secret" ]
+then
+   echo "Some or all of the parameters are empty";
+   helpFunction
+fi
+
+echo "Applying web configurations..."
+echo -e "PORT=3000\nMONGO_URL=mongodb://$username:$password@$databaseIP:$databasePort/$databaseName?authSource=admin&replicaSet=rs0&readPreference=primary&directConnection=true&ssl=false\nSECRET=$secret" > config.env
+echo "Web configurations sucessful!"

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+helpFunction()
+{
+   echo ""
+   echo "Usage: $0 -u <username> -p <password>"
+   echo -e "\t-u admin username for mongoDB"
+   echo -e "\t-p admin password for mongoDB"
+   exit 1 # Exit script after printing help
+}
+
+while getopts "u:p:" opt
+do
+   case "$opt" in
+      u ) username="$OPTARG" ;;
+      p ) password="$OPTARG" ;;
+      ? ) helpFunction ;; # Print helpFunction in case parameter is non-existent
+   esac
+done
+
+# Print helpFunction in case parameters are empty
+if [ -z "$username" ] || [ -z "$password" ]
+then
+   echo "Some or all of the parameters are empty";
+   helpFunction
+fi
+
+echo "Creating admin user..."
+mongosh admin --eval "db.createUser({user:'$username',pwd:'$password', roles: [{role: 'root', db: 'admin'}]});"
+echo "Mongo admin user $username sucessfully created!"
