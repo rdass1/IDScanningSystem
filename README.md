@@ -27,6 +27,7 @@ docker run -d --network="host" -p 127.0.0.1:<port>:27017/tcp --name <container_n
 ```
 
 `<port>` = any port you want to map the container port to
+
 `<container_name>` = set the name of the container
 
 Example:
@@ -60,6 +61,7 @@ Now that we have our database running, we can setup our web app by running:
 docker run -d -p 127.0.0.1:<port>:3000/tcp --name <container_name> rishondass/anbidsystem
 ```
 `<port>` = port you want to map the container to. <span style="color:red;">**Must be different than then database!**</span>
+
 `<container_name>` = set the name of the container
 
 Example
@@ -77,12 +79,19 @@ Then we can setup the configuration of the web app by running:
 ```bash
 docker exec <container_name> ./setup --u <db_username> --pwd <db_password> --ip <db_ip> --p <db_port> --name <db_name> --s <secret>
 ```
+
 `<container_name>` = name of the container running the web app
+
 `<db_username>` = username of the database
+
 `<db_password>` = password of the database
+
 `<db_ip>` = ip address of the database(If running on the same machine as the database it should be 127.0.0.1 unless setup differently)
+
 `<db_port>` = port of the data base(Default port number is 27017)
+
 `<db_name>` = name of the database collection(folder), you can name it anything you want.
+
 `<secret>` = string used for signing and/or encrypting cookies. <span style="color:red;">Important make sure you set this string to something long and random.</span>
 
 Example
@@ -118,7 +127,7 @@ Downloads:
 >
 ><img src="https://raw.githubusercontent.com/wiki/ryanoasis/nerd-fonts/screenshots/v1.0.x/linux-pass-sm.png" align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Linux: [soon]()
 
-`More stuff about scanner app`
+
 ## Usage
 ---
 Once you have everything running you can go to the website by going to your browser and typing:
