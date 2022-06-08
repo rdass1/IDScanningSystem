@@ -139,6 +139,8 @@ https://<ip>:<port>
 
 `<port>` = port of your web app container(use default http port 80 when setting up web app)
 
+> The default username and password for the login are "admin"
+
 >[!Note]
 >The web app server currently runs on http. This is not secure and should be use for production. To use https follow the [setting up https](#setting-up-https) guide.
 ## Build
